@@ -101,23 +101,124 @@ export default function CustomerQuoteClient({ id }) {
   });
 
   return (
-    <main dir="rtl" style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      padding: '20px',
-      fontFamily: 'system-ui, Arial'
-    }}>
-      <div style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        background: 'white',
-        borderRadius: '20px',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-        overflow: 'hidden'
+    <>
+      <style jsx>{`
+        @media (max-width: 480px) {
+          .mobile-header {
+            padding: 20px 15px !important;
+          }
+          .mobile-header img {
+            height: 60px !important;
+          }
+          .mobile-content {
+            padding: 10px !important;
+          }
+          .mobile-customer {
+            padding: 12px !important;
+            margin-bottom: 12px !important;
+            font-size: 14px !important;
+          }
+          .mobile-customer > div:first-child {
+            font-size: 15px !important;
+          }
+          .desktop-table {
+            display: none !important;
+          }
+          .mobile-items {
+            display: block !important;
+          }
+          .mobile-totals {
+            padding: 15px !important;
+            margin-bottom: 15px !important;
+          }
+          .mobile-totals > div > div {
+            font-size: 13px !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 5px !important;
+          }
+          .mobile-totals .total-final {
+            font-size: 16px !important;
+            padding: 10px !important;
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 8px !important;
+          }
+          .mobile-footer {
+            padding: 15px 10px !important;
+            margin-top: 15px !important;
+          }
+          .mobile-footer > div {
+            padding: 15px !important;
+            margin-bottom: 10px !important;
+          }
+        }
+        @media (min-width: 481px) and (max-width: 768px) {
+          .mobile-header {
+            padding: 30px 20px !important;
+          }
+          .mobile-content {
+            padding: 15px !important;
+          }
+          .mobile-customer {
+            padding: 15px !important;
+            margin-bottom: 15px !important;
+          }
+          .mobile-customer > div:first-child {
+            font-size: 16px !important;
+          }
+          .desktop-table {
+            display: none !important;
+          }
+          .mobile-items {
+            display: block !important;
+          }
+          .mobile-totals {
+            padding: 20px !important;
+            margin-bottom: 20px !important;
+          }
+          .mobile-totals > div > div {
+            font-size: 14px !important;
+          }
+          .mobile-totals .total-final {
+            font-size: 18px !important;
+            padding: 12px !important;
+          }
+          .mobile-footer {
+            padding: 20px 15px !important;
+            margin-top: 20px !important;
+          }
+          .mobile-footer > div {
+            padding: 20px !important;
+            margin-bottom: 15px !important;
+          }
+        }
+        @media (min-width: 769px) {
+          .mobile-items {
+            display: none !important;
+          }
+          .desktop-table {
+            display: block !important;
+          }
+        }
+      `}</style>
+      <main dir="rtl" style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        padding: '10px',
+        fontFamily: 'system-ui, Arial'
       }}>
-        {/* Header with Logo */}
         <div style={{
-          background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+          maxWidth: '800px',
+          margin: '0 auto',
+          background: 'white',
+          borderRadius: '20px',
+          boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+          overflow: 'hidden'
+        }}>
+        {/* Header with Logo */}
+        <div className="mobile-header" style={{
+          background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
           color: 'white',
           padding: '40px 30px',
           textAlign: 'center',
@@ -175,9 +276,9 @@ export default function CustomerQuoteClient({ id }) {
         </div>
 
         {/* Content */}
-        <div style={{ padding: '30px' }}>
+        <div className="mobile-content" style={{ padding: '30px' }}>
           {/* Customer Details */}
-          <section style={{
+          <section className="mobile-customer" style={{
             background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
             border: '2px solid #ffc107',
             borderRadius: '15px',
@@ -216,8 +317,8 @@ export default function CustomerQuoteClient({ id }) {
             )}
           </section>
 
-          {/* Items Table */}
-          <div style={{
+          {/* Desktop Table */}
+          <div className="desktop-table" style={{
             background: 'white',
             borderRadius: '15px',
             boxShadow: '0 5px 20px rgba(0,0,0,0.08)',
@@ -228,8 +329,8 @@ export default function CustomerQuoteClient({ id }) {
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
                 <tr style={{ 
-                  background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)', 
-                  color: '#ffc107' 
+                  background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)', 
+                  color: 'white' 
                 }}>
                   <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>פריט</th>
                   <th style={{ textAlign: 'center', padding: '18px', width: '80px', fontSize: '16px', fontWeight: 'bold' }}>כמות</th>
@@ -262,7 +363,7 @@ export default function CustomerQuoteClient({ id }) {
                         padding: '18px', 
                         textAlign: 'left', 
                         fontWeight: 'bold', 
-                        color: '#ffc107',
+                        color: '#0170B9',
                         fontSize: '16px'
                       }}>
                         ₪{currency(it.line_total)}
@@ -286,55 +387,158 @@ export default function CustomerQuoteClient({ id }) {
             </table>
           </div>
 
+          {/* Mobile Items View */}
+          <div className="mobile-items" style={{ display: 'none', marginBottom: '20px' }}>
+            {items.length === 0 ? (
+              <div style={{
+                background: 'white',
+                borderRadius: '12px',
+                padding: '30px',
+                textAlign: 'center',
+                color: '#666',
+                fontSize: '16px',
+                border: '1px solid #e9ecef'
+              }}>
+                📝 אין פריטים להצגה
+              </div>
+            ) : (
+              items.map((it, index) => {
+                const name = it.custom_name || it.product_name || 'פריט';
+                return (
+                  <div key={it.id} style={{
+                    background: 'white',
+                    borderRadius: '12px',
+                    padding: '15px',
+                    marginBottom: '12px',
+                    border: '2px solid #f8f9fa',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                  }}>
+                    <div style={{
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      color: '#0170B9',
+                      marginBottom: '10px'
+                    }}>
+                      {name}
+                    </div>
+                    
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px',
+                      marginBottom: '10px'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '5px 0'
+                      }}>
+                        <span style={{ color: '#6c757d', fontSize: '14px' }}>כמות:</span>
+                        <span style={{ fontWeight: '600', fontSize: '15px' }}>{it.qty}</span>
+                      </div>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '5px 0'
+                      }}>
+                        <span style={{ color: '#6c757d', fontSize: '14px' }}>מחיר יח׳:</span>
+                        <span style={{ fontWeight: '600', fontSize: '15px' }}>₪{currency(it.unit_price)}</span>
+                      </div>
+                    </div>
+                    
+                    {it.notes && (
+                      <div style={{
+                        background: '#f8f9fa',
+                        padding: '8px',
+                        borderRadius: '6px',
+                        fontSize: '14px',
+                        color: '#666',
+                        marginBottom: '10px'
+                      }}>
+                        <span style={{ fontWeight: '600' }}>הערות:</span> {it.notes}
+                      </div>
+                    )}
+                    
+                    <div style={{
+                      borderTop: '1px solid #e9ecef',
+                      paddingTop: '10px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <span style={{ color: '#6c757d', fontSize: '14px' }}>סה״כ שורה:</span>
+                      <span style={{
+                        fontSize: '17px',
+                        fontWeight: 'bold',
+                        color: '#0170B9',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        ₪{currency(it.line_total)}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
           {/* Totals */}
-          <section style={{
-            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+          <section className="mobile-totals" style={{
+            background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
             color: 'white',
             borderRadius: '15px',
             padding: '30px',
             marginBottom: '30px',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+            boxShadow: '0 10px 30px rgba(1, 112, 185, 0.2)'
           }}>
             <div style={{
               display: 'grid',
-              gap: '15px'
+              gap: '12px'
             }}>
               <div style={{ 
-                fontSize: '18px', 
+                fontSize: '16px', 
                 display: 'flex', 
                 justifyContent: 'space-between', 
                 alignItems: 'center',
-                opacity: 0.9 
+                opacity: 0.9,
+                flexWrap: 'wrap',
+                gap: '8px'
               }}>
                 <span>ביניים (לפני מע״מ):</span>
                 <span style={{ fontWeight: 'bold', color: '#ffc107' }}>₪{currency(proposal.subtotal)}</span>
               </div>
               {proposal.include_discount_row && (
                 <div style={{ 
-                  fontSize: '18px', 
+                  fontSize: '16px', 
                   display: 'flex', 
                   justifyContent: 'space-between', 
                   alignItems: 'center',
                   color: '#28a745',
-                  opacity: 0.9 
+                  opacity: 0.9,
+                  flexWrap: 'wrap',
+                  gap: '8px'
                 }}>
                   <span>הנחה:</span>
                   <span style={{ fontWeight: 'bold' }}>-₪{currency(proposal.discount_value)}</span>
                 </div>
               )}
               <div style={{ 
-                fontSize: '18px', 
+                fontSize: '16px', 
                 display: 'flex', 
                 justifyContent: 'space-between', 
                 alignItems: 'center',
-                opacity: 0.9 
+                opacity: 0.9,
+                flexWrap: 'wrap',
+                gap: '8px'
               }}>
                 <span>מע״מ ({vatRate}%):</span>
                 <span style={{ fontWeight: 'bold', color: '#ffc107' }}>₪{currency(proposal.vat_amount)}</span>
               </div>
-              <div style={{
-                fontSize: '24px',
-                padding: '20px',
+              <div className="total-final" style={{
+                fontSize: '20px',
+                padding: '16px',
                 background: 'linear-gradient(45deg, #ffc107, #ffb300)',
                 color: '#1a1a1a',
                 borderRadius: '10px',
@@ -343,7 +547,9 @@ export default function CustomerQuoteClient({ id }) {
                 alignItems: 'center',
                 fontWeight: 'bold',
                 boxShadow: '0 5px 15px rgba(255, 193, 7, 0.4)',
-                marginTop: '10px'
+                marginTop: '10px',
+                flexWrap: 'wrap',
+                gap: '10px'
               }}>
                 <span>סה״כ לתשלום:</span>
                 <span>₪{currency(proposal.total)}</span>
@@ -411,15 +617,15 @@ export default function CustomerQuoteClient({ id }) {
           )}
 
           {/* Footer */}
-          <div style={{
+          <div className="mobile-footer" style={{
             textAlign: 'center',
             padding: '30px 20px',
             borderTop: '2px solid #f8f9fa',
             marginTop: '30px'
           }}>
             <div style={{
-              background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
-              color: '#ffc107',
+              background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
+              color: 'white',
               padding: '25px',
               borderRadius: '15px',
               marginBottom: '20px',
@@ -462,5 +668,6 @@ export default function CustomerQuoteClient({ id }) {
         </div>
       </div>
     </main>
+    </>
   );
 }

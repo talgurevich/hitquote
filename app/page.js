@@ -34,7 +34,7 @@ export default function Home() {
         alignItems: 'center',
         justifyContent: 'center',
         fontFamily: 'system-ui, Arial',
-        padding: '20px',
+        padding: '10px',
         position: 'relative'
       }}>
       <div style={{
@@ -42,12 +42,13 @@ export default function Home() {
         borderRadius: '20px',
         boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
         border: '2px solid rgba(255, 255, 255, 0.8)',
-        padding: '60px 40px',
+        padding: '40px 20px',
         textAlign: 'center',
         maxWidth: '600px',
         width: '100%',
         backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)'
+        WebkitBackdropFilter: 'blur(10px)',
+        margin: '20px 0'
       }}>
         {/* Logo/Title */}
         <div style={{ marginBottom: '40px' }}>
@@ -102,7 +103,7 @@ export default function Home() {
         {/* Action Cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
           gap: '20px',
           marginBottom: '30px'
         }}>

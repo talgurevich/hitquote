@@ -225,12 +225,36 @@ export default function NewClient() {
   }, [products, catalogSearch]);
 
   return (
-    <main dir="rtl" style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      padding: '20px',
-      fontFamily: 'system-ui, Arial'
-    }}>
+    <>
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .mobile-table {
+            display: block !important;
+            overflow-x: auto;
+            white-space: nowrap;
+          }
+          .mobile-table table {
+            min-width: 800px;
+          }
+          .mobile-buttons {
+            flex-direction: column !important;
+            gap: 10px !important;
+          }
+          .mobile-header {
+            flex-direction: column !important;
+            text-align: center !important;
+          }
+          .mobile-totals {
+            max-width: 100% !important;
+          }
+        }
+      `}</style>
+      <main dir="rtl" style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        padding: '10px',
+        fontFamily: 'system-ui, Arial'
+      }}>
       <div style={{
         maxWidth: '1200px',
         margin: '0 auto',
@@ -240,10 +264,10 @@ export default function NewClient() {
         overflow: 'hidden'
       }}>
         {/* Header */}
-        <div style={{
+        <div className="mobile-header" style={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
-          padding: '30px',
+          padding: '20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -276,7 +300,7 @@ export default function NewClient() {
         </div>
 
         {/* Content */}
-        <div style={{ padding: '30px' }}>
+        <div style={{ padding: '20px' }}>
           {error && (
             <div style={{
               background: '#fee',
@@ -390,7 +414,7 @@ export default function NewClient() {
               </div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
                 gap: '15px',
                 marginBottom: '20px'
               }}>
@@ -732,7 +756,7 @@ export default function NewClient() {
             )}
 
             {/* Items Table */}
-            <div style={{
+            <div className="mobile-table" style={{
               background: 'white',
               borderRadius: '15px',
               boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
@@ -915,7 +939,7 @@ export default function NewClient() {
             }}>
               🧮 חישוב סכומים
             </div>
-            <div style={{
+            <div className="mobile-totals" style={{
               display: 'grid',
               gap: '15px',
               maxWidth: '400px',
@@ -1078,7 +1102,7 @@ export default function NewClient() {
           </section>
 
           {/* Action Buttons */}
-          <div style={{
+          <div className="mobile-buttons" style={{
             display: 'flex',
             gap: '15px',
             justifyContent: 'center',
@@ -1153,6 +1177,7 @@ export default function NewClient() {
           </div>
         </div>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

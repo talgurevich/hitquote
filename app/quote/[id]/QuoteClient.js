@@ -132,12 +132,56 @@ export default function QuoteClient({ id }) {
   const vatRate = Number(proposal.vat_rate || settings?.vat_rate || 18);
 
   return (
-    <main dir="rtl" style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      padding: '20px',
-      fontFamily: 'system-ui, Arial'
-    }}>
+    <>
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .mobile-header {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 20px !important;
+          }
+          .mobile-buttons {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+          }
+          .mobile-table {
+            overflow-x: auto;
+            display: block;
+          }
+          .mobile-table table {
+            min-width: 600px;
+          }
+          .mobile-customer {
+            padding: 15px !important;
+            margin-bottom: 15px !important;
+          }
+          .mobile-totals {
+            padding: 20px !important;
+            margin-bottom: 15px !important;
+          }
+          .mobile-totals div {
+            min-width: auto !important;
+            font-size: 14px !important;
+          }
+          .mobile-totals .total-final {
+            font-size: 18px !important;
+          }
+          .mobile-content {
+            padding: 15px !important;
+          }
+          .mobile-back-button {
+            flex-direction: column !important;
+            margin-top: 20px !important;
+          }
+        }
+      `}</style>
+      <main dir="rtl" style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        padding: '10px',
+        fontFamily: 'system-ui, Arial'
+      }}>
       <div style={{
         maxWidth: '900px',
         margin: '0 auto',
@@ -147,10 +191,10 @@ export default function QuoteClient({ id }) {
         overflow: 'hidden'
       }}>
         {/* Header */}
-        <div style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        <div className="mobile-header" style={{
+          background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
           color: 'white',
-          padding: '30px',
+          padding: '30px 20px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -165,7 +209,7 @@ export default function QuoteClient({ id }) {
             />
             <div>
               <h1 style={{ 
-                margin: '0 0 5px 0', 
+                margin: '0 0 8px 0', 
                 fontSize: '28px', 
                 fontWeight: 'bold' 
               }}>
@@ -174,14 +218,15 @@ export default function QuoteClient({ id }) {
               <p style={{ 
                 margin: 0, 
                 opacity: 0.9, 
-                fontSize: '16px' 
+                fontSize: '16px',
+                color: 'rgba(255,255,255,0.9)' 
               }}>
                 מס׳ הצעה: {proposal.proposal_number || proposal.id.slice(0,8)}
               </p>
             </div>
           </div>
           
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div className="mobile-buttons" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             <button 
               onClick={shareCustomerMail} 
               style={{
@@ -237,27 +282,27 @@ export default function QuoteClient({ id }) {
             <Link 
               href={`/new?id=${proposal.id}`} 
               style={{
-                background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+                background: '#0170B9',
                 color: 'white',
                 padding: '12px 24px',
-                borderRadius: '25px',
+                borderRadius: '8px',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: 'bold',
                 border: 'none',
                 transition: 'all 0.2s ease',
-                boxShadow: '0 4px 15px rgba(79, 172, 254, 0.4)',
+                boxShadow: '0 2px 8px rgba(1, 112, 185, 0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(79, 172, 254, 0.5)';
+                e.currentTarget.style.background = '#025a8a';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 112, 185, 0.4)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(79, 172, 254, 0.4)';
+                e.currentTarget.style.background = '#0170B9';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(1, 112, 185, 0.3)';
               }}
             >
               ✏️ עריכה
@@ -301,9 +346,9 @@ export default function QuoteClient({ id }) {
         </div>
 
         {/* Content */}
-        <div style={{ padding: '30px' }}>
+        <div className="mobile-content" style={{ padding: '30px' }}>
 
-          <section style={{
+          <section className="mobile-customer" style={{
             background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
             border: '1px solid #e9ecef',
             borderRadius: '15px',
@@ -342,7 +387,7 @@ export default function QuoteClient({ id }) {
             )}
           </section>
 
-          <div style={{
+          <div className="mobile-table" style={{
             background: 'white',
             borderRadius: '15px',
             boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
@@ -351,7 +396,7 @@ export default function QuoteClient({ id }) {
           }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
+                <tr style={{ background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)', color: 'white' }}>
                   <th style={{ textAlign: 'right', padding: '15px', fontSize: '16px', fontWeight: 'bold' }}>פריט</th>
                   <th style={{ textAlign: 'center', padding: '15px', width: '80px', fontSize: '16px', fontWeight: 'bold' }}>כמות</th>
                   <th style={{ textAlign: 'center', padding: '15px', width: '140px', fontSize: '16px', fontWeight: 'bold' }}>מחיר יח׳ (₪)</th>
@@ -377,7 +422,7 @@ export default function QuoteClient({ id }) {
                       <td style={{ padding: '15px', textAlign: 'center', fontWeight: '500' }}>{it.qty}</td>
                       <td style={{ padding: '15px', textAlign: 'center', fontWeight: '500' }}>{currency(it.unit_price)} ₪</td>
                       <td style={{ padding: '15px', color: '#666', fontSize: '14px' }}>{it.notes || '—'}</td>
-                      <td style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold', color: '#4facfe' }}>
+                      <td style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold', color: '#0170B9' }}>
                         {currency(it.line_total)} ₪
                       </td>
                     </tr>
@@ -399,7 +444,7 @@ export default function QuoteClient({ id }) {
             </table>
           </div>
 
-          <section style={{
+          <section className="mobile-totals" style={{
             background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
             border: '1px solid #e9ecef',
             borderRadius: '15px',
@@ -424,17 +469,17 @@ export default function QuoteClient({ id }) {
               <span>מע״מ ({vatRate}%):</span>
               <span style={{ fontWeight: 'bold', color: '#495057' }}>{currency(proposal.vat_amount)} ₪</span>
             </div>
-            <div style={{
+            <div className="total-final" style={{
               fontSize: '20px',
               padding: '15px',
-              background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+              background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
               color: 'white',
               borderRadius: '10px',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
               fontWeight: 'bold',
-              boxShadow: '0 4px 15px rgba(79, 172, 254, 0.3)'
+              boxShadow: '0 3px 10px rgba(1, 112, 185, 0.3)'
             }}>
               <span>סה״כ לתשלום:</span>
               <span>{currency(proposal.total)} ₪</span>
@@ -473,30 +518,30 @@ export default function QuoteClient({ id }) {
             </section>
           )}
 
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginTop: '30px' }}>
+          <div className="mobile-back-button" style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginTop: '30px' }}>
             <Link 
               href="/quotes" 
               style={{
-                background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                background: '#4B4F58',
                 color: 'white',
                 padding: '12px 24px',
-                borderRadius: '25px',
+                borderRadius: '8px',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: 'bold',
                 transition: 'all 0.2s ease',
-                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+                boxShadow: '0 2px 8px rgba(75, 79, 88, 0.3)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.5)';
+                e.currentTarget.style.background = '#3a3a3a';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(75, 79, 88, 0.4)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+                e.currentTarget.style.background = '#4B4F58';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(75, 79, 88, 0.3)';
               }}
             >
               🔙 חזרה לרשימת הצעות
@@ -505,5 +550,6 @@ export default function QuoteClient({ id }) {
         </div>
       </div>
     </main>
+    </>
   );
 }
