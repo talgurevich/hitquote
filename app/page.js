@@ -4,23 +4,50 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <main dir="rtl" style={{
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      fontFamily: 'system-ui, Arial',
-      padding: '20px'
-    }}>
+    <>
+      <style jsx>{`
+        .background-blur::before {
+          content: '';
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: url('https://breadstation.co.il/wp-content/uploads/sites/221/2021/10/fo_0009__P1A6761.jpg') center/cover;
+          filter: blur(3px);
+          z-index: -2;
+        }
+        .background-overlay::after {
+          content: '';
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
+          z-index: -1;
+        }
+      `}</style>
+      <main dir="rtl" className="background-blur background-overlay" style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'system-ui, Arial',
+        padding: '20px',
+        position: 'relative'
+      }}>
       <div style={{
-        background: 'white',
+        background: 'rgba(255, 255, 255, 0.95)',
         borderRadius: '20px',
-        boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+        boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+        border: '2px solid rgba(255, 255, 255, 0.8)',
         padding: '60px 40px',
         textAlign: 'center',
         maxWidth: '600px',
-        width: '100%'
+        width: '100%',
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)'
       }}>
         {/* Logo/Title */}
         <div style={{ marginBottom: '40px' }}>
@@ -35,7 +62,7 @@ export default function Home() {
           />
           <p style={{
             fontSize: '20px',
-            color: '#28a745',
+            color: '#0170B9',
             margin: '0 0 10px 0',
             fontWeight: 'bold'
           }}>
@@ -43,14 +70,14 @@ export default function Home() {
           </p>
           <p style={{
             fontSize: '18px',
-            color: '#666',
+            color: '#4B4F58',
             margin: '0 0 15px 0'
           }}>
             מערכת הצעות מחיר מקצועית
           </p>
           <p style={{
             fontSize: '16px',
-            color: '#495057',
+            color: '#3a3a3a',
             margin: 0,
             display: 'flex',
             alignItems: 'center',
@@ -64,7 +91,7 @@ export default function Home() {
         {/* Description */}
         <p style={{
           fontSize: '16px',
-          color: '#555',
+          color: '#3a3a3a',
           lineHeight: '1.6',
           marginBottom: '50px'
         }}>
@@ -82,7 +109,7 @@ export default function Home() {
           {/* Quotes Card */}
           <Link href="/quotes" style={{ textDecoration: 'none' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+              background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
               color: 'white',
               padding: '30px 20px',
               borderRadius: '15px',
@@ -93,7 +120,7 @@ export default function Home() {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px rgba(79, 172, 254, 0.4)';
+              e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.4)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
@@ -110,22 +137,26 @@ export default function Home() {
           {/* Catalog Card */}
           <Link href="/catalog" style={{ textDecoration: 'none' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
-              color: '#333',
+              background: 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)',
+              color: '#4B4F58',
               padding: '30px 20px',
               borderRadius: '15px',
               textAlign: 'center',
               cursor: 'pointer',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: 'none'
+              border: '2px solid #0170B9'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px rgba(168, 237, 234, 0.4)';
+              e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.2)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)';
+              e.currentTarget.style.color = 'white';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)';
+              e.currentTarget.style.color = '#4B4F58';
             }}>
               <div style={{ fontSize: '40px', marginBottom: '15px' }}>📁</div>
               <h3 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>ניהול קטלוג</h3>
@@ -156,44 +187,49 @@ export default function Home() {
             flexWrap: 'wrap'
           }}>
             <Link href="/new" style={{
-              background: '#f8f9fa',
-              color: '#495057',
+              background: '#F5F5F5',
+              color: '#4B4F58',
               padding: '8px 16px',
               borderRadius: '25px',
               textDecoration: 'none',
               fontSize: '14px',
-              border: '1px solid #dee2e6',
-              transition: 'background-color 0.2s ease'
+              border: '1px solid #0170B9',
+              transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#e9ecef';
+              e.currentTarget.style.backgroundColor = '#0170B9';
+              e.currentTarget.style.color = 'white';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#f8f9fa';
+              e.currentTarget.style.backgroundColor = '#F5F5F5';
+              e.currentTarget.style.color = '#4B4F58';
             }}>
               🆕 הצעה חדשה
             </Link>
             <Link href="/health" style={{
-              background: '#f8f9fa',
-              color: '#495057',
+              background: '#F5F5F5',
+              color: '#3a3a3a',
               padding: '8px 16px',
               borderRadius: '25px',
               textDecoration: 'none',
               fontSize: '14px',
-              border: '1px solid #dee2e6',
-              transition: 'background-color 0.2s ease'
+              border: '1px solid #E5E5E5',
+              transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#e9ecef';
+              e.currentTarget.style.backgroundColor = '#E5E5E5';
+              e.currentTarget.style.borderColor = '#0170B9';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#f8f9fa';
+              e.currentTarget.style.backgroundColor = '#F5F5F5';
+              e.currentTarget.style.borderColor = '#E5E5E5';
             }}>
               ⚙️ בדיקת מערכת
             </Link>
           </div>
         </div>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

@@ -45,36 +45,80 @@ export default function QuoteClient({ id }) {
     load();
   }, [id]);
 
-  const getCustomerUrl = () => {
-    if (typeof window !== 'undefined') {
-      const currentUrl = window.location.href;
-      // If we're already on the customer page, use current URL
-      if (currentUrl.includes('/customer')) {
-        return currentUrl;
+  const generateShareToken = async () => {
+    if (!proposal?.id) return null;
+    
+    // Generate a new secure token
+    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
+    
+    try {
+      // Try to update with share_token. If column doesn't exist, we'll get an error but continue
+      const { error } = await supabase
+        .from('proposal')
+        .update({ share_token: token })
+        .eq('id', proposal.id);
+      
+      if (error) {
+        // If the column doesn't exist, we'll fall back to using the proposal ID
+        console.warn('share_token column not found, using fallback method');
+        return proposal.id;
       }
-      // Otherwise, add /customer to the current URL
-      return currentUrl + '/customer';
+      
+      // Update local state
+      setProposal(prev => ({ ...prev, share_token: token }));
+      
+      return token;
+    } catch (error) {
+      console.error('Error generating share token:', error);
+      // Fallback to proposal ID
+      return proposal.id;
     }
-    return '';
   };
 
-  const shareMail = () => {
-    const url = getCustomerUrl();
-    const subject = encodeURIComponent('הצעת מחיר - תחנת לחם');
-    const body = encodeURIComponent(`שלום,\n\nמצורפת הצעת המחיר שלך מתחנת לחם:\n\n${url}\n\nתודה!`);
+  const getSecureCustomerUrl = async () => {
+    const token = await generateShareToken();
+    if (!token) return null;
+    
+    if (typeof window !== 'undefined') {
+      const protocol = window.location.protocol;
+      const host = window.location.host;
+      return `${protocol}//${host}/v/${token}`;
+    }
+    return null;
+  };
+
+  const shareMail = async () => {
+    const url = await getSecureCustomerUrl();
+    if (!url) {
+      alert('שגיאה ביצירת קישור בטוח');
+      return;
+    }
+    
+    const subject = encodeURIComponent('הצעת מחיר');
+    const body = encodeURIComponent(`שלום,\n\nמצורפת הצעת המחיר שלך:\n\n${url}\n\nתודה!`);
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
-  const shareWhatsApp = () => {
-    const url = getCustomerUrl();
-    const message = encodeURIComponent(`שלום! מצורפת הצעת המחיר שלך מתחנת לחם: ${url}`);
+  const shareWhatsApp = async () => {
+    const url = await getSecureCustomerUrl();
+    if (!url) {
+      alert('שגיאה ביצירת קישור בטוח');
+      return;
+    }
+    
+    const message = encodeURIComponent(`שלום! מצורפת הצעת המחיר שלך: ${url}`);
     window.open(`https://wa.me/?text=${message}`, '_blank');
   };
 
-  const shareCustomerMail = () => {
-    const url = getCustomerUrl();
-    const subject = encodeURIComponent('הצעת מחיר - תחנת לחם');
-    const body = encodeURIComponent(`שלום,\n\nמצורפת הצעת המחיר שלך מתחנת לחם:\n\n${url}\n\nתודה!`);
+  const shareCustomerMail = async () => {
+    const url = await getSecureCustomerUrl();
+    if (!url) {
+      alert('שגיאה ביצירת קישור בטוח');
+      return;
+    }
+    
+    const subject = encodeURIComponent('הצעת מחיר');
+    const body = encodeURIComponent(`שלום,\n\nמצורפת הצעת המחיר שלך:\n\n${url}\n\nתודה!`);
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   };
 
@@ -218,17 +262,24 @@ export default function QuoteClient({ id }) {
             >
               ✏️ עריכה
             </Link>
-            <Link 
-              href={`/quote/${id}/customer`} 
+            <button
+              onClick={async () => {
+                const url = await getSecureCustomerUrl();
+                if (url) {
+                  window.open(url, '_blank');
+                } else {
+                  alert('שגיאה ביצירת קישור בטוח');
+                }
+              }}
               style={{
                 background: 'rgba(255,193,7,0.9)',
                 color: 'black',
                 padding: '12px 24px',
                 borderRadius: '25px',
-                textDecoration: 'none',
+                border: 'none',
                 fontSize: '16px',
                 fontWeight: 'bold',
-                border: 'none',
+                cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
                 display: 'flex',
@@ -245,7 +296,7 @@ export default function QuoteClient({ id }) {
               }}
             >
               👁️ תצוגת לקוח
-            </Link>
+            </button>
           </div>
         </div>
 
