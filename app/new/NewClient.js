@@ -228,24 +228,34 @@ export default function NewClient() {
     <>
       <style jsx>{`
         @media (max-width: 768px) {
-          .mobile-table {
-            display: block !important;
-            overflow-x: auto;
-            white-space: nowrap;
-          }
-          .mobile-table table {
-            min-width: 800px;
+          .mobile-header {
+            flex-direction: column !important;
+            text-align: center !important;
+            padding: 15px !important;
           }
           .mobile-buttons {
             flex-direction: column !important;
             gap: 10px !important;
           }
-          .mobile-header {
-            flex-direction: column !important;
-            text-align: center !important;
-          }
           .mobile-totals {
             max-width: 100% !important;
+          }
+          .mobile-content {
+            padding: 15px !important;
+          }
+          .desktop-table {
+            display: none !important;
+          }
+          .mobile-items {
+            display: block !important;
+          }
+        }
+        @media (min-width: 769px) {
+          .mobile-items {
+            display: none !important;
+          }
+          .desktop-table {
+            display: block !important;
           }
         }
       `}</style>
@@ -755,8 +765,8 @@ export default function NewClient() {
               </div>
             )}
 
-            {/* Items Table */}
-            <div className="mobile-table" style={{
+            {/* Desktop Items Table */}
+            <div className="desktop-table" style={{
               background: 'white',
               borderRadius: '15px',
               boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
@@ -916,6 +926,160 @@ export default function NewClient() {
                   )}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Items Cards */}
+            <div className="mobile-items" style={{ display: 'none' }}>
+              {items.length === 0 ? (
+                <div style={{
+                  background: 'white',
+                  borderRadius: '15px',
+                  padding: '30px',
+                  textAlign: 'center',
+                  marginBottom: '20px',
+                  boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+                }}>
+                  <div style={{ fontSize: '48px', marginBottom: '15px', opacity: 0.3 }}>📝</div>
+                  <h3 style={{ color: '#666', marginBottom: '10px' }}>אין פריטים עדיין</h3>
+                  <p style={{ color: '#999', fontSize: '14px' }}>הוסף פריטים מהקטלוג או צור פריט חדש</p>
+                </div>
+              ) : (
+                items.map((it, idx) => (
+                  <div key={idx} style={{
+                    background: 'white',
+                    borderRadius: '15px',
+                    padding: '20px',
+                    marginBottom: '15px',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    border: '1px solid #e9ecef'
+                  }}>
+                    {/* Item Header */}
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'flex-start',
+                      marginBottom: '15px',
+                      paddingBottom: '10px',
+                      borderBottom: '1px solid #e9ecef'
+                    }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{
+                          fontSize: '18px',
+                          fontWeight: 'bold',
+                          color: '#333',
+                          marginBottom: '5px'
+                        }}>
+                          {it.custom_name || (it.product_id && products.find(p => p.id === it.product_id)?.name) || it.product_name || 'פריט מותאם'}
+                        </div>
+                        {it.product_id && (
+                          <div style={{ fontSize: '13px', color: '#666' }}>
+                            {products.find(p => p.id === it.product_id)?.category || 'קטגוריה'}
+                          </div>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => removeItem(idx)}
+                        style={{
+                          background: '#dc3545',
+                          color: 'white',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '32px',
+                          height: '32px',
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        ×
+                      </button>
+                    </div>
+
+                    {/* Item Details Grid */}
+                    <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(2, 1fr)',
+                      gap: '15px',
+                      marginBottom: '15px'
+                    }}>
+                      <div>
+                        <label style={{ fontSize: '13px', color: '#666', marginBottom: '5px', display: 'block' }}>כמות:</label>
+                        <input
+                          type="number"
+                          min="0.1"
+                          step="0.1"
+                          value={it.qty}
+                          onChange={(e) => updateItemQty(idx, Number(e.target.value))}
+                          style={{
+                            width: '100%',
+                            padding: '8px',
+                            border: '1px solid #ddd',
+                            borderRadius: '6px',
+                            fontSize: '16px',
+                            textAlign: 'center'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ fontSize: '13px', color: '#666', marginBottom: '5px', display: 'block' }}>מחיר יחידה (₪):</label>
+                        <input
+                          type="number"
+                          min="0"
+                          step="0.01"
+                          value={it.unit_price}
+                          onChange={(e) => updateItemPrice(idx, Number(e.target.value))}
+                          style={{
+                            width: '100%',
+                            padding: '8px',
+                            border: '1px solid #ddd',
+                            borderRadius: '6px',
+                            fontSize: '16px',
+                            textAlign: 'center'
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Notes */}
+                    <div style={{ marginBottom: '15px' }}>
+                      <label style={{ fontSize: '13px', color: '#666', marginBottom: '5px', display: 'block' }}>הערות:</label>
+                      <textarea
+                        value={it.notes}
+                        onChange={(e) => updateItemNotes(idx, e.target.value)}
+                        placeholder="הערות נוספות..."
+                        rows={2}
+                        style={{
+                          width: '100%',
+                          padding: '8px',
+                          border: '1px solid #ddd',
+                          borderRadius: '6px',
+                          fontSize: '14px',
+                          resize: 'vertical'
+                        }}
+                      />
+                    </div>
+
+                    {/* Total */}
+                    <div style={{
+                      paddingTop: '10px',
+                      borderTop: '1px solid #e9ecef',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center'
+                    }}>
+                      <span style={{ fontSize: '16px', color: '#666' }}>סה״כ שורה:</span>
+                      <span style={{
+                        fontSize: '20px',
+                        fontWeight: 'bold',
+                        color: '#0170B9'
+                      }}>
+                        ₪{currency(it.line_total)}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </section>
 
