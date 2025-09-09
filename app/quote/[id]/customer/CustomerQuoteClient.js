@@ -129,10 +129,29 @@ export default function CustomerQuoteClient({ id }) {
             style={{ 
               height: '80px', 
               width: 'auto',
-              marginBottom: '20px',
+              marginBottom: '15px',
               filter: 'brightness(1.2)'
             }}
           />
+          <div style={{
+            fontSize: '16px',
+            color: '#28a745',
+            fontWeight: 'bold',
+            marginBottom: '8px'
+          }}>
+            כשר למהדרין
+          </div>
+          <div style={{
+            fontSize: '14px',
+            color: '#ffc107',
+            marginBottom: '20px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px'
+          }}>
+            📍 צפירה 1 עכו
+          </div>
           <h1 style={{
             margin: '0 0 10px 0',
             fontSize: '32px',
@@ -401,12 +420,32 @@ export default function CustomerQuoteClient({ id }) {
             <div style={{
               background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
               color: '#ffc107',
-              padding: '20px',
+              padding: '25px',
               borderRadius: '15px',
-              marginBottom: '20px'
+              marginBottom: '20px',
+              textAlign: 'center'
             }}>
-              <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '8px' }}>
-                תודה על בחירתכם בתחנת לחם!
+              <div style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '12px' }}>
+                תודה על בחירתכם!
+              </div>
+              <div style={{ 
+                fontSize: '15px', 
+                color: '#28a745', 
+                fontWeight: 'bold',
+                marginBottom: '8px'
+              }}>
+                כשר למהדרין
+              </div>
+              <div style={{ 
+                fontSize: '14px', 
+                color: '#ffc107',
+                marginBottom: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px'
+              }}>
+                📍 צפירה 1 עכו
               </div>
               <div style={{ fontSize: '14px', opacity: 0.9 }}>
                 להזמנות וייעוץ נוסף ניתן ליצור קשר

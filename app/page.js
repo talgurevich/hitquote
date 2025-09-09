@@ -33,24 +33,31 @@ export default function Home() {
               marginBottom: '20px'
             }}
           />
-          <h1 style={{
-            fontSize: '48px',
-            fontWeight: 'bold',
-            color: '#333',
+          <p style={{
+            fontSize: '20px',
+            color: '#28a745',
             margin: '0 0 10px 0',
-            background: 'linear-gradient(45deg, #667eea, #764ba2)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text'
+            fontWeight: 'bold'
           }}>
-            תחנת לחם
-          </h1>
+            כשר למהדרין
+          </p>
           <p style={{
             fontSize: '18px',
             color: '#666',
-            margin: 0
+            margin: '0 0 15px 0'
           }}>
             מערכת הצעות מחיר מקצועית
+          </p>
+          <p style={{
+            fontSize: '16px',
+            color: '#495057',
+            margin: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px'
+          }}>
+            📍 צפירה 1 עכו
           </p>
         </div>
 
@@ -61,7 +68,7 @@ export default function Home() {
           lineHeight: '1.6',
           marginBottom: '50px'
         }}>
-          ברוכים הבאים למערכת ניהול הצעות המחיר של תחנת לחם.<br/>
+          ברוכים הבאים למערכת ניהול הצעות המחיר שלנו.<br/>
           כאן תוכלו ליצור הצעות מחיר מקצועיות ולנהל את קטלוג המוצרים.
         </p>
 
