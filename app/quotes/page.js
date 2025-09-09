@@ -14,7 +14,7 @@ export default function QuotesList() {
         if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
         const { data, error } = await supabase
           .from('proposal')
-          .select('id, proposal_number, created_at, total')
+          .select('id, proposal_number, created_at, total, customer:customer (name)')
           .order('created_at', { ascending: false });
         if (error) throw error;
         setRows(data || []);
@@ -201,96 +201,107 @@ export default function QuotesList() {
           ) : (
             <>
               <div style={{
-                display: 'grid',
-                gap: '15px',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))'
+                background: 'white',
+                borderRadius: '15px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+                overflow: 'hidden'
               }}>
-                {rows.map((r) => (
-                  <Link 
-                    key={r.id} 
-                    href={`/quote/${r.id}`} 
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <div style={{
-                      background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
-                      border: '1px solid #e9ecef',
-                      borderRadius: '15px',
-                      padding: '20px',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-5px)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-                      e.currentTarget.style.borderColor = '#4facfe';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
-                      e.currentTarget.style.borderColor = '#e9ecef';
-                    }}>
-                      <div style={{ 
-                        display: 'flex', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'flex-start',
-                        marginBottom: '15px'
-                      }}>
-                        <div>
-                          <h3 style={{
-                            margin: '0 0 5px 0',
-                            fontSize: '20px',
-                            fontWeight: 'bold',
-                            color: '#333',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px'
-                          }}>
-                            📋 הצעה #{r.proposal_number || r.id.slice(0,8)}
-                          </h3>
-                          <p style={{
-                            margin: 0,
-                            fontSize: '14px',
-                            color: '#666',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5px'
-                          }}>
-                            📅 {new Date(r.created_at).toLocaleDateString('he-IL', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric'
-                            })}
-                          </p>
-                        </div>
-                        <div style={{
-                          background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
-                          color: 'white',
-                          padding: '8px 15px',
-                          borderRadius: '20px',
-                          fontSize: '16px',
-                          fontWeight: 'bold',
-                          textAlign: 'center',
-                          minWidth: '80px'
+                <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                  <thead>
+                    <tr style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
+                      <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>מס׳ הצעה</th>
+                      <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>לקוח</th>
+                      <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך</th>
+                      <th style={{ textAlign: 'left', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>סכום</th>
+                      <th style={{ textAlign: 'center', padding: '18px', width: '120px', fontSize: '16px', fontWeight: 'bold' }}>פעולות</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.map((r, index) => (
+                      <tr 
+                        key={r.id}
+                        style={{
+                          background: index % 2 === 0 ? '#ffffff' : '#f8f9fa',
+                          borderBottom: '1px solid #e9ecef',
+                          transition: 'background-color 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#e3f2fd';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = index % 2 === 0 ? '#ffffff' : '#f8f9fa';
+                        }}
+                      >
+                        <td style={{ padding: '18px', fontSize: '16px', fontWeight: 'bold', color: '#333' }}>
+                          #{r.proposal_number || r.id.slice(0,8)}
+                        </td>
+                        <td style={{ padding: '18px', fontSize: '16px', color: '#495057' }}>
+                          {r.customer?.name || 'לא צוין'}
+                        </td>
+                        <td style={{ padding: '18px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                          {new Date(r.created_at).toLocaleDateString('he-IL', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                          })}
+                        </td>
+                        <td style={{ 
+                          padding: '18px', 
+                          fontSize: '18px', 
+                          fontWeight: 'bold', 
+                          color: '#4facfe',
+                          textAlign: 'left'
                         }}>
-                          ₪{Number(r.total || 0).toFixed(0)}
-                        </div>
-                      </div>
-                      
-                      <div style={{
-                        background: 'rgba(79, 172, 254, 0.1)',
-                        padding: '10px 15px',
-                        borderRadius: '10px',
-                        fontSize: '14px',
-                        color: '#4facfe',
-                        fontWeight: 'bold',
-                        textAlign: 'center'
-                      }}>
-                        לחץ לצפייה ועריכה →
-                      </div>
-                    </div>
-                  </Link>
-                ))}
+                          ₪{Number(r.total || 0).toLocaleString('he-IL')}
+                        </td>
+                        <td style={{ padding: '18px', textAlign: 'center' }}>
+                          <Link 
+                            href={`/quote/${r.id}`}
+                            style={{
+                              background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+                              color: 'white',
+                              padding: '8px 16px',
+                              borderRadius: '20px',
+                              textDecoration: 'none',
+                              fontSize: '14px',
+                              fontWeight: 'bold',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              transition: 'all 0.2s ease',
+                              boxShadow: '0 2px 8px rgba(79, 172, 254, 0.3)'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'translateY(-2px)';
+                              e.currentTarget.style.boxShadow = '0 4px 15px rgba(79, 172, 254, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'translateY(0)';
+                              e.currentTarget.style.boxShadow = '0 2px 8px rgba(79, 172, 254, 0.3)';
+                            }}
+                          >
+                            👁️ צפייה
+                          </Link>
+                        </td>
+                      </tr>
+                    ))}
+                    {rows.length === 0 && (
+                      <tr>
+                        <td 
+                          colSpan={5} 
+                          style={{ 
+                            padding: '40px', 
+                            color: '#666', 
+                            textAlign: 'center',
+                            fontSize: '16px'
+                          }}
+                        >
+                          📝 אין הצעות מחיר עדיין
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </div>
             </>
           )}
