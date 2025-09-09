@@ -24,6 +24,15 @@ export default function Home() {
       }}>
         {/* Logo/Title */}
         <div style={{ marginBottom: '40px' }}>
+          <img 
+            src="/image3.png" 
+            alt="תחנת לחם" 
+            style={{ 
+              height: '80px', 
+              width: 'auto',
+              marginBottom: '20px'
+            }}
+          />
           <h1 style={{
             fontSize: '48px',
             fontWeight: 'bold',

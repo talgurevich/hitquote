@@ -225,193 +225,933 @@ export default function NewClient() {
   }, [products, catalogSearch]);
 
   return (
-    <main dir="rtl" style={{ maxWidth: 1100, margin: '0 auto', padding: 16, fontFamily: 'system-ui, Arial' }}>
-      <h1 style={{ marginTop: 0 }}>{editId ? 'עריכת הצעת מחיר' : 'הצעת מחיר חדשה'}</h1>
-      {error && <div style={{ background:'#ffe8e8', border:'1px solid #f5b5b5', padding:8, borderRadius:8, marginBottom:8 }}>שגיאה: {error}</div>}
-
-      <section style={{ display: 'grid', gap: 8, marginBottom: 12 }}>
-        <label style={{ fontWeight: 700 }}>לקוח</label>
-        <div style={{ display:'flex', gap:8 }}>
-          <select value={customerId || ''} onChange={e => setCustomerId(e.target.value || null)} style={{ flex:1, padding: 8, borderRadius: 8, border: '1px solid #ddd' }}>
-            <option value="">בחר לקוח…</option>
-            {customers.map((c) => (
-              <option key={c.id} value={c.id}>{c.name}</option>
-            ))}
-          </select>
-          <button onClick={() => setShowNewCustomer(true)} style={{ padding:'8px 12px', fontWeight:700 }}>➕ לקוח חדש</button>
-        </div>
-      </section>
-
-      {showNewCustomer && (
-        <div style={{ border:'1px solid #ddd', borderRadius:10, padding:12, marginBottom:12, background:'#fcfcfc' }}>
-          <div style={{ fontWeight:700, marginBottom:8 }}>לקוח חדש</div>
-          <div style={{ display:'grid', gap:8 }}>
-            <input placeholder="שם לקוח *" value={newCust.name} onChange={e=>setNewCust(s=>({ ...s, name:e.target.value }))} style={{ padding:8, borderRadius:8, border:'1px solid #ddd' }}/>
-            <input placeholder="טלפון" value={newCust.phone} onChange={e=>setNewCust(s=>({ ...s, phone:e.target.value }))} style={{ padding:8, borderRadius:8, border:'1px solid #ddd' }}/>
-            <input placeholder="אימייל" value={newCust.email} onChange={e=>setNewCust(s=>({ ...s, email:e.target.value }))} style={{ padding:8, borderRadius:8, border:'1px solid #ddd' }}/>
-            <input placeholder="כתובת" value={newCust.address} onChange={e=>setNewCust(s=>({ ...s, address:e.target.value }))} style={{ padding:8, borderRadius:8, border:'1px solid #ddd' }}/>
-          </div>
-          <div style={{ display:'flex', gap:8, marginTop:10 }}>
-            <button onClick={async () => {
-              try {
-                if (!newCust.name.trim()) throw new Error('שם לקוח חובה');
-                const { data, error } = await supabase.from('customer').insert({
-                  name: newCust.name.trim(),
-                  phone: newCust.phone?.trim() || null,
-                  email: newCust.email?.trim() || null,
-                  address: newCust.address?.trim() || null
-                }).select('id, name').maybeSingle();
-                if (error) throw error;
-                setCustomers((prev)=>[...prev, data]);
-                setCustomerId(data.id);
-                setShowNewCustomer(false);
-                setNewCust({ name:'', phone:'', email:'', address:'' });
-              } catch (e) {
-                alert(e.message || String(e));
-              }
-            }} style={{ padding:'8px 12px', fontWeight:700 }}>שמור לקוח</button>
-            <button onClick={()=>setShowNewCustomer(false)} style={{ padding:'8px 12px', border:'1px solid #ddd', borderRadius:8 }}>ביטול</button>
-          </div>
-        </div>
-      )}
-
-      <section style={{ border:'1px solid #eee', borderRadius:10, padding:12, marginBottom:12 }}>
-        <div style={{ display:'flex', gap:8, alignItems:'center', marginBottom:8 }}>
-          <button onClick={() => setShowCatalogPicker(true)} style={{ padding:'8px 12px', fontWeight:700 }}>➕ פריט מהקטלוג</button>
-          <button onClick={addCustomItem} style={{ padding:'8px 12px', fontWeight:700 }}>➕ פריט כללי</button>
-        </div>
-
-        {showCatalogPicker && (
-          <div style={{ border:'1px solid #ddd', borderRadius:10, padding:10, marginBottom:12, background:'#fafafa' }}>
-            <div style={{ display:'flex', gap:8, alignItems:'center', marginBottom:8 }}>
-              <input
-                value={catalogSearch}
-                onChange={e => setCatalogSearch(e.target.value)}
-                placeholder="חיפוש מהיר (שם/קטגוריה)…"
-                style={{ flex:1, padding:8, borderRadius:8, border:'1px solid #ddd' }}
-              />
-              <button onClick={()=>{ setShowCatalogPicker(false); setCatalogSearch(''); }} style={{ padding:'8px 12px' }}>סגור</button>
+    <main dir="rtl" style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+      padding: '20px',
+      fontFamily: 'system-ui, Arial'
+    }}>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        background: 'white',
+        borderRadius: '20px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+        overflow: 'hidden'
+      }}>
+        {/* Header */}
+        <div style={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          padding: '30px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '15px'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <img 
+              src="/image3.png" 
+              alt="תחנת לחם" 
+              style={{ height: '50px', width: 'auto' }}
+            />
+            <div>
+              <h1 style={{ 
+                margin: '0 0 5px 0', 
+                fontSize: '32px', 
+                fontWeight: 'bold' 
+              }}>
+                {editId ? 'עריכת הצעת מחיר' : 'הצעת מחיר חדשה'}
+              </h1>
+              <p style={{ 
+                margin: 0, 
+                opacity: 0.9, 
+                fontSize: '16px' 
+              }}>
+                {editId ? 'עדכון פרטי הצעה קיימת' : 'יצירת הצעת מחיר חדשה'}
+              </p>
             </div>
-            <div style={{ maxHeight: 260, overflow:'auto' }}>
-              {visibleProducts.length === 0 && <div style={{ color:'#666' }}>לא נמצאו מוצרים.</div>}
-              {visibleProducts.map((p) => (
-                <div key={p.id} style={{ display:'grid', gridTemplateColumns:'1fr auto auto', gap:8, alignItems:'center', padding:'6px 0', borderBottom:'1px dashed #eee' }}>
-                  <div>
-                    <div style={{ fontWeight:700 }}>{p.name}</div>
-                    <div style={{ fontSize:12, color:'#666' }}>
-                      {p.category} {p.unit_label ? `· ${p.unit_label}` : ''} · {currency(p.base_price)} ₪
-                    </div>
-                    {p.options && <div style={{ fontSize:12, color:'#888' }}>{p.options}</div>}
-                  </div>
-                  <div style={{ fontWeight:700 }}>{currency(p.base_price)} ₪</div>
-                  <button onClick={() => addProduct(p)} style={{ padding:'6px 10px' }}>בחר</button>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div style={{ padding: '30px' }}>
+          {error && (
+            <div style={{
+              background: '#fee',
+              border: '1px solid #fcc',
+              borderRadius: '15px',
+              padding: '20px',
+              marginBottom: '20px',
+              color: '#c33',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              fontSize: '16px'
+            }}>
+              ⚠️ <strong>שגיאה:</strong> {error}
+            </div>
+          )}
+
+          {/* Customer Selection */}
+          <section style={{
+            background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
+            border: '1px solid #e9ecef',
+            borderRadius: '15px',
+            padding: '25px',
+            marginBottom: '25px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+          }}>
+            <label style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              marginBottom: '15px',
+              color: '#333',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              👤 בחירת לקוח
+            </label>
+            <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
+              <select 
+                value={customerId || ''} 
+                onChange={e => setCustomerId(e.target.value || null)} 
+                style={{
+                  flex: '1',
+                  minWidth: '250px',
+                  padding: '12px 15px',
+                  borderRadius: '10px',
+                  border: '2px solid #e9ecef',
+                  fontSize: '16px',
+                  background: 'white',
+                  transition: 'border-color 0.2s ease'
+                }}
+                onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+              >
+                <option value="">בחר לקוח מהרשימה...</option>
+                {customers.map((c) => (
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                ))}
+              </select>
+              <button 
+                onClick={() => setShowNewCustomer(true)} 
+                style={{
+                  background: 'linear-gradient(45deg, #28a745, #20c997)',
+                  color: 'white',
+                  padding: '12px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 15px rgba(40, 167, 69, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(40, 167, 69, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.3)';
+                }}
+              >
+                ➕ לקוח חדש
+              </button>
+            </div>
+          </section>
+
+          {/* New Customer Form */}
+          {showNewCustomer && (
+            <div style={{
+              background: 'linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%)',
+              border: '2px solid #28a745',
+              borderRadius: '15px',
+              padding: '25px',
+              marginBottom: '25px',
+              boxShadow: '0 5px 20px rgba(40, 167, 69, 0.1)'
+            }}>
+              <div style={{
+                fontSize: '20px',
+                fontWeight: 'bold',
+                marginBottom: '20px',
+                color: '#333',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}>
+                ✨ הוספת לקוח חדש
+              </div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                gap: '15px',
+                marginBottom: '20px'
+              }}>
+                <input 
+                  placeholder="שם לקוח *" 
+                  value={newCust.name} 
+                  onChange={e=>setNewCust(s=>({ ...s, name:e.target.value }))} 
+                  style={{
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '16px',
+                    transition: 'border-color 0.2s ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                />
+                <input 
+                  placeholder="טלפון" 
+                  value={newCust.phone} 
+                  onChange={e=>setNewCust(s=>({ ...s, phone:e.target.value }))} 
+                  style={{
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '16px',
+                    transition: 'border-color 0.2s ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                />
+                <input 
+                  placeholder="אימייל" 
+                  value={newCust.email} 
+                  onChange={e=>setNewCust(s=>({ ...s, email:e.target.value }))} 
+                  style={{
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '16px',
+                    transition: 'border-color 0.2s ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                />
+                <input 
+                  placeholder="כתובת" 
+                  value={newCust.address} 
+                  onChange={e=>setNewCust(s=>({ ...s, address:e.target.value }))} 
+                  style={{
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '16px',
+                    transition: 'border-color 0.2s ease'
+                  }}
+                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                />
+              </div>
+              <div style={{ display: 'flex', gap: '12px' }}>
+                <button 
+                  onClick={async () => {
+                    try {
+                      if (!newCust.name.trim()) throw new Error('שם לקוח חובה');
+                      const { data, error } = await supabase.from('customer').insert({
+                        name: newCust.name.trim(),
+                        phone: newCust.phone?.trim() || null,
+                        email: newCust.email?.trim() || null,
+                        address: newCust.address?.trim() || null
+                      }).select('id, name').maybeSingle();
+                      if (error) throw error;
+                      setCustomers((prev)=>[...prev, data]);
+                      setCustomerId(data.id);
+                      setShowNewCustomer(false);
+                      setNewCust({ name:'', phone:'', email:'', address:'' });
+                    } catch (e) {
+                      alert(e.message || String(e));
+                    }
+                  }} 
+                  style={{
+                    background: 'linear-gradient(45deg, #28a745, #20c997)',
+                    color: 'white',
+                    padding: '12px 20px',
+                    borderRadius: '10px',
+                    border: 'none',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 4px 15px rgba(40, 167, 69, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(40, 167, 69, 0.4)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.3)';
+                  }}
+                >
+                  💾 שמור לקוח
+                </button>
+                <button 
+                  onClick={() => setShowNewCustomer(false)} 
+                  style={{
+                    background: '#f8f9fa',
+                    color: '#495057',
+                    padding: '12px 20px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '16px',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#e9ecef';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f8f9fa';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                >
+                  ❌ ביטול
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Items Section */}
+          <section style={{
+            background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
+            border: '1px solid #e9ecef',
+            borderRadius: '15px',
+            padding: '25px',
+            marginBottom: '25px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+          }}>
+            <div style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              marginBottom: '20px',
+              color: '#333',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              📋 פריטי ההצעה
+            </div>
+            <div style={{ display: 'flex', gap: '15px', marginBottom: '20px', flexWrap: 'wrap' }}>
+              <button 
+                onClick={() => setShowCatalogPicker(true)} 
+                style={{
+                  background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+                  color: 'white',
+                  padding: '12px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 15px rgba(79, 172, 254, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(79, 172, 254, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(79, 172, 254, 0.3)';
+                }}
+              >
+                📁 פריט מהקטלוג
+              </button>
+              <button 
+                onClick={addCustomItem} 
+                style={{
+                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                  color: 'white',
+                  padding: '12px 20px',
+                  borderRadius: '10px',
+                  border: 'none',
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.3)';
+                }}
+              >
+                ✏️ פריט כללי
+              </button>
+            </div>
+
+            {/* Catalog Picker */}
+            {showCatalogPicker && (
+              <div style={{
+                background: 'linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)',
+                border: '2px solid #4facfe',
+                borderRadius: '15px',
+                padding: '20px',
+                marginBottom: '20px',
+                boxShadow: '0 5px 20px rgba(79, 172, 254, 0.1)'
+              }}>
+                <div style={{ display: 'flex', gap: '15px', alignItems: 'center', marginBottom: '20px' }}>
+                  <input
+                    value={catalogSearch}
+                    onChange={e => setCatalogSearch(e.target.value)}
+                    placeholder="חיפוש מהיר (שם/קטגוריה)…"
+                    style={{
+                      flex: 1,
+                      padding: '12px 15px',
+                      borderRadius: '10px',
+                      border: '2px solid #e9ecef',
+                      fontSize: '16px',
+                      transition: 'border-color 0.2s ease'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                    onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                  />
+                  <button 
+                    onClick={() => { setShowCatalogPicker(false); setCatalogSearch(''); }} 
+                    style={{
+                      background: '#f8f9fa',
+                      color: '#495057',
+                      padding: '12px 20px',
+                      borderRadius: '10px',
+                      border: '2px solid #e9ecef',
+                      fontSize: '16px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = '#e9ecef';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = '#f8f9fa';
+                    }}
+                  >
+                    ❌ סגור
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <table style={{ width:'100%', borderCollapse:'collapse' }}>
-          <thead>
-            <tr>
-              <th style={{ textAlign:'right', borderBottom:'1px solid #ddd', padding:8 }}>פריט</th>
-              <th style={{ textAlign:'center', borderBottom:'1px solid #ddd', padding:8, width:80 }}>כמות</th>
-              <th style={{ textAlign:'center', borderBottom:'1px solid #ddd', padding:8, width:140 }}>מחיר יח׳ (₪, כולל מע״מ)</th>
-              <th style={{ textAlign:'right', borderBottom:'1px solid #ddd', padding:8 }}>הערות</th>
-              <th style={{ textAlign:'left', borderBottom:'1px solid #ddd', padding:8, width:120 }}>סה״כ שורה (₪)</th>
-              <th style={{ borderBottom:'1px solid #ddd', padding:8, width:60 }} />
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((it, idx) => (
-              <tr key={idx}>
-                <td style={{ borderBottom:'1px solid #f2f2f2', padding:8 }}>
-                  {it.isCustom ? (
-                    <input
-                      value={it.name}
-                      onChange={e => updateItem(idx, { name: e.target.value })}
-                      style={{ width:'100%', padding:6, borderRadius:6, border:'1px solid #ddd' }}
-                      placeholder="שם פריט…"
-                    />
-                  ) : (
-                    <div style={{ fontWeight:700 }}>{it.name}</div>
+                <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+                  {visibleProducts.length === 0 && (
+                    <div style={{ 
+                      color: '#666', 
+                      textAlign: 'center', 
+                      padding: '20px',
+                      fontSize: '16px'
+                    }}>
+                      🔍 לא נמצאו מוצרים
+                    </div>
                   )}
-                </td>
-                <td style={{ borderBottom:'1px solid #f2f2f2', padding:8, textAlign:'center' }}>
-                  <input
-                    type="number" min={0}
-                    value={it.qty}
-                    onChange={e => updateItem(idx, { qty: Number(e.target.value || 0) })}
-                    style={{ width:70, padding:6, borderRadius:6, border:'1px solid #ddd', textAlign:'center' }}
-                  />
-                </td>
-                <td style={{ borderBottom:'1px solid #f2f2f2', padding:8, textAlign:'center' }}>
-                  <input
-                    type="number" step="0.01" min={0}
-                    value={it.unit_price}
-                    onChange={e => updateItem(idx, { unit_price: Number(e.target.value || 0) })}
-                    style={{ width:140, padding:6, borderRadius:6, border:'1px solid #ddd', textAlign:'center' }}
-                  />
-                </td>
-                <td style={{ borderBottom:'1px solid #f2f2f2', padding:8 }}>
-                  <input
-                    value={it.notes || ''}
-                    onChange={e => updateItem(idx, { notes: e.target.value })}
-                    style={{ width:'100%', padding:6, borderRadius:6, border:'1px solid #ddd' }}
-                    placeholder="הערות…"
-                  />
-                </td>
-                <td style={{ borderBottom:'1px solid #f2f2f2', padding:8, textAlign:'left', fontWeight:700 }}>
-                  {currency(Number(it.qty || 0) * Number(it.unit_price || 0))} ₪
-                </td>
-                <td style={{ borderBottom:'1px solid #f2f2f2', padding:8, textAlign:'center' }}>
-                  <button onClick={() => removeItem(idx)} style={{ padding:'6px 10px' }}>מחיקה</button>
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && (
-              <tr>
-                <td colSpan={6} style={{ padding:12, color:'#666' }}>לא נבחרו פריטים עדיין.</td>
-              </tr>
+                  {visibleProducts.map((p) => (
+                    <div 
+                      key={p.id} 
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr auto auto',
+                        gap: '15px',
+                        alignItems: 'center',
+                        padding: '15px',
+                        marginBottom: '10px',
+                        background: 'white',
+                        borderRadius: '10px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.05)';
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#333', marginBottom: '5px' }}>
+                          {p.name}
+                        </div>
+                        <div style={{ fontSize: '14px', color: '#666', marginBottom: '3px' }}>
+                          📂 {p.category} {p.unit_label ? `• ${p.unit_label}` : ''}
+                        </div>
+                        {p.options && (
+                          <div style={{ fontSize: '12px', color: '#888' }}>
+                            {p.options}
+                          </div>
+                        )}
+                      </div>
+                      <div style={{ 
+                        fontWeight: 'bold', 
+                        fontSize: '18px', 
+                        color: '#4facfe' 
+                      }}>
+                        ₪{currency(p.base_price)}
+                      </div>
+                      <button 
+                        onClick={() => addProduct(p)} 
+                        style={{
+                          background: 'linear-gradient(45deg, #28a745, #20c997)',
+                          color: 'white',
+                          padding: '8px 16px',
+                          borderRadius: '8px',
+                          border: 'none',
+                          fontSize: '14px',
+                          fontWeight: 'bold',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'scale(1.05)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'scale(1)';
+                        }}
+                      >
+                        ✅ בחר
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
-          </tbody>
-        </table>
-      </section>
 
-      <section style={{ display:'grid', gap:8, justifyContent:'end', marginBottom:12 }}>
-        <div style={{ textAlign:'left' }}>ביניים (לפני מע״מ): <b>{currency(netSubtotal)} ₪</b></div>
-        <div style={{ textAlign:'left' }}>
-          הנחה (%):
-          <input
-            type="number" min={0} max={100}
-            value={discountPct}
-            onChange={e => setDiscountPct(Number(e.target.value || 0))}
-            style={{ width:80, marginInlineStart:8, padding:6, borderRadius:6, border:'1px solid #ddd', textAlign:'center' }}
-          />
-          {discountPct > 0 && <span style={{ marginInlineStart:8 }}>(-{currency(discountValue)} ₪)</span>}
-        </div>
-        <div style={{ textAlign:'left' }}>מע״מ ({vatRate}%): <b>{currency(vatAmount)} ₪</b></div>
-        <div style={{ textAlign:'left', fontSize:18 }}>סה״כ לתשלום: <b>{currency(total)} ₪</b></div>
-      </section>
+            {/* Items Table */}
+            <div style={{
+              background: 'white',
+              borderRadius: '15px',
+              boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+              overflow: 'hidden'
+            }}>
+              <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
+                    <th style={{ textAlign: 'right', padding: '15px', fontSize: '16px', fontWeight: 'bold' }}>פריט</th>
+                    <th style={{ textAlign: 'center', padding: '15px', width: '100px', fontSize: '16px', fontWeight: 'bold' }}>כמות</th>
+                    <th style={{ textAlign: 'center', padding: '15px', width: '160px', fontSize: '16px', fontWeight: 'bold' }}>מחיר יח׳ (₪)</th>
+                    <th style={{ textAlign: 'right', padding: '15px', fontSize: '16px', fontWeight: 'bold' }}>הערות</th>
+                    <th style={{ textAlign: 'left', padding: '15px', width: '120px', fontSize: '16px', fontWeight: 'bold' }}>סה״כ שורה</th>
+                    <th style={{ padding: '15px', width: '80px', fontSize: '16px', fontWeight: 'bold' }}>פעולות</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map((it, idx) => (
+                    <tr 
+                      key={idx} 
+                      style={{
+                        background: idx % 2 === 0 ? '#ffffff' : '#f8f9fa',
+                        transition: 'background-color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#e3f2fd';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = idx % 2 === 0 ? '#ffffff' : '#f8f9fa';
+                      }}
+                    >
+                      <td style={{ padding: '15px' }}>
+                        {it.isCustom ? (
+                          <input
+                            value={it.name}
+                            onChange={e => updateItem(idx, { name: e.target.value })}
+                            style={{
+                              width: '100%',
+                              padding: '8px 12px',
+                              borderRadius: '8px',
+                              border: '2px solid #e9ecef',
+                              fontSize: '14px',
+                              transition: 'border-color 0.2s ease'
+                            }}
+                            placeholder="שם פריט…"
+                            onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                            onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                          />
+                        ) : (
+                          <div style={{ fontWeight: '600', color: '#333', fontSize: '15px' }}>
+                            {it.name}
+                          </div>
+                        )}
+                      </td>
+                      <td style={{ padding: '15px', textAlign: 'center' }}>
+                        <input
+                          type="number" min={0}
+                          value={it.qty}
+                          onChange={e => updateItem(idx, { qty: Number(e.target.value || 0) })}
+                          style={{
+                            width: '80px',
+                            padding: '8px',
+                            borderRadius: '8px',
+                            border: '2px solid #e9ecef',
+                            textAlign: 'center',
+                            fontSize: '14px',
+                            transition: 'border-color 0.2s ease'
+                          }}
+                          onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                          onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                        />
+                      </td>
+                      <td style={{ padding: '15px', textAlign: 'center' }}>
+                        <input
+                          type="number" step="0.01" min={0}
+                          value={it.unit_price}
+                          onChange={e => updateItem(idx, { unit_price: Number(e.target.value || 0) })}
+                          style={{
+                            width: '140px',
+                            padding: '8px',
+                            borderRadius: '8px',
+                            border: '2px solid #e9ecef',
+                            textAlign: 'center',
+                            fontSize: '14px',
+                            transition: 'border-color 0.2s ease'
+                          }}
+                          onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                          onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                        />
+                      </td>
+                      <td style={{ padding: '15px' }}>
+                        <input
+                          value={it.notes || ''}
+                          onChange={e => updateItem(idx, { notes: e.target.value })}
+                          style={{
+                            width: '100%',
+                            padding: '8px 12px',
+                            borderRadius: '8px',
+                            border: '2px solid #e9ecef',
+                            fontSize: '14px',
+                            transition: 'border-color 0.2s ease'
+                          }}
+                          placeholder="הערות…"
+                          onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                          onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                        />
+                      </td>
+                      <td style={{ 
+                        padding: '15px', 
+                        textAlign: 'left', 
+                        fontWeight: 'bold', 
+                        color: '#4facfe',
+                        fontSize: '16px'
+                      }}>
+                        ₪{currency(Number(it.qty || 0) * Number(it.unit_price || 0))}
+                      </td>
+                      <td style={{ padding: '15px', textAlign: 'center' }}>
+                        <button 
+                          onClick={() => removeItem(idx)} 
+                          style={{
+                            background: 'linear-gradient(45deg, #dc3545, #c82333)',
+                            color: 'white',
+                            padding: '8px 12px',
+                            borderRadius: '8px',
+                            border: 'none',
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'scale(1.05)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'scale(1)';
+                          }}
+                        >
+                          🗑️ מחק
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                  {items.length === 0 && (
+                    <tr>
+                      <td 
+                        colSpan={6} 
+                        style={{ 
+                          padding: '40px', 
+                          color: '#666', 
+                          textAlign: 'center',
+                          fontSize: '16px'
+                        }}
+                      >
+                        📝 לא נבחרו פריטים עדיין
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </section>
 
-      <section style={{ display:'grid', gap:8, marginBottom:16 }}>
-        <div>
-          <div style={{ fontWeight:700, marginBottom:4 }}>תנאי תשלום</div>
-          <textarea rows={2} value={paymentTerms} onChange={e => setPaymentTerms(e.target.value)} style={{ width:'100%', padding:8, borderRadius:8, border:'1px solid #ddd' }} placeholder="מזומן / המחאה / העברה בנקאית / שוטף +30" />
-        </div>
-        <div>
-          <div style={{ fontWeight:700, marginBottom:4 }}>הערות</div>
-          <textarea rows={2} value={notes} onChange={e => setNotes(e.target.value)} style={{ width:'100%', padding:8, borderRadius:8, border:'1px solid #ddd' }} placeholder="הערות להצעה…" />
-        </div>
-      </section>
+          {/* Totals Section */}
+          <section style={{
+            background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
+            border: '1px solid #e9ecef',
+            borderRadius: '15px',
+            padding: '25px',
+            marginBottom: '25px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+          }}>
+            <div style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              marginBottom: '20px',
+              color: '#333',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              🧮 חישוב סכומים
+            </div>
+            <div style={{
+              display: 'grid',
+              gap: '15px',
+              maxWidth: '400px',
+              marginInlineStart: 'auto'
+            }}>
+              <div style={{ 
+                fontSize: '16px', 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center' 
+              }}>
+                <span>ביניים (לפני מע״מ):</span>
+                <span style={{ fontWeight: 'bold', color: '#495057' }}>₪{currency(netSubtotal)}</span>
+              </div>
+              <div style={{ 
+                fontSize: '16px', 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                gap: '15px'
+              }}>
+                <span>הנחה (%):</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <input
+                    type="number" min={0} max={100}
+                    value={discountPct}
+                    onChange={e => setDiscountPct(Number(e.target.value || 0))}
+                    style={{
+                      width: '80px',
+                      padding: '8px',
+                      borderRadius: '8px',
+                      border: '2px solid #e9ecef',
+                      textAlign: 'center',
+                      fontSize: '14px',
+                      transition: 'border-color 0.2s ease'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                    onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                  />
+                  {discountPct > 0 && (
+                    <span style={{ color: '#dc3545', fontWeight: 'bold' }}>
+                      (-₪{currency(discountValue)})
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div style={{ 
+                fontSize: '16px', 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center' 
+              }}>
+                <span>מע״מ ({vatRate}%):</span>
+                <span style={{ fontWeight: 'bold', color: '#495057' }}>₪{currency(vatAmount)}</span>
+              </div>
+              <div style={{
+                fontSize: '20px',
+                padding: '15px',
+                background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+                color: 'white',
+                borderRadius: '10px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                fontWeight: 'bold',
+                boxShadow: '0 4px 15px rgba(79, 172, 254, 0.3)'
+              }}>
+                <span>סה״כ לתשלום:</span>
+                <span>₪{currency(total)}</span>
+              </div>
+            </div>
+          </section>
 
-      <div style={{ display:'flex', gap:8 }}>
-        <button onClick={saveQuote} disabled={saving} style={{ padding:'10px 14px', fontWeight:700 }}>
-          {saving ? 'שומר…' : 'שמור הצעה'}
-        </button>
-        <a href="/quotes" style={{ padding:'10px 14px', border:'1px solid #ddd', borderRadius:8, textDecoration:'none' }}>
-          חזרה לרשימת הצעות
-        </a>
+          {/* Additional Details */}
+          <section style={{
+            background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
+            border: '1px solid #e9ecef',
+            borderRadius: '15px',
+            padding: '25px',
+            marginBottom: '25px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+          }}>
+            <div style={{
+              fontSize: '20px',
+              fontWeight: 'bold',
+              marginBottom: '20px',
+              color: '#333',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}>
+              📝 פרטים נוספים
+            </div>
+            <div style={{ display: 'grid', gap: '20px' }}>
+              <div>
+                <label style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '10px',
+                  color: '#495057',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}>
+                  💳 תנאי תשלום
+                </label>
+                <textarea 
+                  rows={3} 
+                  value={paymentTerms} 
+                  onChange={e => setPaymentTerms(e.target.value)} 
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '15px',
+                    lineHeight: '1.5',
+                    resize: 'vertical',
+                    minHeight: '80px',
+                    transition: 'border-color 0.2s ease'
+                  }} 
+                  placeholder="מזומן / המחאה / העברה בנקאית / שוטף +30"
+                  onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                  onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                />
+              </div>
+              <div>
+                <label style={{
+                  fontSize: '16px',
+                  fontWeight: 'bold',
+                  marginBottom: '10px',
+                  color: '#495057',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}>
+                  📋 הערות
+                </label>
+                <textarea 
+                  rows={3} 
+                  value={notes} 
+                  onChange={e => setNotes(e.target.value)} 
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '15px',
+                    lineHeight: '1.5',
+                    resize: 'vertical',
+                    minHeight: '80px',
+                    transition: 'border-color 0.2s ease'
+                  }} 
+                  placeholder="הערות להצעה…"
+                  onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                  onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Action Buttons */}
+          <div style={{
+            display: 'flex',
+            gap: '15px',
+            justifyContent: 'center',
+            marginTop: '30px',
+            flexWrap: 'wrap'
+          }}>
+            <button 
+              onClick={saveQuote} 
+              disabled={saving} 
+              style={{
+                background: saving 
+                  ? 'linear-gradient(45deg, #6c757d, #5a6268)' 
+                  : 'linear-gradient(45deg, #28a745, #20c997)',
+                color: 'white',
+                padding: '15px 30px',
+                borderRadius: '25px',
+                border: 'none',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                cursor: saving ? 'not-allowed' : 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: saving 
+                  ? '0 4px 15px rgba(108, 117, 125, 0.3)' 
+                  : '0 4px 15px rgba(40, 167, 69, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                opacity: saving ? 0.7 : 1
+              }}
+              onMouseEnter={(e) => {
+                if (!saving) {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(40, 167, 69, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!saving) {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.4)';
+                }
+              }}
+            >
+              {saving ? '⏳ שומר...' : '💾 שמור הצעה'}
+            </button>
+            <a 
+              href="/quotes" 
+              style={{
+                background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                color: 'white',
+                padding: '15px 30px',
+                borderRadius: '25px',
+                textDecoration: 'none',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 4px 15px rgba(102, 126, 234, 0.4)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(102, 126, 234, 0.5)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(102, 126, 234, 0.4)';
+              }}
+            >
+              🔙 חזרה לרשימת הצעות
+            </a>
+          </div>
+        </div>
       </div>
     </main>
   );
