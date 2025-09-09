@@ -1,8 +1,18 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { supabase } from '../../../lib/supabaseClient';
+
+// Dynamically import PDF component to avoid SSR issues
+const QuotePDFDownloadButton = dynamic(
+  () => import('./customer/QuotePDFSimple').then(mod => mod.SimplePDFButton),
+  { 
+    ssr: false,
+    loading: () => <span style={{ padding: '12px 20px' }}>⏳ טוען PDF...</span>
+  }
+);
 
 const currency = (n) => Number(n || 0).toFixed(2);
 
@@ -87,17 +97,6 @@ export default function QuoteClient({ id }) {
     return null;
   };
 
-  const shareMail = async () => {
-    const url = await getSecureCustomerUrl();
-    if (!url) {
-      alert('שגיאה ביצירת קישור בטוח');
-      return;
-    }
-    
-    const subject = encodeURIComponent('הצעת מחיר');
-    const body = encodeURIComponent(`שלום,\n\nמצורפת הצעת המחיר שלך:\n\n${url}\n\nתודה!`);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-  };
 
   const shareWhatsApp = async () => {
     const url = await getSecureCustomerUrl();
@@ -110,17 +109,6 @@ export default function QuoteClient({ id }) {
     window.open(`https://wa.me/?text=${message}`, '_blank');
   };
 
-  const shareCustomerMail = async () => {
-    const url = await getSecureCustomerUrl();
-    if (!url) {
-      alert('שגיאה ביצירת קישור בטוח');
-      return;
-    }
-    
-    const subject = encodeURIComponent('הצעת מחיר');
-    const body = encodeURIComponent(`שלום,\n\nמצורפת הצעת המחיר שלך:\n\n${url}\n\nתודה!`);
-    window.location.href = `mailto:?subject=${subject}&body=${body}`;
-  };
 
   if (error) {
     return <main dir="rtl" style={{ padding:16 }}><div style={{ background:'#ffe8e8', border:'1px solid #f5b5b5', padding:8, borderRadius:8 }}>שגיאה: {error}</div></main>;
@@ -182,7 +170,7 @@ export default function QuoteClient({ id }) {
         padding: '10px',
         fontFamily: 'system-ui, Arial'
       }}>
-      <div style={{
+      <div className="quote-container" style={{
         maxWidth: '900px',
         margin: '0 auto',
         background: 'white',
@@ -227,32 +215,9 @@ export default function QuoteClient({ id }) {
           </div>
           
           <div className="mobile-buttons" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <button 
-              onClick={shareCustomerMail} 
-              style={{
-                background: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                padding: '12px 20px',
-                borderRadius: '25px',
-                border: '1px solid rgba(255,255,255,0.3)',
-                fontSize: '14px',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              📧 שליחה במייל
-            </button>
+            <QuotePDFDownloadButton 
+              proposal={proposal}
+            />
             <button 
               onClick={shareWhatsApp} 
               style={{
@@ -346,7 +311,7 @@ export default function QuoteClient({ id }) {
         </div>
 
         {/* Content */}
-        <div className="mobile-content" style={{ padding: '30px' }}>
+        <div id="quote-content" className="mobile-content" style={{ padding: '30px' }}>
 
           <section className="mobile-customer" style={{
             background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',

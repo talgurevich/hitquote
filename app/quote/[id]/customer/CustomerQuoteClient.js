@@ -1,7 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { supabase } from '../../../../lib/supabaseClient';
+
+// Dynamically import PDF component to avoid SSR issues
+const QuotePDFDownloadButton = dynamic(
+  () => import('./QuotePDFSimple').then(mod => mod.SimplePDFButton),
+  { 
+    ssr: false,
+    loading: () => <span style={{ padding: '12px 20px' }}>⏳ טוען PDF...</span>
+  }
+);
 
 const currency = (n) => Number(n || 0).toFixed(2);
 
@@ -208,7 +218,7 @@ export default function CustomerQuoteClient({ id }) {
         padding: '10px',
         fontFamily: 'system-ui, Arial'
       }}>
-        <div style={{
+        <div className="quote-container" style={{
           maxWidth: '800px',
           margin: '0 auto',
           background: 'white',
@@ -217,7 +227,7 @@ export default function CustomerQuoteClient({ id }) {
           overflow: 'hidden'
         }}>
         {/* Header with Logo */}
-        <div className="mobile-header" style={{
+        <div id="quote-header" className="mobile-header" style={{
           background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
           color: 'white',
           padding: '40px 30px',
@@ -227,6 +237,7 @@ export default function CustomerQuoteClient({ id }) {
           <img 
             src="/image3.png" 
             alt="תחנת לחם" 
+            crossOrigin="anonymous"
             style={{ 
               height: '80px', 
               width: 'auto',
@@ -276,7 +287,7 @@ export default function CustomerQuoteClient({ id }) {
         </div>
 
         {/* Content */}
-        <div className="mobile-content" style={{ padding: '30px' }}>
+        <div id="quote-content" className="mobile-content" style={{ padding: '30px' }}>
           {/* Customer Details */}
           <section className="mobile-customer" style={{
             background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
@@ -623,6 +634,13 @@ export default function CustomerQuoteClient({ id }) {
             borderTop: '2px solid #f8f9fa',
             marginTop: '30px'
           }}>
+            {/* PDF Download Button */}
+            <div style={{ marginBottom: '25px' }}>
+              <QuotePDFDownloadButton 
+                proposal={proposal}
+              />
+            </div>
+            
             <div style={{
               background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
               color: 'white',
