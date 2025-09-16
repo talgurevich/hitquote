@@ -160,16 +160,20 @@ function PublicQuoteView() {
           textAlign: 'center',
           position: 'relative'
         }}>
-          <img 
-            src="/image3.png" 
-            alt="תחנת לחם" 
-            style={{ 
-              height: '80px', 
-              width: 'auto',
-              marginBottom: '15px',
-              filter: 'brightness(1.2)'
-            }}
-          />
+          <picture>
+            <source media="(max-width: 768px)" srcSet="/image1.png" />
+            <source media="(min-width: 769px)" srcSet="/image3.png" />
+            <img 
+              src="/image3.png" 
+              alt="תחנת לחם" 
+              style={{ 
+                height: '80px', 
+                width: 'auto',
+                marginBottom: '15px',
+                filter: 'brightness(1.2)'
+              }}
+            />
+          </picture>
           <div style={{
             fontSize: '16px',
             color: '#28a745',

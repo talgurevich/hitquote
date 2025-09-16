@@ -54,15 +54,19 @@ export default function Home() {
       }}>
         {/* Logo/Title */}
         <div style={{ marginBottom: '40px' }}>
-          <img 
-            src="/image3.png" 
-            alt="תחנת לחם" 
-            style={{ 
-              height: '80px', 
-              width: 'auto',
-              marginBottom: '20px'
-            }}
-          />
+          <picture>
+            <source media="(max-width: 768px)" srcSet="/image1.png" />
+            <source media="(min-width: 769px)" srcSet="/image3.png" />
+            <img 
+              src="/image3.png" 
+              alt="תחנת לחם" 
+              style={{ 
+                height: '80px', 
+                width: 'auto',
+                marginBottom: '20px'
+              }}
+            />
+          </picture>
           <p style={{
             fontSize: '20px',
             color: '#0170B9',
