@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import Link from 'next/link';
 
@@ -10,6 +10,12 @@ export default function CatalogUpload() {
   const [products, setProducts] = useState([]);
   const [csvText, setCsvText] = useState('');
   const [deleteExisting, setDeleteExisting] = useState(false);
+  
+  // Online editor state
+  const [existingProducts, setExistingProducts] = useState([]);
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  const [showOnlineEditor, setShowOnlineEditor] = useState(false);
 
   const parseCSV = (text) => {
     const lines = text.trim().split('\n');
@@ -123,6 +129,102 @@ export default function CatalogUpload() {
     link.click();
   };
 
+  // Online editor functions
+  const loadExistingProducts = async () => {
+    if (!supabase) {
+      setMessage('שגיאה: Supabase לא זמין');
+      return;
+    }
+
+    setLoadingProducts(true);
+    try {
+      const { data, error } = await supabase
+        .from('product')
+        .select('*')
+        .order('category', { ascending: true })
+        .order('name', { ascending: true });
+
+      if (error) throw error;
+      setExistingProducts(data || []);
+    } catch (err) {
+      setMessage('❌ שגיאה בטעינת המוצרים: ' + err.message);
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
+
+  const saveProduct = async (product) => {
+    if (!supabase) {
+      setMessage('שגיאה: Supabase לא זמין');
+      return;
+    }
+
+    try {
+      const productData = {
+        category: product.category || null,
+        name: product.name || 'מוצר ללא שם',
+        unit_label: product.unit_label || null,
+        base_price: parseFloat(product.base_price) || 0,
+        notes: product.notes || null,
+        options: product.options || null
+      };
+
+      if (product.id) {
+        // Update existing product
+        const { error } = await supabase
+          .from('product')
+          .update(productData)
+          .eq('id', product.id);
+        
+        if (error) throw error;
+        setMessage('✅ המוצר עודכן בהצלחה!');
+      } else {
+        // Create new product
+        const { error } = await supabase
+          .from('product')
+          .insert([productData]);
+        
+        if (error) throw error;
+        setMessage('✅ המוצר נוסף בהצלחה!');
+      }
+
+      setEditingProduct(null);
+      loadExistingProducts(); // Reload products
+    } catch (err) {
+      setMessage('❌ שגיאה בשמירה: ' + err.message);
+    }
+  };
+
+  const deleteProduct = async (productId) => {
+    if (!supabase) {
+      setMessage('שגיאה: Supabase לא זמין');
+      return;
+    }
+
+    if (!confirm('האם אתה בטוח שברצונך למחוק את המוצר?')) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('product')
+        .delete()
+        .eq('id', productId);
+      
+      if (error) throw error;
+      setMessage('✅ המוצר נמחק בהצלחה!');
+      loadExistingProducts(); // Reload products
+    } catch (err) {
+      setMessage('❌ שגיאה במחיקה: ' + err.message);
+    }
+  };
+
+  useEffect(() => {
+    if (showOnlineEditor) {
+      loadExistingProducts();
+    }
+  }, [showOnlineEditor]);
+
   return (
     <main dir="rtl" style={{ maxWidth: 1200, margin: '0 auto', padding: 16, fontFamily: 'system-ui, Arial' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
@@ -130,6 +232,38 @@ export default function CatalogUpload() {
         <Link href="/quotes" style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, textDecoration: 'none' }}>
           חזרה להצעות
         </Link>
+      </div>
+
+      {/* Navigation tabs */}
+      <div style={{ display: 'flex', gap: '10px', marginBottom: 30, borderBottom: '2px solid #f0f0f0' }}>
+        <button
+          onClick={() => setShowOnlineEditor(false)}
+          style={{
+            padding: '10px 20px',
+            background: !showOnlineEditor ? '#0170B9' : 'transparent',
+            color: !showOnlineEditor ? 'white' : '#0170B9',
+            border: 'none',
+            borderBottom: !showOnlineEditor ? '3px solid #0170B9' : '3px solid transparent',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+          }}
+        >
+          📂 העלאת CSV
+        </button>
+        <button
+          onClick={() => setShowOnlineEditor(true)}
+          style={{
+            padding: '10px 20px',
+            background: showOnlineEditor ? '#0170B9' : 'transparent',
+            color: showOnlineEditor ? 'white' : '#0170B9',
+            border: 'none',
+            borderBottom: showOnlineEditor ? '3px solid #0170B9' : '3px solid transparent',
+            cursor: 'pointer',
+            fontWeight: 'bold'
+          }}
+        >
+          ✏️ עריכה אונליין
+        </button>
       </div>
 
       {message && (
@@ -144,8 +278,11 @@ export default function CatalogUpload() {
         </div>
       )}
 
-      <section style={{ marginBottom: 30 }}>
-        <h2>שלב 1: הורד תבנית CSV</h2>
+      {!showOnlineEditor ? (
+        // CSV Upload Section
+        <div>
+          <section style={{ marginBottom: 30 }}>
+            <h2>שלב 1: הורד תבנית CSV</h2>
         <p>הורד את התבנית וערוך אותה ב-Excel או Google Sheets</p>
         <button onClick={downloadTemplate} style={{ padding: '10px 20px', fontWeight: 700, marginTop: 10 }}>
           📥 הורד תבנית CSV
@@ -250,28 +387,290 @@ export default function CatalogUpload() {
         </section>
       )}
 
-      <section style={{ marginTop: 40, padding: 20, background: '#f5f5f5', borderRadius: 8 }}>
-        <h3>הוראות:</h3>
-        <ol>
-          <li>הורד את תבנית ה-CSV</li>
-          <li>פתח את הקובץ ב-Excel או Google Sheets</li>
-          <li>ערוך את המוצרים שלך (אל תשנה את שורת הכותרות)</li>
-          <li>שמור כ-CSV (UTF-8)</li>
-          <li>העלה את הקובץ או הדבק את התוכן</li>
-          <li>בדוק את התצוגה המקדימה</li>
-          <li>לחץ על "העלה לבסיס נתונים"</li>
-        </ol>
-        
-        <h3 style={{ marginTop: 20 }}>שדות:</h3>
-        <ul>
-          <li><b>category</b> - קטגוריה (לדוגמה: שירותים, מוצרים)</li>
-          <li><b>name</b> - שם המוצר (חובה)</li>
-          <li><b>unit_label</b> - יחידת מידה (לדוגמה: שעה, יחידה, חודש)</li>
-          <li><b>base_price</b> - מחיר בסיס (מספר)</li>
-          <li><b>notes</b> - הערות</li>
-          <li><b>options</b> - אפשרויות מופרדות ב-| (לדוגמה: קטן|בינוני|גדול)</li>
-        </ul>
-      </section>
+          <section style={{ marginTop: 40, padding: 20, background: '#f5f5f5', borderRadius: 8 }}>
+            <h3>הוראות:</h3>
+            <ol>
+              <li>הורד את תבנית ה-CSV</li>
+              <li>פתח את הקובץ ב-Excel או Google Sheets</li>
+              <li>ערוך את המוצרים שלך (אל תשנה את שורת הכותרות)</li>
+              <li>שמור כ-CSV (UTF-8)</li>
+              <li>העלה את הקובץ או הדבק את התוכן</li>
+              <li>בדוק את התצוגה המקדימה</li>
+              <li>לחץ על "העלה לבסיס נתונים"</li>
+            </ol>
+            
+            <h3 style={{ marginTop: 20 }}>שדות:</h3>
+            <ul>
+              <li><b>category</b> - קטגוריה (לדוגמה: שירותים, מוצרים)</li>
+              <li><b>name</b> - שם המוצר (חובה)</li>
+              <li><b>unit_label</b> - יחידת מידה (לדוגמה: שעה, יחידה, חודש)</li>
+              <li><b>base_price</b> - מחיר בסיס (מספר)</li>
+              <li><b>notes</b> - הערות</li>
+              <li><b>options</b> - אפשרויות מופרדות ב-| (לדוגמה: קטן|בינוני|גדול)</li>
+            </ul>
+          </section>
+        </div>
+      ) : (
+        // Online Editor Section
+        <div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <h2>עריכה אונליין של המוצרים הקיימים</h2>
+            <button
+              onClick={() => setEditingProduct({ category: '', name: '', unit_label: '', base_price: '', notes: '', options: '' })}
+              style={{
+                padding: '10px 20px',
+                background: '#52c41a',
+                color: 'white',
+                border: 'none',
+                borderRadius: 8,
+                cursor: 'pointer',
+                fontWeight: 'bold'
+              }}
+            >
+              ➕ הוסף מוצר חדש
+            </button>
+          </div>
+
+          {loadingProducts ? (
+            <div style={{ textAlign: 'center', padding: 40, color: '#666' }}>
+              ⏳ טוען מוצרים...
+            </div>
+          ) : (
+            <div>
+              {existingProducts.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: 40, background: '#f9f9f9', borderRadius: 8, color: '#666' }}>
+                  אין מוצרים במערכת. הוסף מוצר ראשון או העלה CSV.
+                </div>
+              ) : (
+                <div style={{ display: 'grid', gap: '15px' }}>
+                  {existingProducts.map((product) => (
+                    <div key={product.id} style={{
+                      background: 'white',
+                      border: '1px solid #e8e8e8',
+                      borderRadius: 8,
+                      padding: 20,
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 1fr 1fr auto',
+                      gap: 15,
+                      alignItems: 'center'
+                    }}>
+                      <div>
+                        <div style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 5 }}>{product.name}</div>
+                        <div style={{ color: '#666', fontSize: 14 }}>{product.category || 'ללא קטגוריה'}</div>
+                      </div>
+                      <div style={{ fontSize: 14 }}>
+                        <div><strong>יחידה:</strong> {product.unit_label || '-'}</div>
+                        <div><strong>מחיר:</strong> ₪{parseFloat(product.base_price || 0).toFixed(2)}</div>
+                      </div>
+                      <div style={{ fontSize: 14 }}>
+                        <div><strong>הערות:</strong> {product.notes || '-'}</div>
+                        <div><strong>אפשרויות:</strong> {product.options || '-'}</div>
+                      </div>
+                      <div style={{ display: 'flex', gap: 8 }}>
+                        <button
+                          onClick={() => setEditingProduct(product)}
+                          style={{
+                            padding: '6px 12px',
+                            background: '#1890ff',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: 4,
+                            cursor: 'pointer',
+                            fontSize: 12
+                          }}
+                        >
+                          ✏️ ערוך
+                        </button>
+                        <button
+                          onClick={() => deleteProduct(product.id)}
+                          style={{
+                            padding: '6px 12px',
+                            background: '#ff4d4f',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: 4,
+                            cursor: 'pointer',
+                            fontSize: 12
+                          }}
+                        >
+                          🗑️ מחק
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Edit Product Modal */}
+          {editingProduct && (
+            <div style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              background: 'rgba(0,0,0,0.5)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1000
+            }}>
+              <div style={{
+                background: 'white',
+                borderRadius: 12,
+                padding: 30,
+                maxWidth: 500,
+                width: '90%',
+                maxHeight: '80vh',
+                overflow: 'auto'
+              }}>
+                <h3 style={{ marginBottom: 20 }}>
+                  {editingProduct.id ? 'ערוך מוצר' : 'הוסף מוצר חדש'}
+                </h3>
+                
+                <div style={{ display: 'grid', gap: 15 }}>
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}>שם המוצר *</label>
+                    <input
+                      type="text"
+                      value={editingProduct.name}
+                      onChange={(e) => setEditingProduct({...editingProduct, name: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: 10,
+                        border: '1px solid #ddd',
+                        borderRadius: 4,
+                        fontSize: 14
+                      }}
+                      placeholder="שם המוצר"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}>קטגוריה</label>
+                    <input
+                      type="text"
+                      value={editingProduct.category}
+                      onChange={(e) => setEditingProduct({...editingProduct, category: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: 10,
+                        border: '1px solid #ddd',
+                        borderRadius: 4,
+                        fontSize: 14
+                      }}
+                      placeholder="לדוגמה: שירותים, מוצרים"
+                    />
+                  </div>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}>יחידת מידה</label>
+                      <input
+                        type="text"
+                        value={editingProduct.unit_label}
+                        onChange={(e) => setEditingProduct({...editingProduct, unit_label: e.target.value})}
+                        style={{
+                          width: '100%',
+                          padding: 10,
+                          border: '1px solid #ddd',
+                          borderRadius: 4,
+                          fontSize: 14
+                        }}
+                        placeholder="יחידה, שעה, חודש"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}>מחיר בסיס</label>
+                      <input
+                        type="number"
+                        value={editingProduct.base_price}
+                        onChange={(e) => setEditingProduct({...editingProduct, base_price: e.target.value})}
+                        style={{
+                          width: '100%',
+                          padding: 10,
+                          border: '1px solid #ddd',
+                          borderRadius: 4,
+                          fontSize: 14
+                        }}
+                        placeholder="0"
+                        step="0.01"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}>הערות</label>
+                    <textarea
+                      value={editingProduct.notes}
+                      onChange={(e) => setEditingProduct({...editingProduct, notes: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: 10,
+                        border: '1px solid #ddd',
+                        borderRadius: 4,
+                        fontSize: 14,
+                        minHeight: 60
+                      }}
+                      placeholder="הערות נוספות"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label style={{ display: 'block', marginBottom: 5, fontWeight: 'bold' }}>אפשרויות</label>
+                    <input
+                      type="text"
+                      value={editingProduct.options}
+                      onChange={(e) => setEditingProduct({...editingProduct, options: e.target.value})}
+                      style={{
+                        width: '100%',
+                        padding: 10,
+                        border: '1px solid #ddd',
+                        borderRadius: 4,
+                        fontSize: 14
+                      }}
+                      placeholder="אפשרויות מופרדות ב-| לדוגמה: קטן|בינוני|גדול"
+                    />
+                  </div>
+                </div>
+                
+                <div style={{ display: 'flex', gap: 10, marginTop: 20, justifyContent: 'flex-end' }}>
+                  <button
+                    onClick={() => setEditingProduct(null)}
+                    style={{
+                      padding: '10px 20px',
+                      background: '#f5f5f5',
+                      color: '#333',
+                      border: '1px solid #ddd',
+                      borderRadius: 4,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    ביטול
+                  </button>
+                  <button
+                    onClick={() => saveProduct(editingProduct)}
+                    disabled={!editingProduct.name.trim()}
+                    style={{
+                      padding: '10px 20px',
+                      background: editingProduct.name.trim() ? '#52c41a' : '#ccc',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: 4,
+                      cursor: editingProduct.name.trim() ? 'pointer' : 'not-allowed'
+                    }}
+                  >
+                    💾 שמור
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </main>
   );
 }
