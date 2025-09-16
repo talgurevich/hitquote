@@ -7,7 +7,7 @@ import { supabase } from '../../../lib/supabaseClient';
 
 // Dynamically import PDF component to avoid SSR issues
 const QuotePDFDownloadButton = dynamic(
-  () => import('./customer/QuotePDFSimple').then(mod => mod.SimplePDFButton),
+  () => import('./QuotePDFSimple').then(mod => mod.SimplePDFButton),
   { 
     ssr: false,
     loading: () => <span style={{ padding: '12px 20px' }}>⏳ טוען PDF...</span>
@@ -55,58 +55,34 @@ export default function QuoteClient({ id }) {
     load();
   }, [id]);
 
-  const generateShareToken = async () => {
-    if (!proposal?.id) return null;
-    
-    // Generate a new secure token
-    const token = Math.random().toString(36).substring(2) + Date.now().toString(36);
-    
-    try {
-      // Try to update with share_token. If column doesn't exist, we'll get an error but continue
-      const { error } = await supabase
-        .from('proposal')
-        .update({ share_token: token })
-        .eq('id', proposal.id);
-      
-      if (error) {
-        // If the column doesn't exist, we'll fall back to using the proposal ID
-        console.warn('share_token column not found, using fallback method');
-        return proposal.id;
-      }
-      
-      // Update local state
-      setProposal(prev => ({ ...prev, share_token: token }));
-      
-      return token;
-    } catch (error) {
-      console.error('Error generating share token:', error);
-      // Fallback to proposal ID
-      return proposal.id;
-    }
-  };
-
-  const getSecureCustomerUrl = async () => {
-    const token = await generateShareToken();
-    if (!token) return null;
-    
-    if (typeof window !== 'undefined') {
-      const protocol = window.location.protocol;
-      const host = window.location.host;
-      return `${protocol}//${host}/v/${token}`;
-    }
-    return null;
-  };
 
 
   const shareWhatsApp = async () => {
-    const url = await getSecureCustomerUrl();
-    if (!url) {
-      alert('שגיאה ביצירת קישור בטוח');
-      return;
+    try {
+      // Import PDF generation function
+      const { generatePDFBlob } = await import('./QuotePDFSimple');
+      
+      // Generate PDF blob
+      const pdfBlob = await generatePDFBlob(proposal);
+      
+      // Create download link for the PDF
+      const url = URL.createObjectURL(pdfBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `הצעת_מחיר_${proposal.proposal_number || proposal.id.slice(0,8)}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      // Open WhatsApp with message about the PDF
+      const message = encodeURIComponent(`שלום ${proposal.customer?.name || ''}! הצעת המחיר שלך מוכנה להורדה. אני שולח אותה עכשיו בנפרד.`);
+      window.open(`https://wa.me/${proposal.customer?.phone?.replace(/[^\d]/g, '') || ''}?text=${message}`, '_blank');
+      
+    } catch (error) {
+      console.error('Error sharing via WhatsApp:', error);
+      alert('שגיאה בהכנת הקובץ לשיתוף');
     }
-    
-    const message = encodeURIComponent(`שלום! מצורפת הצעת המחיר שלך: ${url}`);
-    window.open(`https://wa.me/?text=${message}`, '_blank');
   };
 
 
@@ -276,41 +252,6 @@ export default function QuoteClient({ id }) {
             >
               ✏️ עריכה
             </Link>
-            <button
-              onClick={async () => {
-                const url = await getSecureCustomerUrl();
-                if (url) {
-                  window.open(url, '_blank');
-                } else {
-                  alert('שגיאה ביצירת קישור בטוח');
-                }
-              }}
-              style={{
-                background: 'rgba(255,193,7,0.9)',
-                color: 'black',
-                padding: '12px 24px',
-                borderRadius: '25px',
-                border: 'none',
-                fontSize: '16px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 4px 15px rgba(255, 193, 7, 0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 193, 7, 0.5)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(255, 193, 7, 0.4)';
-              }}
-            >
-              👁️ תצוגת לקוח
-            </button>
           </div>
         </div>
 

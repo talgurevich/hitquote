@@ -8,7 +8,6 @@ export const config = {
     '/quote/:path*',
     '/catalog/:path*',
     '/health/:path*',
-    '/diag/:path*',
-    '/v/:path*'
+    '/diag/:path*'
   ]
 }
