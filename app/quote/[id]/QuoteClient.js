@@ -190,11 +190,15 @@ export default function QuoteClient({ id }) {
           gap: '15px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <img 
-              src="/image3.png" 
-              alt="תחנת לחם" 
-              style={{ height: '50px', width: 'auto' }}
-            />
+            <picture>
+              <source media="(max-width: 768px)" srcSet="/image1.png" />
+              <source media="(min-width: 769px)" srcSet="/image3.png" />
+              <img 
+                src="/image3.png" 
+                alt="תחנת לחם" 
+                style={{ height: '50px', width: 'auto' }}
+              />
+            </picture>
             <div>
               <h1 style={{ 
                 margin: '0 0 8px 0', 
