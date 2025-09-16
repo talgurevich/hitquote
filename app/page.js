@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import UserMenu from './components/UserMenu';
 
 export default function Home() {
   return (
     <>
+      <UserMenu />
       <style jsx>{`
         .background-blur::before {
           content: '';
