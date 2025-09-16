@@ -275,9 +275,9 @@ export default function NewClient() {
       }}>
         {/* Header */}
         <div className="mobile-header" style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
           color: 'white',
-          padding: '20px',
+          padding: '40px 30px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
@@ -319,14 +319,13 @@ export default function NewClient() {
             <div style={{
               background: '#fee',
               border: '1px solid #fcc',
-              borderRadius: '15px',
-              padding: '20px',
+              borderRadius: '10px',
+              padding: '15px',
               marginBottom: '20px',
               color: '#c33',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              fontSize: '16px'
+              gap: '10px'
             }}>
               ⚠️ <strong>שגיאה:</strong> {error}
             </div>
@@ -345,7 +344,7 @@ export default function NewClient() {
               fontSize: '20px',
               fontWeight: 'bold',
               marginBottom: '15px',
-              color: '#333',
+              color: '#3a3a3a',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
@@ -366,7 +365,7 @@ export default function NewClient() {
                   background: 'white',
                   transition: 'border-color 0.2s ease'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                 onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
               >
                 <option value="">בחר לקוח מהרשימה...</option>
@@ -377,7 +376,7 @@ export default function NewClient() {
               <button 
                 onClick={() => setShowNewCustomer(true)} 
                 style={{
-                  background: 'linear-gradient(45deg, #28a745, #20c997)',
+                  background: 'linear-gradient(45deg, #0170B9, #0170B9)',
                   color: 'white',
                   padding: '12px 20px',
                   borderRadius: '10px',
@@ -386,18 +385,18 @@ export default function NewClient() {
                   fontWeight: 'bold',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
-                  boxShadow: '0 4px 15px rgba(40, 167, 69, 0.3)',
+                  boxShadow: '0 4px 15px rgba(1, 112, 185, 0.3)',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(40, 167, 69, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(1, 112, 185, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.3)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(1, 112, 185, 0.3)';
                 }}
               >
                 ➕ לקוח חדש
@@ -408,18 +407,18 @@ export default function NewClient() {
           {/* New Customer Form */}
           {showNewCustomer && (
             <div style={{
-              background: 'linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%)',
-              border: '2px solid #28a745',
+              background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
+              border: '1px solid #e9ecef',
               borderRadius: '15px',
               padding: '25px',
               marginBottom: '25px',
-              boxShadow: '0 5px 20px rgba(40, 167, 69, 0.1)'
+              boxShadow: '0 5px 20px rgba(1, 112, 185, 0.1)'
             }}>
               <div style={{
                 fontSize: '20px',
                 fontWeight: 'bold',
                 marginBottom: '20px',
-                color: '#333',
+                color: '#3a3a3a',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '10px'
@@ -443,7 +442,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
                 <input 
@@ -457,7 +456,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
                 <input 
@@ -471,7 +470,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
                 <input 
@@ -485,7 +484,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#28a745'}
+                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
               </div>
@@ -510,7 +509,7 @@ export default function NewClient() {
                     }
                   }} 
                   style={{
-                    background: 'linear-gradient(45deg, #28a745, #20c997)',
+                    background: 'linear-gradient(45deg, #0170B9, #0170B9)',
                     color: 'white',
                     padding: '12px 20px',
                     borderRadius: '10px',
@@ -519,15 +518,15 @@ export default function NewClient() {
                     fontWeight: 'bold',
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
-                    boxShadow: '0 4px 15px rgba(40, 167, 69, 0.3)'
+                    boxShadow: '0 4px 15px rgba(1, 112, 185, 0.3)'
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(40, 167, 69, 0.4)';
+                    e.currentTarget.style.boxShadow = '0 6px 20px rgba(1, 112, 185, 0.4)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.3)';
+                    e.currentTarget.style.boxShadow = '0 4px 15px rgba(1, 112, 185, 0.3)';
                   }}
                 >
                   💾 שמור לקוח
@@ -536,7 +535,7 @@ export default function NewClient() {
                   onClick={() => setShowNewCustomer(false)} 
                   style={{
                     background: '#f8f9fa',
-                    color: '#495057',
+                    color: '#4B4F58',
                     padding: '12px 20px',
                     borderRadius: '10px',
                     border: '2px solid #e9ecef',
@@ -572,7 +571,7 @@ export default function NewClient() {
               fontSize: '20px',
               fontWeight: 'bold',
               marginBottom: '20px',
-              color: '#333',
+              color: '#3a3a3a',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
@@ -583,7 +582,7 @@ export default function NewClient() {
               <button 
                 onClick={() => setShowCatalogPicker(true)} 
                 style={{
-                  background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+                  background: '#0170B9',
                   color: 'white',
                   padding: '12px 20px',
                   borderRadius: '10px',
@@ -592,18 +591,18 @@ export default function NewClient() {
                   fontWeight: 'bold',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
-                  boxShadow: '0 4px 15px rgba(79, 172, 254, 0.3)',
+                  boxShadow: '0 4px 15px rgba(1, 112, 185, 0.3)',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(79, 172, 254, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(1, 112, 185, 0.4)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(79, 172, 254, 0.3)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(1, 112, 185, 0.3)';
                 }}
               >
                 📁 פריט מהקטלוג
@@ -611,7 +610,7 @@ export default function NewClient() {
               <button 
                 onClick={addCustomItem} 
                 style={{
-                  background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                  background: '#0170B9',
                   color: 'white',
                   padding: '12px 20px',
                   borderRadius: '10px',
@@ -642,7 +641,7 @@ export default function NewClient() {
             {showCatalogPicker && (
               <div style={{
                 background: 'linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)',
-                border: '2px solid #4facfe',
+                border: '2px solid #0170B9',
                 borderRadius: '15px',
                 padding: '20px',
                 marginBottom: '20px',
@@ -661,14 +660,14 @@ export default function NewClient() {
                       fontSize: '16px',
                       transition: 'border-color 0.2s ease'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                    onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                     onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                   />
                   <button 
                     onClick={() => { setShowCatalogPicker(false); setCatalogSearch(''); }} 
                     style={{
                       background: '#f8f9fa',
-                      color: '#495057',
+                      color: '#4B4F58',
                       padding: '12px 20px',
                       borderRadius: '10px',
                       border: '2px solid #e9ecef',
@@ -689,7 +688,7 @@ export default function NewClient() {
                 <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
                   {visibleProducts.length === 0 && (
                     <div style={{ 
-                      color: '#666', 
+                      color: '#4B4F58', 
                       textAlign: 'center', 
                       padding: '20px',
                       fontSize: '16px'
@@ -722,10 +721,10 @@ export default function NewClient() {
                       }}
                     >
                       <div>
-                        <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#333', marginBottom: '5px' }}>
+                        <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#3a3a3a', marginBottom: '5px' }}>
                           {p.name}
                         </div>
-                        <div style={{ fontSize: '14px', color: '#666', marginBottom: '3px' }}>
+                        <div style={{ fontSize: '14px', color: '#4B4F58', marginBottom: '3px' }}>
                           📂 {p.category} {p.unit_label ? `• ${p.unit_label}` : ''}
                         </div>
                         {p.options && (
@@ -737,14 +736,14 @@ export default function NewClient() {
                       <div style={{ 
                         fontWeight: 'bold', 
                         fontSize: '18px', 
-                        color: '#4facfe' 
+                        color: '#0170B9' 
                       }}>
                         ₪{currency(p.base_price)}
                       </div>
                       <button 
                         onClick={() => addProduct(p)} 
                         style={{
-                          background: 'linear-gradient(45deg, #28a745, #20c997)',
+                          background: 'linear-gradient(45deg, #0170B9, #0170B9)',
                           color: 'white',
                           padding: '8px 16px',
                           borderRadius: '8px',
@@ -778,7 +777,7 @@ export default function NewClient() {
             }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white' }}>
+                  <tr style={{ background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)', color: 'white' }}>
                     <th style={{ textAlign: 'right', padding: '15px', fontSize: '16px', fontWeight: 'bold' }}>פריט</th>
                     <th style={{ textAlign: 'center', padding: '15px', width: '100px', fontSize: '16px', fontWeight: 'bold' }}>כמות</th>
                     <th style={{ textAlign: 'center', padding: '15px', width: '160px', fontSize: '16px', fontWeight: 'bold' }}>מחיר יח׳ (₪)</th>
@@ -816,11 +815,11 @@ export default function NewClient() {
                               transition: 'border-color 0.2s ease'
                             }}
                             placeholder="שם פריט…"
-                            onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                            onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                             onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                           />
                         ) : (
-                          <div style={{ fontWeight: '600', color: '#333', fontSize: '15px' }}>
+                          <div style={{ fontWeight: '600', color: '#3a3a3a', fontSize: '15px' }}>
                             {it.name}
                           </div>
                         )}
@@ -839,7 +838,7 @@ export default function NewClient() {
                             fontSize: '14px',
                             transition: 'border-color 0.2s ease'
                           }}
-                          onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                          onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                           onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                         />
                       </td>
@@ -857,7 +856,7 @@ export default function NewClient() {
                             fontSize: '14px',
                             transition: 'border-color 0.2s ease'
                           }}
-                          onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                          onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                           onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                         />
                       </td>
@@ -874,7 +873,7 @@ export default function NewClient() {
                             transition: 'border-color 0.2s ease'
                           }}
                           placeholder="הערות…"
-                          onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                          onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                           onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                         />
                       </td>
@@ -882,7 +881,7 @@ export default function NewClient() {
                         padding: '15px', 
                         textAlign: 'left', 
                         fontWeight: 'bold', 
-                        color: '#4facfe',
+                        color: '#0170B9',
                         fontSize: '16px'
                       }}>
                         ₪{currency(Number(it.qty || 0) * Number(it.unit_price || 0))}
@@ -891,7 +890,7 @@ export default function NewClient() {
                         <button 
                           onClick={() => removeItem(idx)} 
                           style={{
-                            background: 'linear-gradient(45deg, #dc3545, #c82333)',
+                            background: 'linear-gradient(45deg, #4B4F58, #4B4F58)',
                             color: 'white',
                             padding: '8px 12px',
                             borderRadius: '8px',
@@ -919,7 +918,7 @@ export default function NewClient() {
                         colSpan={6} 
                         style={{ 
                           padding: '40px', 
-                          color: '#666', 
+                          color: '#4B4F58', 
                           textAlign: 'center',
                           fontSize: '16px'
                         }}
@@ -944,7 +943,7 @@ export default function NewClient() {
                   boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
                 }}>
                   <div style={{ fontSize: '48px', marginBottom: '15px', opacity: 0.3 }}>📝</div>
-                  <h3 style={{ color: '#666', marginBottom: '10px' }}>אין פריטים עדיין</h3>
+                  <h3 style={{ color: '#4B4F58', marginBottom: '10px' }}>אין פריטים עדיין</h3>
                   <p style={{ color: '#999', fontSize: '14px' }}>הוסף פריטים מהקטלוג או צור פריט חדש</p>
                 </div>
               ) : (
@@ -970,13 +969,13 @@ export default function NewClient() {
                         <div style={{
                           fontSize: '18px',
                           fontWeight: 'bold',
-                          color: '#333',
+                          color: '#3a3a3a',
                           marginBottom: '5px'
                         }}>
                           {it.custom_name || (it.product_id && products.find(p => p.id === it.product_id)?.name) || it.product_name || 'פריט מותאם'}
                         </div>
                         {it.product_id && (
-                          <div style={{ fontSize: '13px', color: '#666' }}>
+                          <div style={{ fontSize: '13px', color: '#4B4F58' }}>
                             {products.find(p => p.id === it.product_id)?.category || 'קטגוריה'}
                           </div>
                         )}
@@ -984,7 +983,7 @@ export default function NewClient() {
                       <button
                         onClick={() => removeItem(idx)}
                         style={{
-                          background: '#dc3545',
+                          background: '#4B4F58',
                           color: 'white',
                           border: 'none',
                           borderRadius: '50%',
@@ -1008,7 +1007,7 @@ export default function NewClient() {
                       marginBottom: '15px'
                     }}>
                       <div>
-                        <label style={{ fontSize: '13px', color: '#666', marginBottom: '5px', display: 'block' }}>כמות:</label>
+                        <label style={{ fontSize: '13px', color: '#4B4F58', marginBottom: '5px', display: 'block' }}>כמות:</label>
                         <input
                           type="number"
                           min="0.1"
@@ -1026,7 +1025,7 @@ export default function NewClient() {
                         />
                       </div>
                       <div>
-                        <label style={{ fontSize: '13px', color: '#666', marginBottom: '5px', display: 'block' }}>מחיר יחידה (₪):</label>
+                        <label style={{ fontSize: '13px', color: '#4B4F58', marginBottom: '5px', display: 'block' }}>מחיר יחידה (₪):</label>
                         <input
                           type="number"
                           min="0"
@@ -1047,7 +1046,7 @@ export default function NewClient() {
 
                     {/* Notes */}
                     <div style={{ marginBottom: '15px' }}>
-                      <label style={{ fontSize: '13px', color: '#666', marginBottom: '5px', display: 'block' }}>הערות:</label>
+                      <label style={{ fontSize: '13px', color: '#4B4F58', marginBottom: '5px', display: 'block' }}>הערות:</label>
                       <textarea
                         value={it.notes}
                         onChange={(e) => updateItemNotes(idx, e.target.value)}
@@ -1072,7 +1071,7 @@ export default function NewClient() {
                       justifyContent: 'space-between',
                       alignItems: 'center'
                     }}>
-                      <span style={{ fontSize: '16px', color: '#666' }}>סה״כ שורה:</span>
+                      <span style={{ fontSize: '16px', color: '#4B4F58' }}>סה״כ שורה:</span>
                       <span style={{
                         fontSize: '20px',
                         fontWeight: 'bold',
@@ -1100,7 +1099,7 @@ export default function NewClient() {
               fontSize: '20px',
               fontWeight: 'bold',
               marginBottom: '20px',
-              color: '#333',
+              color: '#3a3a3a',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
@@ -1120,7 +1119,7 @@ export default function NewClient() {
                 alignItems: 'center' 
               }}>
                 <span>ביניים (לפני מע״מ):</span>
-                <span style={{ fontWeight: 'bold', color: '#495057' }}>₪{currency(netSubtotal)}</span>
+                <span style={{ fontWeight: 'bold', color: '#4B4F58' }}>₪{currency(netSubtotal)}</span>
               </div>
               <div style={{ 
                 fontSize: '16px', 
@@ -1144,11 +1143,11 @@ export default function NewClient() {
                       fontSize: '14px',
                       transition: 'border-color 0.2s ease'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                    onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                     onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                   />
                   {discountPct > 0 && (
-                    <span style={{ color: '#dc3545', fontWeight: 'bold' }}>
+                    <span style={{ color: '#4B4F58', fontWeight: 'bold' }}>
                       (-₪{currency(discountValue)})
                     </span>
                   )}
@@ -1161,19 +1160,19 @@ export default function NewClient() {
                 alignItems: 'center' 
               }}>
                 <span>מע״מ ({vatRate}%):</span>
-                <span style={{ fontWeight: 'bold', color: '#495057' }}>₪{currency(vatAmount)}</span>
+                <span style={{ fontWeight: 'bold', color: '#4B4F58' }}>₪{currency(vatAmount)}</span>
               </div>
               <div style={{
                 fontSize: '20px',
                 padding: '15px',
-                background: 'linear-gradient(45deg, #4facfe, #00f2fe)',
+                background: '#0170B9',
                 color: 'white',
                 borderRadius: '10px',
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 fontWeight: 'bold',
-                boxShadow: '0 4px 15px rgba(79, 172, 254, 0.3)'
+                boxShadow: '0 4px 15px rgba(1, 112, 185, 0.3)'
               }}>
                 <span>סה״כ לתשלום:</span>
                 <span>₪{currency(total)}</span>
@@ -1194,7 +1193,7 @@ export default function NewClient() {
               fontSize: '20px',
               fontWeight: 'bold',
               marginBottom: '20px',
-              color: '#333',
+              color: '#3a3a3a',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
@@ -1207,7 +1206,7 @@ export default function NewClient() {
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '10px',
-                  color: '#495057',
+                  color: '#4B4F58',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px'
@@ -1230,7 +1229,7 @@ export default function NewClient() {
                     transition: 'border-color 0.2s ease'
                   }} 
                   placeholder="מזומן / המחאה / העברה בנקאית / שוטף +30"
-                  onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
               </div>
@@ -1239,7 +1238,7 @@ export default function NewClient() {
                   fontSize: '16px',
                   fontWeight: 'bold',
                   marginBottom: '10px',
-                  color: '#495057',
+                  color: '#4B4F58',
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px'
@@ -1262,7 +1261,7 @@ export default function NewClient() {
                     transition: 'border-color 0.2s ease'
                   }} 
                   placeholder="הערות להצעה…"
-                  onFocus={(e) => e.target.style.borderColor = '#4facfe'}
+                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
               </div>
@@ -1283,7 +1282,7 @@ export default function NewClient() {
               style={{
                 background: saving 
                   ? 'linear-gradient(45deg, #6c757d, #5a6268)' 
-                  : 'linear-gradient(45deg, #28a745, #20c997)',
+                  : 'linear-gradient(45deg, #0170B9, #0170B9)',
                 color: 'white',
                 padding: '15px 30px',
                 borderRadius: '25px',
@@ -1294,7 +1293,7 @@ export default function NewClient() {
                 transition: 'all 0.2s ease',
                 boxShadow: saving 
                   ? '0 4px 15px rgba(108, 117, 125, 0.3)' 
-                  : '0 4px 15px rgba(40, 167, 69, 0.4)',
+                  : '0 4px 15px rgba(1, 112, 185, 0.4)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '10px',
@@ -1309,7 +1308,7 @@ export default function NewClient() {
               onMouseLeave={(e) => {
                 if (!saving) {
                   e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(1, 112, 185, 0.4)';
                 }
               }}
             >
@@ -1318,7 +1317,7 @@ export default function NewClient() {
             <a 
               href="/quotes" 
               style={{
-                background: 'linear-gradient(45deg, #667eea, #764ba2)',
+                background: '#0170B9',
                 color: 'white',
                 padding: '15px 30px',
                 borderRadius: '25px',

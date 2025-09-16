@@ -145,7 +145,7 @@ function SignInContent() {
           <div style={{ marginBottom: '30px' }}>
             <h2 style={{
               fontSize: '28px',
-              color: '#333',
+              color: '#3a3a3a',
               marginBottom: '15px',
               fontWeight: 'bold'
             }}>
@@ -153,7 +153,7 @@ function SignInContent() {
             </h2>
             <p style={{
               fontSize: '16px',
-              color: '#666',
+              color: '#4B4F58',
               marginBottom: '30px',
               lineHeight: '1.5'
             }}>
@@ -161,12 +161,12 @@ function SignInContent() {
             </p>
             {error === 'AccessDenied' && (
               <div style={{
-                background: '#fee',
-                border: '1px solid #fcc',
+                background: '#f8f9fa',
+                border: '1px solid #4B4F58',
                 borderRadius: '8px',
                 padding: '15px',
                 marginBottom: '20px',
-                color: '#c00'
+                color: '#4B4F58'
               }}>
                 <strong>שגיאה:</strong> החשבון שלך אינו מורשה לגשת למערכת
               </div>
@@ -230,7 +230,7 @@ function SignInContent() {
             </p>
             <p style={{
               fontSize: '13px',
-              color: '#666',
+              color: '#4B4F58',
               margin: '8px 0 0 0'
             }}>
               המערכת מוגנת באמצעות אימות Google לביטחון מירבי

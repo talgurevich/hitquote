@@ -226,7 +226,14 @@ export default function CatalogUpload() {
   }, [showOnlineEditor]);
 
   return (
-    <main dir="rtl" style={{ maxWidth: 1200, margin: '0 auto', padding: 16, fontFamily: 'system-ui, Arial' }}>
+    <main dir="rtl" style={{ 
+      maxWidth: 1200, 
+      margin: '0 auto', 
+      padding: 16, 
+      fontFamily: 'system-ui, Arial',
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+    }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <h1>ניהול קטלוג מוצרים</h1>
         <Link href="/quotes" style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, textDecoration: 'none' }}>
@@ -271,8 +278,8 @@ export default function CatalogUpload() {
           padding: 12, 
           marginBottom: 20, 
           borderRadius: 8, 
-          background: message.includes('✅') ? '#d4f4dd' : message.includes('❌') ? '#ffe8e8' : '#e8f4ff',
-          border: `1px solid ${message.includes('✅') ? '#52c41a' : message.includes('❌') ? '#ff4d4f' : '#1890ff'}`
+          background: message.includes('✅') ? '#e8f4ff' : message.includes('❌') ? '#f8f9fa' : '#e8f4ff',
+          border: `1px solid ${message.includes('✅') ? '#0170B9' : message.includes('❌') ? '#4B4F58' : '#0170B9'}`
         }}>
           {message}
         </div>
@@ -375,7 +382,7 @@ export default function CatalogUpload() {
               padding: '12px 24px', 
               fontWeight: 700, 
               fontSize: 16,
-              background: uploading ? '#ccc' : '#52c41a',
+              background: uploading ? '#ccc' : '#0170B9',
               color: 'white',
               border: 'none',
               borderRadius: 8,
@@ -419,7 +426,7 @@ export default function CatalogUpload() {
               onClick={() => setEditingProduct({ category: '', name: '', unit_label: '', base_price: '', notes: '', options: '' })}
               style={{
                 padding: '10px 20px',
-                background: '#52c41a',
+                background: '#0170B9',
                 color: 'white',
                 border: 'none',
                 borderRadius: 8,
@@ -471,7 +478,7 @@ export default function CatalogUpload() {
                           onClick={() => setEditingProduct(product)}
                           style={{
                             padding: '6px 12px',
-                            background: '#1890ff',
+                            background: '#0170B9',
                             color: 'white',
                             border: 'none',
                             borderRadius: 4,
@@ -485,7 +492,7 @@ export default function CatalogUpload() {
                           onClick={() => deleteProduct(product.id)}
                           style={{
                             padding: '6px 12px',
-                            background: '#ff4d4f',
+                            background: '#4B4F58',
                             color: 'white',
                             border: 'none',
                             borderRadius: 4,
@@ -656,7 +663,7 @@ export default function CatalogUpload() {
                     disabled={!editingProduct.name.trim()}
                     style={{
                       padding: '10px 20px',
-                      background: editingProduct.name.trim() ? '#52c41a' : '#ccc',
+                      background: editingProduct.name.trim() ? '#0170B9' : '#ccc',
                       color: 'white',
                       border: 'none',
                       borderRadius: 4,
