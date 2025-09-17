@@ -97,7 +97,7 @@ export default function NewClient() {
         if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
         const { data: p, error: e1 } = await supabase
           .from('proposal')
-          .select('id, customer_id, payment_terms, notes, delivery_date, discount_value, subtotal, vat_rate')
+          .select('id, customer_id, payment_terms, notes, discount_value, subtotal, vat_rate')
           .eq('id', editId)
           .maybeSingle();
         if (e1) throw e1;
@@ -203,7 +203,7 @@ export default function NewClient() {
         customer_id: customerId,
         payment_terms: paymentTerms || null,
         notes: notes || null,
-        delivery_date: deliveryDate || null,
+        // delivery_date: deliveryDate || null, // TODO: Add after running database migration
         subtotal: netSubtotal,
         discount_value: discountValue,
         include_discount_row: discountValue > 0,

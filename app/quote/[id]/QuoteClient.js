@@ -32,7 +32,7 @@ export default function QuoteClient({ id }) {
           supabase.from('settings').select('*').limit(1).maybeSingle(),
           supabase
             .from('proposal')
-            .select('id, proposal_number, customer_id, payment_terms, notes, delivery_date, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, customer:customer (name, phone, email, address)')
+            .select('id, proposal_number, customer_id, payment_terms, notes, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, customer:customer (name, phone, email, address)')
             .eq('id', id)
             .maybeSingle()
         ]);
