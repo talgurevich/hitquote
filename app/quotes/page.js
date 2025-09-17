@@ -14,7 +14,7 @@ export default function QuotesList() {
         if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
         const { data, error } = await supabase
           .from('proposal')
-          .select('id, proposal_number, created_at, total, customer:customer (name)')
+          .select('id, proposal_number, created_at, delivery_date, total, customer:customer (name)')
           .order('created_at', { ascending: false });
         if (error) throw error;
         setRows(data || []);
@@ -269,7 +269,8 @@ export default function QuotesList() {
                     <tr style={{ background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)', color: 'white' }}>
                       <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>מס׳ הצעה</th>
                       <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>לקוח</th>
-                      <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך</th>
+                      <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך יצירה</th>
+                      <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך משלוח</th>
                       <th style={{ textAlign: 'left', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>סכום</th>
                       <th style={{ textAlign: 'center', padding: '18px', width: '120px', fontSize: '16px', fontWeight: 'bold' }}>פעולות</th>
                     </tr>
@@ -302,6 +303,13 @@ export default function QuotesList() {
                             month: '2-digit',
                             day: '2-digit'
                           })}
+                        </td>
+                        <td style={{ padding: '18px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                          {r.delivery_date ? new Date(r.delivery_date).toLocaleDateString('he-IL', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                          }) : 'לא צוין'}
                         </td>
                         <td style={{ 
                           padding: '18px', 
@@ -347,7 +355,7 @@ export default function QuotesList() {
                     {rows.length === 0 && (
                       <tr>
                         <td 
-                          colSpan={5} 
+                          colSpan={6} 
                           style={{ 
                             padding: '40px', 
                             color: '#666', 
@@ -398,13 +406,24 @@ export default function QuotesList() {
                         </div>
                         <div style={{
                           fontSize: '14px',
-                          color: '#6c757d'
+                          color: '#6c757d',
+                          marginBottom: '4px'
                         }}>
-                          {new Date(r.created_at).toLocaleDateString('he-IL', {
+                          יצירה: {new Date(r.created_at).toLocaleDateString('he-IL', {
                             year: 'numeric',
                             month: '2-digit',
                             day: '2-digit'
                           })}
+                        </div>
+                        <div style={{
+                          fontSize: '14px',
+                          color: '#6c757d'
+                        }}>
+                          משלוח: {r.delivery_date ? new Date(r.delivery_date).toLocaleDateString('he-IL', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit'
+                          }) : 'לא צוין'}
                         </div>
                       </div>
                       <div style={{

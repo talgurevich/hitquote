@@ -54,6 +54,8 @@ export default function NewClient() {
   const [notes, setNotes] = useState('');
   const [deliveryDate, setDeliveryDate] = useState('');
   const [discountPct, setDiscountPct] = useState(0);
+  const [discountType, setDiscountType] = useState('percentage'); // 'percentage' or 'absolute'
+  const [discountAmount, setDiscountAmount] = useState(0);
   const [items, setItems] = useState([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -97,7 +99,7 @@ export default function NewClient() {
         if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
         const { data: p, error: e1 } = await supabase
           .from('proposal')
-          .select('id, customer_id, payment_terms, notes, discount_value, subtotal, vat_rate')
+          .select('id, customer_id, payment_terms, notes, delivery_date, discount_value, subtotal, vat_rate')
           .eq('id', editId)
           .maybeSingle();
         if (e1) throw e1;
@@ -107,8 +109,18 @@ export default function NewClient() {
         setPaymentTerms(p.payment_terms || '');
         setNotes(p.notes || '');
         setDeliveryDate(p.delivery_date || '');
-        const pct = p.subtotal ? (Number(p.discount_value || 0) / Number(p.subtotal)) * 100 : 0;
-        setDiscountPct(Number(pct.toFixed(2)));
+        const discountVal = Number(p.discount_value || 0);
+        if (discountVal > 0) {
+          // Check if discount is likely percentage-based (less than subtotal)
+          const pct = p.subtotal ? (discountVal / Number(p.subtotal)) * 100 : 0;
+          if (pct <= 100) {
+            setDiscountType('percentage');
+            setDiscountPct(Number(pct.toFixed(2)));
+          } else {
+            setDiscountType('absolute');
+            setDiscountAmount(discountVal);
+          }
+        }
 
         const { data: it, error: e2 } = await supabase
           .from('proposal_item')
@@ -143,7 +155,13 @@ export default function NewClient() {
     [items]
   );
   const netSubtotal = useMemo(() => grossSubtotal / vatFactor, [grossSubtotal, vatFactor]);
-  const discountValue = useMemo(() => netSubtotal * (Number(discountPct || 0) / 100), [netSubtotal, discountPct]);
+  const discountValue = useMemo(() => {
+    if (discountType === 'percentage') {
+      return netSubtotal * (Number(discountPct || 0) / 100);
+    } else {
+      return Number(discountAmount || 0);
+    }
+  }, [netSubtotal, discountPct, discountType, discountAmount]);
   const netAfterDiscount = useMemo(() => Math.max(0, netSubtotal - discountValue), [netSubtotal, discountValue]);
   const vatAmount = useMemo(() => netAfterDiscount * (vatRate / 100), [netAfterDiscount, vatRate]);
   const total = useMemo(() => netAfterDiscount + vatAmount, [netAfterDiscount, vatAmount]);
@@ -191,6 +209,7 @@ export default function NewClient() {
       setSaving(true);
       setError(null);
       if (!customerId) throw new Error('בחר לקוח');
+      if (!deliveryDate) throw new Error('בחר תאריך משלוח');
 
       let proposalId = editId;
       let proposalNumber = null;
@@ -203,7 +222,7 @@ export default function NewClient() {
         customer_id: customerId,
         payment_terms: paymentTerms || null,
         notes: notes || null,
-        // delivery_date: deliveryDate || null, // TODO: Add after running database migration
+        delivery_date: deliveryDate || null,
         subtotal: netSubtotal,
         discount_value: discountValue,
         include_discount_row: discountValue > 0,
@@ -1365,12 +1384,44 @@ export default function NewClient() {
                 alignItems: 'center',
                 gap: '15px'
               }}>
-                <span>הנחה (%):</span>
+                <span>הנחה:</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <select
+                    value={discountType}
+                    onChange={e => {
+                      setDiscountType(e.target.value);
+                      if (e.target.value === 'percentage') {
+                        setDiscountAmount(0);
+                      } else {
+                        setDiscountPct(0);
+                      }
+                    }}
+                    style={{
+                      padding: '8px',
+                      borderRadius: '8px',
+                      border: '2px solid #e9ecef',
+                      fontSize: '14px',
+                      transition: 'border-color 0.2s ease'
+                    }}
+                    onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                    onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                  >
+                    <option value="percentage">%</option>
+                    <option value="absolute">₪</option>
+                  </select>
                   <input
-                    type="number" min={0} max={100}
-                    value={discountPct}
-                    onChange={e => setDiscountPct(Number(e.target.value || 0))}
+                    type="number" 
+                    min={0}
+                    max={discountType === 'percentage' ? 100 : undefined}
+                    value={discountType === 'percentage' ? discountPct : discountAmount}
+                    onChange={e => {
+                      const val = Number(e.target.value || 0);
+                      if (discountType === 'percentage') {
+                        setDiscountPct(val);
+                      } else {
+                        setDiscountAmount(val);
+                      }
+                    }}
                     style={{
                       width: '80px',
                       padding: '8px',
@@ -1383,7 +1434,7 @@ export default function NewClient() {
                     onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                     onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                   />
-                  {discountPct > 0 && (
+                  {discountValue > 0 && (
                     <span style={{ color: '#4B4F58', fontWeight: 'bold' }}>
                       (-₪{currency(discountValue)})
                     </span>
