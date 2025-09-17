@@ -21,8 +21,8 @@ const handler = NextAuth({
       }
     },
     async redirect({ url, baseUrl }) {
-      // Redirect to home page after successful sign in
-      return baseUrl
+      // Redirect to dashboard after successful sign in
+      return baseUrl + '/dashboard'
     },
     async session({ session, token }) {
       return session

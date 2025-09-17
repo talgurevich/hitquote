@@ -123,7 +123,7 @@ export default function QuotesList() {
           </div>
           
           <div className="mobile-buttons" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Link href="/" style={{
+            <Link href="/dashboard" style={{
               background: 'rgba(255,255,255,0.2)',
               color: 'white',
               padding: '12px 20px',
