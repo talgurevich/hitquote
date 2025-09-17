@@ -62,6 +62,9 @@ export default function NewClient() {
 
   const [showCatalogPicker, setShowCatalogPicker] = useState(false);
   const [catalogSearch, setCatalogSearch] = useState('');
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   useEffect(() => {
     const load = async () => {
@@ -147,9 +150,35 @@ export default function NewClient() {
     setItems((prev) => [...prev, { isCustom: true, product_id: null, name: 'פריט כללי', qty: 1, unit_price: 0, notes: '' }]);
   };
   const addProduct = (p) => {
-    setItems((prev) => [...prev, { isCustom: false, product_id: p.id, name: p.name, qty: 1, unit_price: Number(p.base_price || 0), notes: '' }]);
+    // Check if product has options
+    const availableOptions = parseOptions(p.options);
+    if (availableOptions.length > 0) {
+      // Show options modal for selection
+      setSelectedProduct(p);
+      setSelectedOptions([]);
+      setShowOptionsModal(true);
+    } else {
+      // Add product directly without options
+      addProductWithOptions(p, []);
+    }
+  };
+
+  const addProductWithOptions = (p, selectedOpts) => {
+    const optionsText = selectedOpts.length > 0 ? selectedOpts.join(', ') : '';
+    setItems((prev) => [...prev, { 
+      isCustom: false, 
+      product_id: p.id, 
+      name: p.name, 
+      qty: 1, 
+      unit_price: Number(p.base_price || 0), 
+      notes: optionsText ? `אפשרויות: ${optionsText}` : '',
+      selectedOptions: selectedOpts
+    }]);
     setShowCatalogPicker(false);
+    setShowOptionsModal(false);
     setCatalogSearch('');
+    setSelectedProduct(null);
+    setSelectedOptions([]);
   };
   const updateItem = (idx, patch) => setItems((prev) => prev.map((it, i) => (i === idx ? { ...it, ...patch } : it)));
   const removeItem = (idx) => setItems((prev) => prev.filter((_, i) => i !== idx));
@@ -764,6 +793,185 @@ export default function NewClient() {
                       </button>
                     </div>
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* Options Selection Modal */}
+            {showOptionsModal && selectedProduct && (
+              <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0,0,0,0.5)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1000
+              }}>
+                <div style={{
+                  background: 'white',
+                  borderRadius: '20px',
+                  padding: '30px',
+                  maxWidth: '500px',
+                  width: '90%',
+                  maxHeight: '80vh',
+                  overflowY: 'auto',
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+                }}>
+                  <div style={{
+                    marginBottom: '25px',
+                    textAlign: 'center'
+                  }}>
+                    <h3 style={{
+                      fontSize: '24px',
+                      fontWeight: 'bold',
+                      color: '#0170B9',
+                      margin: '0 0 10px 0'
+                    }}>
+                      בחר אפשרויות
+                    </h3>
+                    <div style={{
+                      fontSize: '18px',
+                      color: '#333',
+                      fontWeight: 'bold',
+                      marginBottom: '5px'
+                    }}>
+                      {selectedProduct.name}
+                    </div>
+                    <div style={{
+                      fontSize: '16px',
+                      color: '#0170B9',
+                      fontWeight: 'bold'
+                    }}>
+                      ₪{currency(selectedProduct.base_price)}
+                    </div>
+                  </div>
+
+                  <div style={{ marginBottom: '25px' }}>
+                    <div style={{
+                      fontSize: '16px',
+                      fontWeight: 'bold',
+                      color: '#333',
+                      marginBottom: '15px'
+                    }}>
+                      אפשרויות זמינות:
+                    </div>
+                    
+                    {parseOptions(selectedProduct.options).map((option, index) => (
+                      <label 
+                        key={index}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          padding: '12px 15px',
+                          marginBottom: '8px',
+                          background: selectedOptions.includes(option) ? '#e3f2fd' : '#f8f9fa',
+                          borderRadius: '10px',
+                          border: selectedOptions.includes(option) ? '2px solid #0170B9' : '2px solid #e9ecef',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          if (!selectedOptions.includes(option)) {
+                            e.currentTarget.style.backgroundColor = '#f0f0f0';
+                            e.currentTarget.style.borderColor = '#ccc';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!selectedOptions.includes(option)) {
+                            e.currentTarget.style.backgroundColor = '#f8f9fa';
+                            e.currentTarget.style.borderColor = '#e9ecef';
+                          }
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedOptions.includes(option)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedOptions(prev => [...prev, option]);
+                            } else {
+                              setSelectedOptions(prev => prev.filter(opt => opt !== option));
+                            }
+                          }}
+                          style={{
+                            width: '18px',
+                            height: '18px',
+                            accentColor: '#0170B9'
+                          }}
+                        />
+                        <span style={{
+                          fontSize: '16px',
+                          color: '#333',
+                          fontWeight: selectedOptions.includes(option) ? 'bold' : 'normal'
+                        }}>
+                          {option}
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+
+                  <div style={{
+                    display: 'flex',
+                    gap: '15px',
+                    justifyContent: 'center'
+                  }}>
+                    <button
+                      onClick={() => {
+                        setShowOptionsModal(false);
+                        setSelectedProduct(null);
+                        setSelectedOptions([]);
+                      }}
+                      style={{
+                        background: '#f8f9fa',
+                        color: '#333',
+                        padding: '12px 24px',
+                        borderRadius: '10px',
+                        border: '2px solid #e9ecef',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#e9ecef';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = '#f8f9fa';
+                      }}
+                    >
+                      ❌ ביטול
+                    </button>
+                    <button
+                      onClick={() => addProductWithOptions(selectedProduct, selectedOptions)}
+                      style={{
+                        background: '#0170B9',
+                        color: 'white',
+                        padding: '12px 24px',
+                        borderRadius: '10px',
+                        border: 'none',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxShadow: '0 3px 10px rgba(1, 112, 185, 0.3)'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = '#025a8a';
+                        e.currentTarget.style.boxShadow = '0 5px 15px rgba(1, 112, 185, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = '#0170B9';
+                        e.currentTarget.style.boxShadow = '0 3px 10px rgba(1, 112, 185, 0.3)';
+                      }}
+                    >
+                      ✅ הוסף למסמך
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
