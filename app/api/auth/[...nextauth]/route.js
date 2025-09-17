@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
 
-const ALLOWED_EMAILS = ['tal.gurevich@gmail.com', 'Moran.marmus@gmail.com']
+const ALLOWED_EMAILS = ['tal.gurevich@gmail.com', 'moran.marmus@gmail.com']
 
 const handler = NextAuth({
   providers: [
@@ -15,11 +15,12 @@ const handler = NextAuth({
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      // Only allow specific emails to sign in
-      if (ALLOWED_EMAILS.includes(user.email)) {
+      // Only allow specific emails to sign in (case-insensitive)
+      if (ALLOWED_EMAILS.includes(user.email?.toLowerCase())) {
         return true
       } else {
         // Deny access for non-allowed emails
+        console.log(`Access denied for email: ${user.email}`)
         return false
       }
     },
