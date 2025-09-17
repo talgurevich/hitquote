@@ -198,7 +198,7 @@ export default function QuoteClient({ id }) {
                 fontWeight: '500',
                 marginTop: '6px'
               }}>
-                <div style={{ marginBottom: '2px' }}>אל יזמות ופיתוח ע.מ. • ח.פ: 312333263</div>
+                <div style={{ marginBottom: '2px' }}>אל יזמות ופיתוח ע.מ. • 312333263</div>
                 <div style={{ marginBottom: '2px' }}>ברכה צפירה 3, עכו • 0502670040 • 0508386698</div>
                 <div>moran.marmus@gmail.com</div>
               </div>
