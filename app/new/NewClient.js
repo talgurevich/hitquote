@@ -1377,20 +1377,26 @@ export default function NewClient() {
                 <span>ביניים (לפני מע״מ):</span>
                 <span style={{ fontWeight: 'bold', color: '#4B4F58' }}>₪{currency(netSubtotal)}</span>
               </div>
+              {/* DISCOUNT COMPONENT RESTRUCTURED - HEROKU DEPLOY 2025 */}
               <div 
-                data-discount-section="v3-1737158400"
+                id="discount-component-heroku-2025"
+                className="discount-wrapper-new"
                 style={{ 
                 fontSize: '16px', 
                 display: 'flex', 
                 justifyContent: 'space-between', 
                 alignItems: 'center',
-                gap: '15px'
+                gap: '15px',
+                backgroundColor: 'transparent'
               }}>
-                <span>הנחה:</span>
-                {/* FORCE-REBUILD-1737158400 */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontWeight: 'normal' }}>הנחה:</span>
+                <div 
+                  className="discount-controls-heroku-2025"
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
+                >
                   <select
-                    className="discount-type-selector-v3-1737158400"
+                    id="discount-type-heroku-rebuild"
+                    className="discount-selector-heroku-new"
                     value={discountType}
                     onChange={e => {
                       setDiscountType(e.target.value);
@@ -1405,13 +1411,14 @@ export default function NewClient() {
                       borderRadius: '8px',
                       border: '2px solid #e9ecef',
                       fontSize: '14px',
-                      transition: 'border-color 0.2s ease'
+                      transition: 'border-color 0.2s ease',
+                      minWidth: '60px'
                     }}
                     onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                     onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                   >
-                    <option value="percentage">%</option>
-                    <option value="absolute">₪</option>
+                    <option value="percentage">אחוז %</option>
+                    <option value="absolute">סכום ₪</option>
                   </select>
                   <input
                     type="number" 
