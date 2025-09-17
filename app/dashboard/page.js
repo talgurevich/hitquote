@@ -55,10 +55,10 @@ export default function Home() {
         {/* Logo/Title */}
         <div style={{ marginBottom: '40px' }}>
           <picture>
-            <source media="(max-width: 768px)" srcSet="/image1.png" />
-            <source media="(min-width: 769px)" srcSet="/image3.png" />
+            <source media="(max-width: 768px)" srcSet="/logo-new.png?v=1758110947" />
+            <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
             <img 
-              src="/image3.png" 
+              src="/logo-new.png?v=1758110947" 
               alt="תחנת לחם" 
               style={{ 
                 height: '80px', 

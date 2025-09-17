@@ -108,8 +108,8 @@ export const generateSimplePDF = async () => {
       foreignObjectRendering: false
     };
 
-    // Wait a moment for the DOM to settle
-    await new Promise(resolve => setTimeout(resolve, 300));
+    // Wait longer for images (especially new logo) to load
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Capture the cleaned clone
     const canvas = await html2canvas(clonedContainer, options);
@@ -274,8 +274,8 @@ export const generatePDFBlob = async (proposal) => {
       foreignObjectRendering: false
     };
 
-    // Wait a moment for the DOM to settle
-    await new Promise(resolve => setTimeout(resolve, 300));
+    // Wait longer for images (especially new logo) to load
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Capture the cleaned clone
     const canvas = await html2canvas(clonedContainer, options);
