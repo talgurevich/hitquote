@@ -184,13 +184,23 @@ export default function QuoteClient({ id }) {
                 הצעת מחיר
               </h1>
               <p style={{ 
-                margin: 0, 
+                margin: '0 0 8px 0', 
                 opacity: 0.9, 
                 fontSize: '16px',
                 color: 'rgba(255,255,255,0.9)' 
               }}>
                 מס׳ הצעה: {proposal.proposal_number || proposal.id.slice(0,8)}
               </p>
+              <div style={{ 
+                fontSize: '12px',
+                color: 'rgba(255,255,255,0.8)',
+                lineHeight: '1.4',
+                fontWeight: '500'
+              }}>
+                <div>אל יזמות ופיתוח ע.מ. • ח.פ: 312333263</div>
+                <div>ברכה צפירה 3, עכו • 0502670040 • 0508386698</div>
+                <div>moran.marmus@gmail.com</div>
+              </div>
             </div>
           </div>
           
