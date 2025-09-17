@@ -54,13 +54,29 @@ function HomeContent() {
   return (
     <>
       <style jsx>{`
-        .hero-bg {
+        .hero-bg::before {
+          content: '';
+          position: absolute;
+          top: -10px;
+          left: -10px;
+          right: -10px;
+          bottom: -10px;
+          background-image: url('/bg1.jpg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          filter: blur(8px) brightness(0.6);
+          z-index: -2;
+        }
+        
+        .hero-overlay {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: white;
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(2px);
           z-index: -1;
         }
         
@@ -86,7 +102,7 @@ function HomeContent() {
             margin: 20px !important;
           }
           .hero-logo {
-            height: 120px !important;
+            height: 160px !important;
           }
           .hero-content {
             padding: 40px 30px !important;
@@ -110,10 +126,16 @@ function HomeContent() {
           textAlign: 'center',
           padding: '60px 20px',
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          backgroundImage: 'url("/bg1.jpg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
         }}>
-          {/* White Background */}
+          {/* Background Image */}
           <div className="hero-bg"></div>
+          {/* Overlay for better text readability */}
+          <div className="hero-overlay"></div>
           
           {/* Content */}
           <div className="hero-content" style={{
@@ -128,7 +150,7 @@ function HomeContent() {
               alt="Logo" 
               className="hero-logo"
               style={{ 
-                height: '180px', 
+                height: '240px', 
                 width: 'auto',
                 marginBottom: '40px'
               }}
@@ -152,8 +174,9 @@ function HomeContent() {
               fontSize: '22px',
               color: '#4B4F58',
               lineHeight: '1.6',
-              margin: '0 0 40px 0',
-              maxWidth: '600px'
+              margin: '0 auto 40px auto',
+              maxWidth: '600px',
+              textAlign: 'center'
             }}>
               פתרון מתקדם וחכם לניהול הצעות מחיר, ניהול קטלוג מוצרים ויצירת מסמכים מקצועיים
             </p>
