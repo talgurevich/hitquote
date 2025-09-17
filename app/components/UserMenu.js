@@ -45,7 +45,7 @@ export default function UserMenu() {
         </div>
       </div>
       <button
-        onClick={() => signOut({ callbackUrl: '/auth/signin' })}
+        onClick={() => signOut({ callbackUrl: '/' })}
         style={{
           background: '#dc3545',
           color: 'white',
