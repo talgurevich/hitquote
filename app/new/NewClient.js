@@ -1180,7 +1180,29 @@ export default function NewClient() {
                           color: '#3a3a3a',
                           marginBottom: '5px'
                         }}>
-                          {it.custom_name || (it.product_id && products.find(p => p.id === it.product_id)?.name) || it.product_name || 'פריט מותאם'}
+                          {it.isCustom ? (
+                            <input
+                              value={it.name || ''}
+                              onChange={(e) => updateItem(idx, { name: e.target.value })}
+                              placeholder="שם פריט..."
+                              style={{
+                                width: '100%',
+                                padding: '8px 12px',
+                                border: '2px solid #e9ecef',
+                                borderRadius: '8px',
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                color: '#3a3a3a',
+                                backgroundColor: 'white',
+                                transition: 'border-color 0.2s ease',
+                                fontFamily: 'system-ui, Arial'
+                              }}
+                              onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                              onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                            />
+                          ) : (
+                            it.name || 'פריט'
+                          )}
                         </div>
                         {it.product_id && (
                           <div style={{ fontSize: '13px', color: '#4B4F58' }}>
