@@ -1256,8 +1256,8 @@ export default function NewClient() {
                     <div style={{ marginBottom: '15px' }}>
                       <label style={{ fontSize: '13px', color: '#4B4F58', marginBottom: '5px', display: 'block' }}>הערות:</label>
                       <textarea
-                        value={it.notes}
-                        onChange={(e) => updateItemNotes(idx, e.target.value)}
+                        value={it.notes || ''}
+                        onChange={(e) => updateItem(idx, { notes: e.target.value })}
                         placeholder="הערות נוספות..."
                         rows={2}
                         style={{
@@ -1265,9 +1265,13 @@ export default function NewClient() {
                           padding: '8px',
                           border: '1px solid #ddd',
                           borderRadius: '6px',
-                          fontSize: '14px',
-                          resize: 'vertical'
+                          fontSize: '16px',
+                          resize: 'vertical',
+                          fontFamily: 'system-ui, Arial',
+                          lineHeight: '1.5'
                         }}
+                        onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                        onBlur={(e) => e.target.style.borderColor = '#ddd'}
                       />
                     </div>
 
