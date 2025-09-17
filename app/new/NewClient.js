@@ -1246,7 +1246,7 @@ export default function NewClient() {
                           min="0.1"
                           step="0.1"
                           value={it.qty}
-                          onChange={(e) => updateItemQty(idx, Number(e.target.value))}
+                          onChange={(e) => updateItem(idx, { qty: Number(e.target.value || 0) })}
                           style={{
                             width: '100%',
                             padding: '8px',
@@ -1264,7 +1264,7 @@ export default function NewClient() {
                           min="0"
                           step="0.01"
                           value={it.unit_price}
-                          onChange={(e) => updateItemPrice(idx, Number(e.target.value))}
+                          onChange={(e) => updateItem(idx, { unit_price: Number(e.target.value || 0) })}
                           style={{
                             width: '100%',
                             padding: '8px',
