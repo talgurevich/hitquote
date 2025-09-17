@@ -1387,6 +1387,7 @@ export default function NewClient() {
                 <span>הנחה:</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <select
+                    className="discount-type-selector-v2"
                     value={discountType}
                     onChange={e => {
                       setDiscountType(e.target.value);
