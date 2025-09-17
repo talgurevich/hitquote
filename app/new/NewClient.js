@@ -1377,7 +1377,9 @@ export default function NewClient() {
                 <span>ביניים (לפני מע״מ):</span>
                 <span style={{ fontWeight: 'bold', color: '#4B4F58' }}>₪{currency(netSubtotal)}</span>
               </div>
-              <div style={{ 
+              <div 
+                data-discount-section="v3-1737158400"
+                style={{ 
                 fontSize: '16px', 
                 display: 'flex', 
                 justifyContent: 'space-between', 
@@ -1385,9 +1387,10 @@ export default function NewClient() {
                 gap: '15px'
               }}>
                 <span>הנחה:</span>
+                {/* FORCE-REBUILD-1737158400 */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <select
-                    className="discount-type-selector-v2"
+                    className="discount-type-selector-v3-1737158400"
                     value={discountType}
                     onChange={e => {
                       setDiscountType(e.target.value);
