@@ -10,6 +10,9 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     })
   ],
+  pages: {
+    signOut: '/'
+  },
   callbacks: {
     async signIn({ user, account, profile }) {
       // Only allow specific emails to sign in
@@ -21,6 +24,10 @@ const handler = NextAuth({
       }
     },
     async redirect({ url, baseUrl }) {
+      // Handle logout - if signing out, go to homepage
+      if (url.includes('/signout') || url.includes('callbackUrl=%2F')) {
+        return baseUrl + '/'
+      }
       // Redirect to dashboard after successful sign in
       return baseUrl + '/dashboard'
     },
