@@ -52,6 +52,7 @@ export default function NewClient() {
   const [customerId, setCustomerId] = useState(null);
   const [paymentTerms, setPaymentTerms] = useState('');
   const [notes, setNotes] = useState('');
+  const [deliveryDate, setDeliveryDate] = useState('');
   const [discountPct, setDiscountPct] = useState(0);
   const [items, setItems] = useState([]);
   const [saving, setSaving] = useState(false);
@@ -96,7 +97,7 @@ export default function NewClient() {
         if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
         const { data: p, error: e1 } = await supabase
           .from('proposal')
-          .select('id, customer_id, payment_terms, notes, discount_value, subtotal, vat_rate')
+          .select('id, customer_id, payment_terms, notes, delivery_date, discount_value, subtotal, vat_rate')
           .eq('id', editId)
           .maybeSingle();
         if (e1) throw e1;
@@ -105,6 +106,7 @@ export default function NewClient() {
         setCustomerId(p.customer_id || null);
         setPaymentTerms(p.payment_terms || '');
         setNotes(p.notes || '');
+        setDeliveryDate(p.delivery_date || '');
         const pct = p.subtotal ? (Number(p.discount_value || 0) / Number(p.subtotal)) * 100 : 0;
         setDiscountPct(Number(pct.toFixed(2)));
 
@@ -201,6 +203,7 @@ export default function NewClient() {
         customer_id: customerId,
         payment_terms: paymentTerms || null,
         notes: notes || null,
+        delivery_date: deliveryDate || null,
         subtotal: netSubtotal,
         discount_value: discountValue,
         include_discount_row: discountValue > 0,
@@ -1495,6 +1498,42 @@ export default function NewClient() {
                     transition: 'border-color 0.2s ease'
                   }} 
                   placeholder="הערות להצעה…"
+                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
+                />
+              </div>
+
+              {/* Delivery Date */}
+              <div style={{ 
+                background: 'linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)', 
+                padding: '20px', 
+                borderRadius: '15px',
+                border: '1px solid #ddd',
+                marginTop: '20px' 
+              }}>
+                <label style={{ 
+                  fontSize: '16px', 
+                  fontWeight: 'bold', 
+                  marginBottom: '10px',
+                  color: '#4B4F58',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}>
+                  📅 תאריך משלוח
+                </label>
+                <input 
+                  type="date"
+                  value={deliveryDate} 
+                  onChange={e => setDeliveryDate(e.target.value)} 
+                  style={{
+                    width: '100%',
+                    padding: '12px 15px',
+                    borderRadius: '10px',
+                    border: '2px solid #e9ecef',
+                    fontSize: '15px',
+                    transition: 'border-color 0.2s ease'
+                  }} 
                   onFocus={(e) => e.target.style.borderColor = '#0170B9'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />

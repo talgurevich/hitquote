@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS proposal (
     customer_id UUID REFERENCES customer(id),
     payment_terms TEXT,
     notes TEXT,
+    delivery_date DATE,
     subtotal DECIMAL(10,2) DEFAULT 0,
     discount_value DECIMAL(10,2) DEFAULT 0,
     include_discount_row BOOLEAN DEFAULT false,

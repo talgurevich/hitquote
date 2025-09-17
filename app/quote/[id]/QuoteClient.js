@@ -32,7 +32,7 @@ export default function QuoteClient({ id }) {
           supabase.from('settings').select('*').limit(1).maybeSingle(),
           supabase
             .from('proposal')
-            .select('id, proposal_number, customer_id, payment_terms, notes, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, customer:customer (name, phone, email, address)')
+            .select('id, proposal_number, customer_id, payment_terms, notes, delivery_date, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, customer:customer (name, phone, email, address)')
             .eq('id', id)
             .maybeSingle()
         ]);
@@ -396,7 +396,7 @@ export default function QuoteClient({ id }) {
             </div>
           </section>
 
-          {(proposal.payment_terms || proposal.notes) && (
+          {(proposal.payment_terms || proposal.notes || proposal.delivery_date) && (
             <section style={{
               background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
               border: '1px solid #e9ecef',
@@ -406,12 +406,26 @@ export default function QuoteClient({ id }) {
               boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
             }}>
               {proposal.payment_terms && (
-                <div style={{ marginBottom: proposal.notes ? '15px' : '0' }}>
+                <div style={{ marginBottom: (proposal.delivery_date || proposal.notes) ? '15px' : '0' }}>
                   <span style={{ fontWeight: 'bold', color: '#495057', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     💳 תנאי תשלום:
                   </span>
                   <div style={{ fontSize: '15px', color: '#666', paddingRight: '25px' }}>
                     {proposal.payment_terms}
+                  </div>
+                </div>
+              )}
+              {proposal.delivery_date && (
+                <div style={{ marginBottom: proposal.notes ? '15px' : '0' }}>
+                  <span style={{ fontWeight: 'bold', color: '#495057', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                    📅 תאריך משלוח:
+                  </span>
+                  <div style={{ fontSize: '15px', color: '#666', paddingRight: '25px' }}>
+                    {new Date(proposal.delivery_date).toLocaleDateString('he-IL', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
                   </div>
                 </div>
               )}
