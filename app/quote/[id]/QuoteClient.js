@@ -167,10 +167,10 @@ export default function QuoteClient({ id }) {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <picture>
-              <source media="(max-width: 768px)" srcSet="/logo-new.png?v=1758110947" />
+              <source media="(max-width: 768px)" srcSet="/image1-mobile.png?v=1737159000" />
               <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
               <img 
-                src="/logo-new.png?v=1758110947" 
+                src="/image1-mobile.png?v=1737159000" 
                 alt="תחנת לחם" 
                 style={{ height: '50px', width: 'auto' }}
               />
