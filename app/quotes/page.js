@@ -7,23 +7,69 @@ import { supabase } from '../../lib/supabaseClient';
 export default function QuotesList() {
   const [rows, setRows] = useState([]);
   const [err, setErr] = useState(null);
+  const [updating, setUpdating] = useState(null);
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
-        const { data, error } = await supabase
-          .from('proposal')
-          .select('id, proposal_number, created_at, delivery_date, total, customer:customer (name)')
-          .order('created_at', { ascending: false });
-        if (error) throw error;
-        setRows(data || []);
-      } catch (e) {
-        setErr(e.message || String(e));
-      }
-    };
-    load();
+    loadQuotes();
   }, []);
+
+  const loadQuotes = async () => {
+    try {
+      if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
+      const { data, error } = await supabase
+        .from('proposal')
+        .select('id, proposal_number, created_at, delivery_date, total, status, customer:customer (name)')
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      setRows(data || []);
+    } catch (e) {
+      setErr(e.message || String(e));
+    }
+  };
+
+  const updateQuoteStatus = async (quoteId, newStatus) => {
+    setUpdating(quoteId);
+    try {
+      const { error } = await supabase
+        .from('proposal')
+        .update({ status: newStatus })
+        .eq('id', quoteId);
+      
+      if (error) throw error;
+      
+      // Reload quotes to reflect the change
+      await loadQuotes();
+    } catch (e) {
+      setErr(e.message || String(e));
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    const statusConfig = {
+      pending: { text: 'ממתין', color: '#ffc107', bg: '#fff8e1' },
+      accepted: { text: 'מאושר', color: '#28a745', bg: '#e8f5e8' },
+      rejected: { text: 'נדחה', color: '#dc3545', bg: '#fde8e8' }
+    };
+    
+    const config = statusConfig[status] || statusConfig.pending;
+    
+    return (
+      <span style={{
+        background: config.bg,
+        color: config.color,
+        padding: '4px 8px',
+        borderRadius: '12px',
+        fontSize: '12px',
+        fontWeight: 'bold',
+        border: `1px solid ${config.color}`,
+        display: 'inline-block'
+      }}>
+        {config.text}
+      </span>
+    );
+  };
 
   return (
     <>
@@ -171,6 +217,30 @@ export default function QuotesList() {
               📁 ניהול קטלוג
             </Link>
             
+            <Link href="/schedule" style={{
+              background: 'rgba(255,255,255,0.2)',
+              color: 'white',
+              padding: '12px 20px',
+              borderRadius: '25px',
+              textDecoration: 'none',
+              fontSize: '14px',
+              border: '1px solid rgba(255,255,255,0.3)',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}>
+              📅 לוח זמנים
+            </Link>
+            
             <Link href="/new" style={{
               background: '#0170B9',
               color: 'white',
@@ -272,7 +342,8 @@ export default function QuotesList() {
                       <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך יצירה</th>
                       <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך משלוח</th>
                       <th style={{ textAlign: 'left', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>סכום</th>
-                      <th style={{ textAlign: 'center', padding: '18px', width: '120px', fontSize: '16px', fontWeight: 'bold' }}>פעולות</th>
+                      <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>סטטוס</th>
+                      <th style={{ textAlign: 'center', padding: '18px', width: '200px', fontSize: '16px', fontWeight: 'bold' }}>פעולות</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -321,34 +392,94 @@ export default function QuotesList() {
                           ₪{Number(r.total || 0).toLocaleString('he-IL')}
                         </td>
                         <td style={{ padding: '18px', textAlign: 'center' }}>
-                          <Link 
-                            href={`/quote/${r.id}`}
-                            className="view-button"
-                            style={{
-                              background: '#0170B9',
-                              color: 'white',
-                              padding: '8px 16px',
-                              borderRadius: '6px',
-                              textDecoration: 'none',
-                              fontSize: '14px',
-                              fontWeight: 'bold',
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '6px',
-                              transition: 'all 0.2s ease',
-                              boxShadow: '0 2px 6px rgba(1, 112, 185, 0.3)'
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.background = '#025a8a';
-                              e.currentTarget.style.boxShadow = '0 3px 10px rgba(1, 112, 185, 0.4)';
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.background = '#0170B9';
-                              e.currentTarget.style.boxShadow = '0 2px 6px rgba(1, 112, 185, 0.3)';
-                            }}
-                          >
-                            👁️ צפייה
-                          </Link>
+                          {getStatusBadge(r.status || 'pending')}
+                        </td>
+                        <td style={{ padding: '18px', textAlign: 'center' }}>
+                          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <Link 
+                              href={`/quote/${r.id}`}
+                              style={{
+                                background: '#0170B9',
+                                color: 'white',
+                                padding: '6px 12px',
+                                borderRadius: '6px',
+                                textDecoration: 'none',
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                transition: 'all 0.2s ease',
+                                boxShadow: '0 2px 4px rgba(1, 112, 185, 0.3)'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#025a8a';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = '#0170B9';
+                              }}
+                            >
+                              👁️ צפייה
+                            </Link>
+                            
+                            {r.status !== 'accepted' && (
+                              <button
+                                onClick={() => updateQuoteStatus(r.id, 'accepted')}
+                                disabled={updating === r.id}
+                                style={{
+                                  background: updating === r.id ? '#ccc' : '#28a745',
+                                  color: 'white',
+                                  padding: '6px 12px',
+                                  borderRadius: '6px',
+                                  border: 'none',
+                                  fontSize: '12px',
+                                  fontWeight: 'bold',
+                                  cursor: updating === r.id ? 'not-allowed' : 'pointer',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  transition: 'all 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => {
+                                  if (updating !== r.id) e.currentTarget.style.background = '#218838';
+                                }}
+                                onMouseLeave={(e) => {
+                                  if (updating !== r.id) e.currentTarget.style.background = '#28a745';
+                                }}
+                              >
+                                ✅ אשר
+                              </button>
+                            )}
+                            
+                            {r.status !== 'rejected' && (
+                              <button
+                                onClick={() => updateQuoteStatus(r.id, 'rejected')}
+                                disabled={updating === r.id}
+                                style={{
+                                  background: updating === r.id ? '#ccc' : '#dc3545',
+                                  color: 'white',
+                                  padding: '6px 12px',
+                                  borderRadius: '6px',
+                                  border: 'none',
+                                  fontSize: '12px',
+                                  fontWeight: 'bold',
+                                  cursor: updating === r.id ? 'not-allowed' : 'pointer',
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '4px',
+                                  transition: 'all 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => {
+                                  if (updating !== r.id) e.currentTarget.style.background = '#c82333';
+                                }}
+                                onMouseLeave={(e) => {
+                                  if (updating !== r.id) e.currentTarget.style.background = '#dc3545';
+                                }}
+                              >
+                                ❌ דחה
+                              </button>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
