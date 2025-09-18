@@ -176,6 +176,14 @@ export default function QuoteClient({ id }) {
               />
             </picture>
             <div>
+              <p style={{
+                margin: '0 0 12px 0',
+                fontSize: '14px',
+                color: 'rgba(255,255,255,0.95)',
+                fontWeight: 'bold'
+              }}>
+                כשר למהדרין
+              </p>
               <h1 style={{ 
                 margin: '0 0 8px 0', 
                 fontSize: '28px', 
