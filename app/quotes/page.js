@@ -343,7 +343,7 @@ export default function QuotesList() {
                       <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך משלוח</th>
                       <th style={{ textAlign: 'left', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>סכום</th>
                       <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>סטטוס</th>
-                      <th style={{ textAlign: 'center', padding: '18px', width: '200px', fontSize: '16px', fontWeight: 'bold' }}>פעולות</th>
+                      <th style={{ textAlign: 'center', padding: '18px', width: '140px', fontSize: '16px', fontWeight: 'bold' }}>פעולות</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -394,23 +394,25 @@ export default function QuotesList() {
                         <td style={{ padding: '18px', textAlign: 'center' }}>
                           {getStatusBadge(r.status || 'pending')}
                         </td>
-                        <td style={{ padding: '18px', textAlign: 'center' }}>
-                          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <td style={{ padding: '12px', textAlign: 'center' }}>
+                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'center', alignItems: 'center', flexWrap: 'nowrap' }}>
                             <Link 
                               href={`/quote/${r.id}`}
+                              title="צפייה בהצעה"
                               style={{
                                 background: '#0170B9',
                                 color: 'white',
-                                padding: '6px 12px',
-                                borderRadius: '6px',
+                                padding: '0',
+                                borderRadius: '4px',
                                 textDecoration: 'none',
-                                fontSize: '12px',
-                                fontWeight: 'bold',
+                                fontSize: '14px',
                                 display: 'inline-flex',
                                 alignItems: 'center',
-                                gap: '4px',
+                                justifyContent: 'center',
                                 transition: 'all 0.2s ease',
-                                boxShadow: '0 2px 4px rgba(1, 112, 185, 0.3)'
+                                width: '32px',
+                                height: '32px',
+                                boxSizing: 'border-box'
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.background = '#025a8a';
@@ -419,26 +421,29 @@ export default function QuotesList() {
                                 e.currentTarget.style.background = '#0170B9';
                               }}
                             >
-                              👁️ צפייה
+                              👁️
                             </Link>
                             
                             {r.status !== 'accepted' && (
                               <button
                                 onClick={() => updateQuoteStatus(r.id, 'accepted')}
                                 disabled={updating === r.id}
+                                title="אשר הצעה"
                                 style={{
                                   background: updating === r.id ? '#ccc' : '#28a745',
                                   color: 'white',
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
+                                  padding: '0',
+                                  borderRadius: '4px',
                                   border: 'none',
-                                  fontSize: '12px',
-                                  fontWeight: 'bold',
+                                  fontSize: '14px',
                                   cursor: updating === r.id ? 'not-allowed' : 'pointer',
                                   display: 'inline-flex',
                                   alignItems: 'center',
-                                  gap: '4px',
-                                  transition: 'all 0.2s ease'
+                                  justifyContent: 'center',
+                                  transition: 'all 0.2s ease',
+                                  width: '32px',
+                                  height: '32px',
+                                  boxSizing: 'border-box'
                                 }}
                                 onMouseEnter={(e) => {
                                   if (updating !== r.id) e.currentTarget.style.background = '#218838';
@@ -447,7 +452,7 @@ export default function QuotesList() {
                                   if (updating !== r.id) e.currentTarget.style.background = '#28a745';
                                 }}
                               >
-                                ✅ אשר
+                                ✅
                               </button>
                             )}
                             
@@ -455,19 +460,22 @@ export default function QuotesList() {
                               <button
                                 onClick={() => updateQuoteStatus(r.id, 'rejected')}
                                 disabled={updating === r.id}
+                                title="דחה הצעה"
                                 style={{
                                   background: updating === r.id ? '#ccc' : '#dc3545',
                                   color: 'white',
-                                  padding: '6px 12px',
-                                  borderRadius: '6px',
+                                  padding: '0',
+                                  borderRadius: '4px',
                                   border: 'none',
-                                  fontSize: '12px',
-                                  fontWeight: 'bold',
+                                  fontSize: '14px',
                                   cursor: updating === r.id ? 'not-allowed' : 'pointer',
                                   display: 'inline-flex',
                                   alignItems: 'center',
-                                  gap: '4px',
-                                  transition: 'all 0.2s ease'
+                                  justifyContent: 'center',
+                                  transition: 'all 0.2s ease',
+                                  width: '32px',
+                                  height: '32px',
+                                  boxSizing: 'border-box'
                                 }}
                                 onMouseEnter={(e) => {
                                   if (updating !== r.id) e.currentTarget.style.background = '#c82333';
@@ -476,7 +484,7 @@ export default function QuotesList() {
                                   if (updating !== r.id) e.currentTarget.style.background = '#dc3545';
                                 }}
                               >
-                                ❌ דחה
+                                ❌
                               </button>
                             )}
                           </div>

@@ -10,7 +10,7 @@ export default function UserMenu() {
   return (
     <div style={{
       position: 'fixed',
-      top: '20px',
+      bottom: '20px',
       left: '20px',
       zIndex: 1000,
       background: 'rgba(255, 255, 255, 0.95)',
