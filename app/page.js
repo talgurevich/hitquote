@@ -9,6 +9,7 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
   const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
     // Check if user is already signed in
@@ -27,6 +28,7 @@ function HomeContent() {
     setIsLoading(true);
     await signIn('google', { callbackUrl: '/dashboard' });
   };
+  
 
   if (isLoading) {
     return (
@@ -106,6 +108,12 @@ function HomeContent() {
           }
           .hero-content {
             padding: 40px 30px !important;
+          }
+          .contact-form {
+            padding: 25px 20px !important;
+          }
+          .contact-form input {
+            font-size: 16px !important;
           }
         }
       `}</style>
@@ -481,6 +489,7 @@ function HomeContent() {
             </div>
           </div>
         </section>
+
 
         {/* Footer */}
         <footer style={{

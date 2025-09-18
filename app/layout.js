@@ -1,8 +1,8 @@
 import Providers from './providers';
 
 export const metadata = {
-  title: 'הצעות מחיר - תחנת לחם',
-  description: 'מערכת הצעות מחיר מקצועית',
+  title: 'Hit Quote',
+  description: 'Professional Quote Management System',
 };
 
 export default function RootLayout({ children }) {
