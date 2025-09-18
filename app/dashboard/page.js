@@ -61,7 +61,7 @@ export default function Home() {
               src="/logo-new.png?v=1758110947" 
               alt="תחנת לחם" 
               style={{ 
-                height: '80px', 
+                height: '50px', 
                 width: 'auto',
                 marginBottom: '20px'
               }}
