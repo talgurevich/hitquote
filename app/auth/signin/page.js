@@ -115,7 +115,7 @@ function SignInContent() {
             </picture>
             <p style={{
               fontSize: '24px',
-              color: '#0170B9',
+              color: '#ffdc33',
               margin: '0 0 10px 0',
               fontWeight: 'bold'
             }}>
@@ -222,7 +222,7 @@ function SignInContent() {
           }}>
             <p style={{
               fontSize: '14px',
-              color: '#0170B9',
+              color: '#ffdc33',
               margin: 0,
               fontWeight: '600'
             }}>

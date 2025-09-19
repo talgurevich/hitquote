@@ -130,8 +130,8 @@ export default function QuotesList() {
       }}>
         {/* Header */}
         <div className="mobile-header" style={{
-          background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
-          color: 'white',
+          background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+          color: 'black',
           padding: '40px 30px',
           display: 'flex',
           justifyContent: 'space-between',
@@ -242,7 +242,7 @@ export default function QuotesList() {
             </Link>
             
             <Link href="/new" style={{
-              background: '#0170B9',
+              background: '#ffdc33',
               color: 'white',
               padding: '12px 24px',
               borderRadius: '8px',
@@ -257,11 +257,11 @@ export default function QuotesList() {
               gap: '8px'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#025a8a';
+              e.currentTarget.style.background = '#e6c52d';
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 112, 185, 0.4)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#0170B9';
+              e.currentTarget.style.background = '#ffdc33';
               e.currentTarget.style.boxShadow = '0 2px 8px rgba(1, 112, 185, 0.3)';
             }}>
               🆕 הצעה חדשה
@@ -301,7 +301,7 @@ export default function QuotesList() {
                 התחל ביצירת הצעת המחיר הראשונה שלך
               </p>
               <Link href="/new" style={{
-                background: '#0170B9',
+                background: '#ffdc33',
                 color: 'white',
                 padding: '15px 30px',
                 borderRadius: '8px',
@@ -315,11 +315,11 @@ export default function QuotesList() {
                 boxShadow: '0 3px 10px rgba(1, 112, 185, 0.3)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#025a8a';
+                e.currentTarget.style.background = '#e6c52d';
                 e.currentTarget.style.boxShadow = '0 5px 15px rgba(1, 112, 185, 0.4)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#0170B9';
+                e.currentTarget.style.background = '#ffdc33';
                 e.currentTarget.style.boxShadow = '0 3px 10px rgba(1, 112, 185, 0.3)';
               }}>
                 🚀 צור הצעה חדשה
@@ -336,7 +336,7 @@ export default function QuotesList() {
               }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
-                    <tr style={{ background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)', color: 'white' }}>
+                    <tr style={{ background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)', color: 'white' }}>
                       <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>מס׳ הצעה</th>
                       <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>לקוח</th>
                       <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך יצירה</th>
@@ -386,7 +386,7 @@ export default function QuotesList() {
                           padding: '18px', 
                           fontSize: '18px', 
                           fontWeight: 'bold', 
-                          color: '#0170B9',
+                          color: '#ffdc33',
                           textAlign: 'left'
                         }}>
                           ₪{Number(r.total || 0).toLocaleString('he-IL')}
@@ -400,7 +400,7 @@ export default function QuotesList() {
                               href={`/quote/${r.id}`}
                               title="צפייה בהצעה"
                               style={{
-                                background: '#0170B9',
+                                background: '#ffdc33',
                                 color: 'white',
                                 padding: '0',
                                 borderRadius: '4px',
@@ -415,10 +415,10 @@ export default function QuotesList() {
                                 boxSizing: 'border-box'
                               }}
                               onMouseEnter={(e) => {
-                                e.currentTarget.style.background = '#025a8a';
+                                e.currentTarget.style.background = '#e6c52d';
                               }}
                               onMouseLeave={(e) => {
-                                e.currentTarget.style.background = '#0170B9';
+                                e.currentTarget.style.background = '#ffdc33';
                               }}
                             >
                               👁️
@@ -531,7 +531,7 @@ export default function QuotesList() {
                         <div style={{
                           fontSize: '18px',
                           fontWeight: 'bold',
-                          color: '#0170B9',
+                          color: '#ffdc33',
                           marginBottom: '8px'
                         }}>
                           #{r.proposal_number || r.id.slice(0,8)}
@@ -568,7 +568,7 @@ export default function QuotesList() {
                       <div style={{
                         fontSize: '20px',
                         fontWeight: 'bold',
-                        color: '#0170B9'
+                        color: '#ffdc33'
                       }}>
                         ₪{Number(r.total || 0).toLocaleString('he-IL')}
                       </div>
@@ -576,7 +576,7 @@ export default function QuotesList() {
                     <Link 
                       href={`/quote/${r.id}`}
                       style={{
-                        background: '#0170B9',
+                        background: '#ffdc33',
                         color: 'white',
                         padding: '12px',
                         borderRadius: '8px',
@@ -591,10 +591,10 @@ export default function QuotesList() {
                         width: '100%'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#025a8a';
+                        e.currentTarget.style.background = '#e6c52d';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#0170B9';
+                        e.currentTarget.style.background = '#ffdc33';
                       }}
                     >
                       👁️ צפייה בהצעה

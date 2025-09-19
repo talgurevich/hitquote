@@ -43,21 +43,21 @@ export const generateSimplePDF = async () => {
       // Remove inline styles that might override our changes
       if (element.style) {
         // Handle background colors and gradients
-        if (element.style.background && (element.style.background.includes('#0170B9') || element.style.background.includes('rgb(1, 112, 185)') || element.style.background.includes('025a8a'))) {
+        if (element.style.background && (element.style.background.includes('#ffdc33') || element.style.background.includes('rgb(1, 112, 185)') || element.style.background.includes('025a8a'))) {
           element.style.background = '#3a3a3a';
         }
         
-        if (element.style.backgroundColor && (element.style.backgroundColor.includes('#0170B9') || element.style.backgroundColor.includes('rgb(1, 112, 185)'))) {
+        if (element.style.backgroundColor && (element.style.backgroundColor.includes('#ffdc33') || element.style.backgroundColor.includes('rgb(1, 112, 185)'))) {
           element.style.backgroundColor = '#3a3a3a';
         }
         
         // Handle text colors
-        if (element.style.color && (element.style.color.includes('#0170B9') || element.style.color.includes('rgb(1, 112, 185)'))) {
+        if (element.style.color && (element.style.color.includes('#ffdc33') || element.style.color.includes('rgb(1, 112, 185)'))) {
           element.style.color = '#000000';
         }
         
         // Handle border colors
-        if (element.style.borderColor && (element.style.borderColor.includes('#0170B9') || element.style.borderColor.includes('rgb(1, 112, 185)'))) {
+        if (element.style.borderColor && (element.style.borderColor.includes('#ffdc33') || element.style.borderColor.includes('rgb(1, 112, 185)'))) {
           element.style.borderColor = '#3a3a3a';
         }
       }
@@ -209,21 +209,21 @@ export const generatePDFBlob = async (proposal) => {
       // Remove inline styles that might override our changes
       if (element.style) {
         // Handle background colors and gradients
-        if (element.style.background && (element.style.background.includes('#0170B9') || element.style.background.includes('rgb(1, 112, 185)') || element.style.background.includes('025a8a'))) {
+        if (element.style.background && (element.style.background.includes('#ffdc33') || element.style.background.includes('rgb(1, 112, 185)') || element.style.background.includes('025a8a'))) {
           element.style.background = '#3a3a3a';
         }
         
-        if (element.style.backgroundColor && (element.style.backgroundColor.includes('#0170B9') || element.style.backgroundColor.includes('rgb(1, 112, 185)'))) {
+        if (element.style.backgroundColor && (element.style.backgroundColor.includes('#ffdc33') || element.style.backgroundColor.includes('rgb(1, 112, 185)'))) {
           element.style.backgroundColor = '#3a3a3a';
         }
         
         // Handle text colors
-        if (element.style.color && (element.style.color.includes('#0170B9') || element.style.color.includes('rgb(1, 112, 185)'))) {
+        if (element.style.color && (element.style.color.includes('#ffdc33') || element.style.color.includes('rgb(1, 112, 185)'))) {
           element.style.color = '#000000';
         }
         
         // Handle border colors
-        if (element.style.borderColor && (element.style.borderColor.includes('#0170B9') || element.style.borderColor.includes('rgb(1, 112, 185)'))) {
+        if (element.style.borderColor && (element.style.borderColor.includes('#ffdc33') || element.style.borderColor.includes('rgb(1, 112, 185)'))) {
           element.style.borderColor = '#3a3a3a';
         }
       }

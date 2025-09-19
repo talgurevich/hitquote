@@ -46,13 +46,13 @@ export default function Diag() {
       background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
     }}>
       <h1 style={{ color: '#3a3a3a' }}>בדיקת דיאגנוסטיקה</h1>
-      <div style={{ color: '#3a3a3a' }}>ENV URL: <b style={{ color: envOk.url ? '#0170B9' : '#4B4F58' }}>{envOk.url ? 'OK' : 'MISSING'}</b></div>
-      <div style={{ color: '#3a3a3a' }}>ENV KEY: <b style={{ color: envOk.key ? '#0170B9' : '#4B4F58' }}>{envOk.key ? 'OK' : 'MISSING'}</b></div>
+      <div style={{ color: '#3a3a3a' }}>ENV URL: <b style={{ color: envOk.url ? '#ffdc33' : '#4B4F58' }}>{envOk.url ? 'OK' : 'MISSING'}</b></div>
+      <div style={{ color: '#3a3a3a' }}>ENV KEY: <b style={{ color: envOk.key ? '#ffdc33' : '#4B4F58' }}>{envOk.key ? 'OK' : 'MISSING'}</b></div>
       <hr />
       {err && <div style={{ color: '#4B4F58' }}>שגיאה: {err}</div>}
-      <div style={{ color: '#3a3a3a' }}>לקוחות (customer): <b style={{ color: '#0170B9' }}>{counts.customers ?? '—'}</b></div>
-      <div style={{ color: '#3a3a3a' }}>מוצרים (product): <b style={{ color: '#0170B9' }}>{counts.products ?? '—'}</b></div>
-      <div style={{ color: '#3a3a3a' }}>הגדרות (settings): <b style={{ color: '#0170B9' }}>{counts.settings ?? '—'}</b></div>
+      <div style={{ color: '#3a3a3a' }}>לקוחות (customer): <b style={{ color: '#ffdc33' }}>{counts.customers ?? '—'}</b></div>
+      <div style={{ color: '#3a3a3a' }}>מוצרים (product): <b style={{ color: '#ffdc33' }}>{counts.products ?? '—'}</b></div>
+      <div style={{ color: '#3a3a3a' }}>הגדרות (settings): <b style={{ color: '#ffdc33' }}>{counts.settings ?? '—'}</b></div>
     </main>
   );
 }

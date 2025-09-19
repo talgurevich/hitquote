@@ -13,8 +13,8 @@ export default function Health() {
     }}>
       <h1 style={{ color: '#3a3a3a' }}>בדיקת ENV</h1>
       <ul style={{ lineHeight: 1.8 }}>
-        <li>NEXT_PUBLIC_SUPABASE_URL: <b style={{ color: hasUrl ? '#0170B9' : '#4B4F58' }}>{hasUrl ? 'OK' : 'MISSING'}</b></li>
-        <li>NEXT_PUBLIC_SUPABASE_ANON_KEY: <b style={{ color: hasKey ? '#0170B9' : '#4B4F58' }}>{hasKey ? 'OK' : 'MISSING'}</b></li>
+        <li>NEXT_PUBLIC_SUPABASE_URL: <b style={{ color: hasUrl ? '#ffdc33' : '#4B4F58' }}>{hasUrl ? 'OK' : 'MISSING'}</b></li>
+        <li>NEXT_PUBLIC_SUPABASE_ANON_KEY: <b style={{ color: hasKey ? '#ffdc33' : '#4B4F58' }}>{hasKey ? 'OK' : 'MISSING'}</b></li>
       </ul>
     </main>
   );

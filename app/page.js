@@ -169,7 +169,7 @@ function HomeContent() {
               fontSize: '48px',
               fontWeight: 'bold',
               margin: '0 0 20px 0',
-              background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
+              background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text'
@@ -203,7 +203,7 @@ function HomeContent() {
                 border: '1px solid rgba(1, 112, 185, 0.2)'
               }}>
                 <div style={{ fontSize: '32px', marginBottom: '10px' }}>⚡</div>
-                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#0170B9', marginBottom: '5px' }}>מהיר ויעיל</div>
+                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>מהיר ויעיל</div>
                 <div style={{ fontSize: '14px', color: '#666' }}>יצירת הצעות מחיר בקליקים ספורים</div>
               </div>
               <div style={{
@@ -213,7 +213,7 @@ function HomeContent() {
                 border: '1px solid rgba(1, 112, 185, 0.2)'
               }}>
                 <div style={{ fontSize: '32px', marginBottom: '10px' }}>📊</div>
-                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#0170B9', marginBottom: '5px' }}>ניהול מתקדם</div>
+                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>ניהול מתקדם</div>
                 <div style={{ fontSize: '14px', color: '#666' }}>קטלוג מוצרים וניהול לקוחות</div>
               </div>
               <div style={{
@@ -223,7 +223,7 @@ function HomeContent() {
                 border: '1px solid rgba(1, 112, 185, 0.2)'
               }}>
                 <div style={{ fontSize: '32px', marginBottom: '10px' }}>🔒</div>
-                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#0170B9', marginBottom: '5px' }}>מאובטח</div>
+                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>מאובטח</div>
                 <div style={{ fontSize: '14px', color: '#666' }}>אימות Google ובטיחות מירבית</div>
               </div>
             </div>
@@ -232,7 +232,7 @@ function HomeContent() {
             <a 
               href="#login" 
               style={{
-                background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
+                background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
                 color: 'white',
                 padding: '15px 30px',
                 borderRadius: '25px',
@@ -473,7 +473,7 @@ function HomeContent() {
             }}>
               <p style={{
                 fontSize: '14px',
-                color: '#0170B9',
+                color: '#ffdc33',
                 margin: 0,
                 fontWeight: '600'
               }}>
@@ -513,16 +513,16 @@ function HomeContent() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
-                  color: '#0170B9',
+                  color: '#ffdc33',
                   textDecoration: 'none',
                   fontWeight: 'bold',
                   transition: 'color 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#025a8a';
+                  e.currentTarget.style.color = '#e6c52d';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#0170B9';
+                  e.currentTarget.style.color = '#ffdc33';
                 }}
               >
                 Tal Gurevich

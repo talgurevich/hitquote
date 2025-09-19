@@ -69,7 +69,7 @@ export default function Home() {
           </picture>
           <p style={{
             fontSize: '20px',
-            color: '#0170B9',
+            color: '#ffdc33',
             margin: '0 0 10px 0',
             fontWeight: 'bold'
           }}>
@@ -116,8 +116,8 @@ export default function Home() {
           {/* Quotes Card */}
           <Link href="/quotes" style={{ textDecoration: 'none' }}>
             <div style={{
-              background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
-              color: 'white',
+              background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+              color: 'black',
               padding: '30px 20px',
               borderRadius: '15px',
               textAlign: 'center',
@@ -151,12 +151,12 @@ export default function Home() {
               textAlign: 'center',
               cursor: 'pointer',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '2px solid #0170B9'
+              border: '2px solid #ffdc33'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
               e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.2)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)';
               e.currentTarget.style.color = 'white';
             }}
             onMouseLeave={(e) => {
@@ -183,12 +183,12 @@ export default function Home() {
               textAlign: 'center',
               cursor: 'pointer',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '2px solid #0170B9'
+              border: '2px solid #ffdc33'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-5px)';
               e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.2)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)';
               e.currentTarget.style.color = 'white';
             }}
             onMouseLeave={(e) => {
@@ -232,11 +232,11 @@ export default function Home() {
               borderRadius: '25px',
               textDecoration: 'none',
               fontSize: '14px',
-              border: '1px solid #0170B9',
+              border: '1px solid #ffdc33',
               transition: 'all 0.2s ease'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#0170B9';
+              e.currentTarget.style.backgroundColor = '#ffdc33';
               e.currentTarget.style.color = 'white';
             }}
             onMouseLeave={(e) => {
@@ -257,7 +257,7 @@ export default function Home() {
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = '#E5E5E5';
-              e.currentTarget.style.borderColor = '#0170B9';
+              e.currentTarget.style.borderColor = '#ffdc33';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = '#F5F5F5';

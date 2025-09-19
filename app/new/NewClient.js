@@ -326,7 +326,7 @@ export default function NewClient() {
       }}>
         {/* Header */}
         <div className="mobile-header" style={{
-          background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
+          background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
           color: 'white',
           padding: '40px 30px',
           display: 'flex',
@@ -416,7 +416,7 @@ export default function NewClient() {
                   background: 'white',
                   transition: 'border-color 0.2s ease'
                 }}
-                onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                 onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
               >
                 <option value="">בחר לקוח מהרשימה...</option>
@@ -427,7 +427,7 @@ export default function NewClient() {
               <button 
                 onClick={() => setShowNewCustomer(true)} 
                 style={{
-                  background: 'linear-gradient(45deg, #0170B9, #0170B9)',
+                  background: 'linear-gradient(45deg, #ffdc33, #ffdc33)',
                   color: 'white',
                   padding: '12px 20px',
                   borderRadius: '10px',
@@ -493,7 +493,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
                 <input 
@@ -507,7 +507,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
                 <input 
@@ -521,7 +521,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
                 <input 
@@ -535,7 +535,7 @@ export default function NewClient() {
                     fontSize: '16px',
                     transition: 'border-color 0.2s ease'
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
               </div>
@@ -560,7 +560,7 @@ export default function NewClient() {
                     }
                   }} 
                   style={{
-                    background: 'linear-gradient(45deg, #0170B9, #0170B9)',
+                    background: 'linear-gradient(45deg, #ffdc33, #ffdc33)',
                     color: 'white',
                     padding: '12px 20px',
                     borderRadius: '10px',
@@ -633,7 +633,7 @@ export default function NewClient() {
               <button 
                 onClick={() => setShowCatalogPicker(true)} 
                 style={{
-                  background: '#0170B9',
+                  background: '#ffdc33',
                   color: 'white',
                   padding: '12px 20px',
                   borderRadius: '10px',
@@ -661,7 +661,7 @@ export default function NewClient() {
               <button 
                 onClick={addCustomItem} 
                 style={{
-                  background: '#0170B9',
+                  background: '#ffdc33',
                   color: 'white',
                   padding: '12px 20px',
                   borderRadius: '10px',
@@ -692,7 +692,7 @@ export default function NewClient() {
             {showCatalogPicker && (
               <div style={{
                 background: 'linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%)',
-                border: '2px solid #0170B9',
+                border: '2px solid #ffdc33',
                 borderRadius: '15px',
                 padding: '20px',
                 marginBottom: '20px',
@@ -711,7 +711,7 @@ export default function NewClient() {
                       fontSize: '16px',
                       transition: 'border-color 0.2s ease'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                    onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                     onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                   />
                   <button 
@@ -787,14 +787,14 @@ export default function NewClient() {
                       <div style={{ 
                         fontWeight: 'bold', 
                         fontSize: '18px', 
-                        color: '#0170B9' 
+                        color: '#ffdc33' 
                       }}>
                         ₪{currency(p.base_price)}
                       </div>
                       <button 
                         onClick={() => addProduct(p)} 
                         style={{
-                          background: 'linear-gradient(45deg, #0170B9, #0170B9)',
+                          background: 'linear-gradient(45deg, #ffdc33, #ffdc33)',
                           color: 'white',
                           padding: '8px 16px',
                           borderRadius: '8px',
@@ -850,7 +850,7 @@ export default function NewClient() {
                     <h3 style={{
                       fontSize: '24px',
                       fontWeight: 'bold',
-                      color: '#0170B9',
+                      color: '#ffdc33',
                       margin: '0 0 10px 0'
                     }}>
                       בחר אפשרויות
@@ -865,7 +865,7 @@ export default function NewClient() {
                     </div>
                     <div style={{
                       fontSize: '16px',
-                      color: '#0170B9',
+                      color: '#ffdc33',
                       fontWeight: 'bold'
                     }}>
                       ₪{currency(selectedProduct.base_price)}
@@ -893,7 +893,7 @@ export default function NewClient() {
                           marginBottom: '8px',
                           background: selectedOptions.includes(option) ? '#e3f2fd' : '#f8f9fa',
                           borderRadius: '10px',
-                          border: selectedOptions.includes(option) ? '2px solid #0170B9' : '2px solid #e9ecef',
+                          border: selectedOptions.includes(option) ? '2px solid #ffdc33' : '2px solid #e9ecef',
                           cursor: 'pointer',
                           transition: 'all 0.2s ease'
                         }}
@@ -923,7 +923,7 @@ export default function NewClient() {
                           style={{
                             width: '18px',
                             height: '18px',
-                            accentColor: '#0170B9'
+                            accentColor: '#ffdc33'
                           }}
                         />
                         <span style={{
@@ -971,7 +971,7 @@ export default function NewClient() {
                     <button
                       onClick={() => addProductWithOptions(selectedProduct, selectedOptions)}
                       style={{
-                        background: '#0170B9',
+                        background: '#ffdc33',
                         color: 'white',
                         padding: '12px 24px',
                         borderRadius: '10px',
@@ -983,11 +983,11 @@ export default function NewClient() {
                         boxShadow: '0 3px 10px rgba(1, 112, 185, 0.3)'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = '#025a8a';
+                        e.currentTarget.style.backgroundColor = '#e6c52d';
                         e.currentTarget.style.boxShadow = '0 5px 15px rgba(1, 112, 185, 0.4)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = '#0170B9';
+                        e.currentTarget.style.backgroundColor = '#ffdc33';
                         e.currentTarget.style.boxShadow = '0 3px 10px rgba(1, 112, 185, 0.3)';
                       }}
                     >
@@ -1007,7 +1007,7 @@ export default function NewClient() {
             }}>
               <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                 <thead>
-                  <tr style={{ background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)', color: 'white' }}>
+                  <tr style={{ background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)', color: 'white' }}>
                     <th style={{ textAlign: 'right', padding: '15px', fontSize: '16px', fontWeight: 'bold' }}>פריט</th>
                     <th style={{ textAlign: 'center', padding: '15px', width: '100px', fontSize: '16px', fontWeight: 'bold' }}>כמות</th>
                     <th style={{ textAlign: 'center', padding: '15px', width: '160px', fontSize: '16px', fontWeight: 'bold' }}>מחיר יח׳ (₪)</th>
@@ -1045,7 +1045,7 @@ export default function NewClient() {
                               transition: 'border-color 0.2s ease'
                             }}
                             placeholder="שם פריט…"
-                            onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                            onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                             onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                           />
                         ) : (
@@ -1068,7 +1068,7 @@ export default function NewClient() {
                             fontSize: '14px',
                             transition: 'border-color 0.2s ease'
                           }}
-                          onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                          onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                           onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                         />
                       </td>
@@ -1086,7 +1086,7 @@ export default function NewClient() {
                             fontSize: '14px',
                             transition: 'border-color 0.2s ease'
                           }}
-                          onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                          onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                           onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                         />
                       </td>
@@ -1103,7 +1103,7 @@ export default function NewClient() {
                             transition: 'border-color 0.2s ease'
                           }}
                           placeholder="הערות…"
-                          onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                          onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                           onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                         />
                       </td>
@@ -1111,7 +1111,7 @@ export default function NewClient() {
                         padding: '15px', 
                         textAlign: 'left', 
                         fontWeight: 'bold', 
-                        color: '#0170B9',
+                        color: '#ffdc33',
                         fontSize: '16px'
                       }}>
                         ₪{currency(Number(it.qty || 0) * Number(it.unit_price || 0))}
@@ -1219,7 +1219,7 @@ export default function NewClient() {
                                 transition: 'border-color 0.2s ease',
                                 fontFamily: 'system-ui, Arial'
                               }}
-                              onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                              onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                               onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                             />
                           ) : (
@@ -1314,7 +1314,7 @@ export default function NewClient() {
                           fontFamily: 'system-ui, Arial',
                           lineHeight: '1.5'
                         }}
-                        onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                        onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                         onBlur={(e) => e.target.style.borderColor = '#ddd'}
                       />
                     </div>
@@ -1331,7 +1331,7 @@ export default function NewClient() {
                       <span style={{
                         fontSize: '20px',
                         fontWeight: 'bold',
-                        color: '#0170B9'
+                        color: '#ffdc33'
                       }}>
                         ₪{currency(it.line_total)}
                       </span>
@@ -1414,7 +1414,7 @@ export default function NewClient() {
                       transition: 'border-color 0.2s ease',
                       minWidth: '60px'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                    onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                     onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                   >
                     <option value="percentage">אחוז %</option>
@@ -1442,7 +1442,7 @@ export default function NewClient() {
                       fontSize: '14px',
                       transition: 'border-color 0.2s ease'
                     }}
-                    onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                    onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                     onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                   />
                   {discountValue > 0 && (
@@ -1464,7 +1464,7 @@ export default function NewClient() {
               <div style={{
                 fontSize: '20px',
                 padding: '15px',
-                background: '#0170B9',
+                background: '#ffdc33',
                 color: 'white',
                 borderRadius: '10px',
                 display: 'flex',
@@ -1528,7 +1528,7 @@ export default function NewClient() {
                     transition: 'border-color 0.2s ease'
                   }} 
                   placeholder="מזומן / המחאה / העברה בנקאית / שוטף +30"
-                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
               </div>
@@ -1560,7 +1560,7 @@ export default function NewClient() {
                     transition: 'border-color 0.2s ease'
                   }} 
                   placeholder="הערות להצעה…"
-                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
               </div>
@@ -1596,7 +1596,7 @@ export default function NewClient() {
                     fontSize: '15px',
                     transition: 'border-color 0.2s ease'
                   }} 
-                  onFocus={(e) => e.target.style.borderColor = '#0170B9'}
+                  onFocus={(e) => e.target.style.borderColor = '#ffdc33'}
                   onBlur={(e) => e.target.style.borderColor = '#e9ecef'}
                 />
               </div>
@@ -1617,7 +1617,7 @@ export default function NewClient() {
               style={{
                 background: saving 
                   ? 'linear-gradient(45deg, #6c757d, #5a6268)' 
-                  : 'linear-gradient(45deg, #0170B9, #0170B9)',
+                  : 'linear-gradient(45deg, #ffdc33, #ffdc33)',
                 color: 'white',
                 padding: '15px 30px',
                 borderRadius: '25px',
@@ -1652,7 +1652,7 @@ export default function NewClient() {
             <a 
               href="/quotes" 
               style={{
-                background: '#0170B9',
+                background: '#ffdc33',
                 color: 'white',
                 padding: '15px 30px',
                 borderRadius: '25px',

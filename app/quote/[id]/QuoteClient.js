@@ -156,7 +156,7 @@ export default function QuoteClient({ id }) {
       }}>
         {/* Header */}
         <div className="mobile-header" style={{
-          background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
+          background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
           color: 'white',
           padding: '30px 20px',
           display: 'flex',
@@ -246,7 +246,7 @@ export default function QuoteClient({ id }) {
             <Link 
               href={`/new?id=${proposal.id}`} 
               style={{
-                background: '#0170B9',
+                background: '#ffdc33',
                 color: 'white',
                 padding: '12px 24px',
                 borderRadius: '8px',
@@ -261,11 +261,11 @@ export default function QuoteClient({ id }) {
                 gap: '8px'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#025a8a';
+                e.currentTarget.style.background = '#e6c52d';
                 e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 112, 185, 0.4)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#0170B9';
+                e.currentTarget.style.background = '#ffdc33';
                 e.currentTarget.style.boxShadow = '0 2px 8px rgba(1, 112, 185, 0.3)';
               }}
             >
@@ -325,7 +325,7 @@ export default function QuoteClient({ id }) {
           }}>
             <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)', color: 'white' }}>
+                <tr style={{ background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)', color: 'white' }}>
                   <th style={{ textAlign: 'right', padding: '15px', fontSize: '16px', fontWeight: 'bold' }}>פריט</th>
                   <th style={{ textAlign: 'center', padding: '15px', width: '80px', fontSize: '16px', fontWeight: 'bold' }}>כמות</th>
                   <th style={{ textAlign: 'center', padding: '15px', width: '140px', fontSize: '16px', fontWeight: 'bold' }}>מחיר יח׳ (₪)</th>
@@ -351,7 +351,7 @@ export default function QuoteClient({ id }) {
                       <td style={{ padding: '15px', textAlign: 'center', fontWeight: '500' }}>{it.qty}</td>
                       <td style={{ padding: '15px', textAlign: 'center', fontWeight: '500' }}>{currency(it.unit_price)} ₪</td>
                       <td style={{ padding: '15px', color: '#666', fontSize: '14px' }}>{it.notes || '—'}</td>
-                      <td style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold', color: '#0170B9' }}>
+                      <td style={{ padding: '15px', textAlign: 'left', fontWeight: 'bold', color: '#ffdc33' }}>
                         {currency(it.line_total)} ₪
                       </td>
                     </tr>
@@ -401,7 +401,7 @@ export default function QuoteClient({ id }) {
             <div className="total-final" style={{
               fontSize: '20px',
               padding: '15px',
-              background: 'linear-gradient(135deg, #0170B9 0%, #025a8a 100%)',
+              background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
               color: 'white',
               borderRadius: '10px',
               display: 'flex',
