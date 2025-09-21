@@ -32,7 +32,7 @@ export default function QuoteClient({ id }) {
           supabase.from('settings').select('*').limit(1).maybeSingle(),
           supabase
             .from('proposal')
-            .select('id, proposal_number, customer_id, payment_terms, notes, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, customer:customer (name, phone, email, address)')
+            .select('id, proposal_number, customer_id, payment_terms, notes, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, delivery_date, customer:customer (name, phone, email, address)')
             .eq('id', id)
             .maybeSingle()
         ]);
@@ -40,6 +40,7 @@ export default function QuoteClient({ id }) {
         if (e2) throw e2;
         setSettings(st || {});
         setProposal(p);
+        console.log('Loaded proposal data:', p); // Debug log
 
         const { data: it, error: e3 } = await supabase
           .from('proposal_item')
@@ -316,6 +317,72 @@ export default function QuoteClient({ id }) {
             )}
           </section>
 
+          {/* Date Information Section */}
+          <section style={{
+            background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
+            border: '1px solid #e9ecef',
+            borderRadius: '15px',
+            padding: '20px',
+            marginBottom: '20px',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
+          }}>
+            <div style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '30px',
+              marginBottom: '15px'
+            }}>
+              <div>
+                <div style={{
+                  fontSize: '12px',
+                  color: '#666',
+                  marginBottom: '5px',
+                  fontWeight: 'bold'
+                }}>
+                  📅 תאריך יצירה:
+                </div>
+                <div style={{ fontSize: '14px', color: '#333' }}>
+                  {new Date(proposal.created_at).toLocaleDateString('he-IL', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                  })}
+                </div>
+              </div>
+              {proposal.delivery_date && proposal.delivery_date !== '' && (
+                <div>
+                  <div style={{
+                    fontSize: '12px',
+                    color: '#666',
+                    marginBottom: '5px',
+                    fontWeight: 'bold'
+                  }}>
+                    🚚 תאריך משלוח:
+                  </div>
+                  <div style={{ fontSize: '14px', color: '#333' }}>
+                    {new Date(proposal.delivery_date).toLocaleDateString('he-IL', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit'
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+            <div style={{
+              borderTop: '1px solid #e9ecef',
+              paddingTop: '12px',
+              fontSize: '13px',
+              color: '#666',
+              fontStyle: 'italic',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}>
+              ⏰ <span>הצעה זו בתוקף ל-30 יום מתאריך היצירה</span>
+            </div>
+          </section>
+
           <div className="mobile-table" style={{
             background: 'white',
             borderRadius: '15px',
@@ -415,7 +482,7 @@ export default function QuoteClient({ id }) {
             </div>
           </section>
 
-          {(proposal.payment_terms || proposal.notes || proposal.delivery_date) && (
+          {(proposal.payment_terms || proposal.notes || (proposal.delivery_date && proposal.delivery_date !== '')) && (
             <section style={{
               background: 'linear-gradient(135deg, #fff 0%, #f8f9fa 100%)',
               border: '1px solid #e9ecef',
@@ -425,7 +492,7 @@ export default function QuoteClient({ id }) {
               boxShadow: '0 2px 10px rgba(0,0,0,0.05)'
             }}>
               {proposal.payment_terms && (
-                <div style={{ marginBottom: (proposal.delivery_date || proposal.notes) ? '15px' : '0' }}>
+                <div style={{ marginBottom: ((proposal.delivery_date && proposal.delivery_date !== '') || proposal.notes) ? '15px' : '0' }}>
                   <span style={{ fontWeight: 'bold', color: '#495057', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     💳 תנאי תשלום:
                   </span>
@@ -434,7 +501,7 @@ export default function QuoteClient({ id }) {
                   </div>
                 </div>
               )}
-              {proposal.delivery_date && (
+              {proposal.delivery_date && proposal.delivery_date !== '' && (
                 <div style={{ marginBottom: proposal.notes ? '15px' : '0' }}>
                   <span style={{ fontWeight: 'bold', color: '#495057', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                     📅 תאריך משלוח:
