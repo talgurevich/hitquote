@@ -106,19 +106,15 @@ export default function Home() {
           marginBottom: '30px',
           textAlign: 'center'
         }}>
-          <picture>
-            <source media="(max-width: 768px)" srcSet="/logo-new.png?v=1758110947" />
-            <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
-            <img 
-              src="/logo-new.png?v=1758110947" 
-              alt="תחנת לחם" 
-              style={{ 
-                height: '40px', 
-                width: 'auto',
-                marginBottom: '15px'
-              }}
-            />
-          </picture>
+          <img 
+            src="/logo2.png" 
+            alt="HIT Quote" 
+            style={{ 
+              height: '160px', 
+              width: 'auto',
+              marginBottom: '25px'
+            }}
+          />
           <h1 style={{
             fontSize: '28px',
             fontWeight: 'bold',

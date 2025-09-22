@@ -350,6 +350,29 @@ export default function HamburgerMenu() {
                 </div>
               </div>
             </Link>
+
+            <Link href="/support" onClick={closeMenu} style={{ textDecoration: 'none' }}>
+              <div style={{
+                padding: '15px 30px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '15px',
+                transition: 'background 0.2s ease',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
+                <span style={{ fontSize: '24px' }}>💬</span>
+                <div>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                    תמיכה
+                  </div>
+                  <div style={{ fontSize: '12px', color: '#666' }}>
+                    יצירת קשר ועזרה
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
 
           {/* Sign Out */}
