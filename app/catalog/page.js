@@ -2,21 +2,47 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import HamburgerMenu from '../components/HamburgerMenu';
 
 export default function CatalogUpload() {
+  const router = useRouter();
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState('');
   const [products, setProducts] = useState([]);
   const [csvText, setCsvText] = useState('');
   const [deleteExisting, setDeleteExisting] = useState(false);
+  const [loading, setLoading] = useState(true);
   
   // Online editor state
   const [existingProducts, setExistingProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [showOnlineEditor, setShowOnlineEditor] = useState(false);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    const session = await getSession();
+    if (!session) {
+      router.push('/');
+      return;
+    }
+    
+    // Set up Supabase auth with the session
+    if (supabase && session.supabaseAccessToken) {
+      await supabase.auth.setSession({
+        access_token: session.supabaseAccessToken,
+        refresh_token: session.supabaseRefreshToken,
+      });
+    }
+    
+    setLoading(false);
+  };
 
   const parseCSV = (text) => {
     const lines = text.trim().split('\n');
@@ -132,21 +158,18 @@ export default function CatalogUpload() {
 
   // Online editor functions
   const loadExistingProducts = async () => {
-    if (!supabase) {
-      setMessage('שגיאה: Supabase לא זמין');
-      return;
-    }
-
     setLoadingProducts(true);
     try {
-      const { data, error } = await supabase
-        .from('product')
-        .select('*')
-        .order('category', { ascending: true })
-        .order('name', { ascending: true });
-
-      if (error) throw error;
+      const response = await fetch('/api/debug-query');
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+      const data = await response.json();
       setExistingProducts(data || []);
+      
+      if (data && data.length > 0) {
+        setMessage(`✅ Successfully loaded ${data.length} products from catalog`);
+      }
     } catch (err) {
       setMessage('❌ שגיאה בטעינת המוצרים: ' + err.message);
     } finally {
@@ -225,6 +248,22 @@ export default function CatalogUpload() {
       loadExistingProducts();
     }
   }, [showOnlineEditor]);
+
+  if (loading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%)',
+        color: 'white',
+        fontSize: '18px'
+      }}>
+        טוען...
+      </div>
+    );
+  }
 
   return (
     <>
