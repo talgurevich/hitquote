@@ -5,12 +5,20 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { supabase } from '../../../lib/supabaseClient';
 
-// Dynamically import PDF component to avoid SSR issues
+// Dynamically import PDF components to avoid SSR issues
 const QuotePDFDownloadButton = dynamic(
   () => import('./QuotePDFSimple').then(mod => mod.SimplePDFButton),
   { 
     ssr: false,
     loading: () => <span style={{ padding: '12px 20px' }}>⏳ טוען PDF...</span>
+  }
+);
+
+const SignedPDFDownloadButton = dynamic(
+  () => import('./QuotePDFSigned').then(mod => mod.SignedPDFButton),
+  { 
+    ssr: false,
+    loading: () => <span style={{ padding: '12px 20px' }}>⏳ טוען PDF חתום...</span>
   }
 );
 
@@ -32,7 +40,7 @@ export default function QuoteClient({ id }) {
           supabase.from('settings').select('*').limit(1).maybeSingle(),
           supabase
             .from('proposal')
-            .select('id, proposal_number, customer_id, payment_terms, notes, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, delivery_date, customer:customer (name, phone, email, address)')
+            .select('id, proposal_number, customer_id, payment_terms, notes, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, delivery_date, signature_status, signature_timestamp, signer_name, signature_data, customer:customer (name, phone, email, address)')
             .eq('id', id)
             .maybeSingle()
         ]);
@@ -218,6 +226,40 @@ export default function QuoteClient({ id }) {
             <QuotePDFDownloadButton 
               proposal={proposal}
             />
+            <SignedPDFDownloadButton 
+              proposal={proposal}
+            />
+            {proposal?.signature_status !== 'signed' && (
+              <button 
+                onClick={() => {
+                  window.open(`/sign/${id}`, '_blank');
+                }}
+                style={{
+                  background: '#28a745',
+                  color: 'white',
+                  padding: '12px 20px',
+                  borderRadius: '25px',
+                  border: 'none',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#218838';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = '#28a745';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                ✍️ שלח לחתימה
+              </button>
+            )}
             <button 
               onClick={shareWhatsApp} 
               style={{
@@ -376,10 +418,26 @@ export default function QuoteClient({ id }) {
               color: '#666',
               fontStyle: 'italic',
               display: 'flex',
-              alignItems: 'center',
+              flexDirection: 'column',
               gap: '8px'
             }}>
-              ⏰ <span>הצעה זו בתוקף ל-30 יום מתאריך היצירה</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                ⏰ <span>הצעה זו בתוקף ל-30 יום מתאריך היצירה</span>
+              </div>
+              {proposal.signature_status === 'signed' && (
+                <div style={{
+                  marginTop: '8px',
+                  padding: '8px 12px',
+                  background: '#d4edda',
+                  border: '1px solid #c3e6cb',
+                  borderRadius: '6px',
+                  color: '#155724',
+                  fontWeight: 'bold',
+                  fontStyle: 'normal'
+                }}>
+                  ✅ נחתם על ידי {proposal.signer_name} בתאריך {new Date(proposal.signature_timestamp).toLocaleDateString('he-IL')}
+                </div>
+              )}
             </div>
           </section>
 

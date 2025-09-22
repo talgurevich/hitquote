@@ -7,7 +7,6 @@ import { supabase } from '../../lib/supabaseClient';
 export default function QuotesList() {
   const [rows, setRows] = useState([]);
   const [err, setErr] = useState(null);
-  const [updating, setUpdating] = useState(null);
 
   useEffect(() => {
     loadQuotes();
@@ -18,7 +17,7 @@ export default function QuotesList() {
       if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
       const { data, error } = await supabase
         .from('proposal')
-        .select('id, proposal_number, created_at, delivery_date, total, status, customer:customer (name)')
+        .select('id, proposal_number, created_at, delivery_date, total, status, signature_status, signature_timestamp, signer_name, customer:customer (name)')
         .order('created_at', { ascending: false });
       if (error) throw error;
       setRows(data || []);
@@ -27,46 +26,42 @@ export default function QuotesList() {
     }
   };
 
-  const updateQuoteStatus = async (quoteId, newStatus) => {
-    setUpdating(quoteId);
-    try {
-      const { error } = await supabase
-        .from('proposal')
-        .update({ status: newStatus })
-        .eq('id', quoteId);
-      
-      if (error) throw error;
-      
-      // Reload quotes to reflect the change
-      await loadQuotes();
-    } catch (e) {
-      setErr(e.message || String(e));
-    } finally {
-      setUpdating(null);
+  const getStatusBadge = (status, signatureStatus) => {
+    // If signed, show signed status regardless of original status
+    if (signatureStatus === 'signed') {
+      return (
+        <span style={{
+          background: '#d4edda',
+          color: '#155724',
+          padding: '5px 10px',
+          borderRadius: '12px',
+          fontSize: '12px',
+          fontWeight: 'bold',
+          border: '1px solid #c3e6cb',
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '4px'
+        }}>
+          ✍️ נחתם
+        </span>
+      );
     }
-  };
-
-  const getStatusBadge = (status) => {
-    const statusConfig = {
-      pending: { text: 'ממתין', color: '#ffc107', bg: '#fff8e1' },
-      accepted: { text: 'מאושר', color: '#28a745', bg: '#e8f5e8' },
-      rejected: { text: 'נדחה', color: '#dc3545', bg: '#fde8e8' }
-    };
     
-    const config = statusConfig[status] || statusConfig.pending;
-    
+    // Otherwise show waiting status
     return (
       <span style={{
-        background: config.bg,
-        color: config.color,
-        padding: '4px 8px',
+        background: '#fff8e1',
+        color: '#ffc107',
+        padding: '5px 10px',
         borderRadius: '12px',
         fontSize: '12px',
         fontWeight: 'bold',
-        border: `1px solid ${config.color}`,
-        display: 'inline-block'
+        border: '1px solid #ffc107',
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '4px'
       }}>
-        {config.text}
+        ⏳ ממתין
       </span>
     );
   };
@@ -392,7 +387,7 @@ export default function QuotesList() {
                           ₪{Number(r.total || 0).toLocaleString('he-IL')}
                         </td>
                         <td style={{ padding: '18px', textAlign: 'center' }}>
-                          {getStatusBadge(r.status || 'pending')}
+                          {getStatusBadge(r.status || 'pending', r.signature_status)}
                         </td>
                         <td style={{ padding: '12px', textAlign: 'center' }}>
                           <div style={{ display: 'flex', gap: '4px', justifyContent: 'center', alignItems: 'center', flexWrap: 'nowrap' }}>
@@ -402,91 +397,28 @@ export default function QuotesList() {
                               style={{
                                 background: '#ffdc33',
                                 color: 'white',
-                                padding: '0',
-                                borderRadius: '4px',
+                                padding: '8px 16px',
+                                borderRadius: '6px',
                                 textDecoration: 'none',
                                 fontSize: '14px',
                                 display: 'inline-flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 transition: 'all 0.2s ease',
-                                width: '32px',
-                                height: '32px',
-                                boxSizing: 'border-box'
+                                fontWeight: 'bold',
+                                gap: '6px'
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.background = '#e6c52d';
+                                e.currentTarget.style.transform = 'translateY(-2px)';
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.background = '#ffdc33';
+                                e.currentTarget.style.transform = 'translateY(0)';
                               }}
                             >
-                              👁️
+                              👁️ צפייה
                             </Link>
-                            
-                            {r.status !== 'accepted' && (
-                              <button
-                                onClick={() => updateQuoteStatus(r.id, 'accepted')}
-                                disabled={updating === r.id}
-                                title="אשר הצעה"
-                                style={{
-                                  background: updating === r.id ? '#ccc' : '#28a745',
-                                  color: 'white',
-                                  padding: '0',
-                                  borderRadius: '4px',
-                                  border: 'none',
-                                  fontSize: '14px',
-                                  cursor: updating === r.id ? 'not-allowed' : 'pointer',
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  transition: 'all 0.2s ease',
-                                  width: '32px',
-                                  height: '32px',
-                                  boxSizing: 'border-box'
-                                }}
-                                onMouseEnter={(e) => {
-                                  if (updating !== r.id) e.currentTarget.style.background = '#218838';
-                                }}
-                                onMouseLeave={(e) => {
-                                  if (updating !== r.id) e.currentTarget.style.background = '#28a745';
-                                }}
-                              >
-                                ✅
-                              </button>
-                            )}
-                            
-                            {r.status !== 'rejected' && (
-                              <button
-                                onClick={() => updateQuoteStatus(r.id, 'rejected')}
-                                disabled={updating === r.id}
-                                title="דחה הצעה"
-                                style={{
-                                  background: updating === r.id ? '#ccc' : '#dc3545',
-                                  color: 'white',
-                                  padding: '0',
-                                  borderRadius: '4px',
-                                  border: 'none',
-                                  fontSize: '14px',
-                                  cursor: updating === r.id ? 'not-allowed' : 'pointer',
-                                  display: 'inline-flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  transition: 'all 0.2s ease',
-                                  width: '32px',
-                                  height: '32px',
-                                  boxSizing: 'border-box'
-                                }}
-                                onMouseEnter={(e) => {
-                                  if (updating !== r.id) e.currentTarget.style.background = '#c82333';
-                                }}
-                                onMouseLeave={(e) => {
-                                  if (updating !== r.id) e.currentTarget.style.background = '#dc3545';
-                                }}
-                              >
-                                ❌
-                              </button>
-                            )}
                           </div>
                         </td>
                       </tr>
