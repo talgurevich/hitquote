@@ -1,13 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getSession } from 'next-auth/react';
 import HamburgerMenu from '../components/HamburgerMenu';
 import { supabase } from '../../lib/supabaseClient';
 
 export default function SettingsPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isFirstTime = searchParams.get('first_time') === 'true';
+  
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [settings, setSettings] = useState({
@@ -156,6 +159,13 @@ export default function SettingsPage() {
       setSettings(updatedSettings);
       setLogoFile(null);
       setSuccess('ההגדרות נשמרו בהצלחה!');
+      
+      // If this is a first-time user, redirect to dashboard after successful save
+      if (isFirstTime) {
+        setTimeout(() => {
+          router.push('/dashboard');
+        }, 2000);
+      }
     } catch (err) {
       console.error('Error saving settings:', err);
       setError('שגיאה בשמירת ההגדרות: ' + err.message);
@@ -219,9 +229,51 @@ export default function SettingsPage() {
               margin: 0,
               fontSize: '16px'
             }}>
-              נהל את הגדרות העסק והלוגו שלך
+              {isFirstTime ? 'ברוכים הבאים! בואו נגדיר את פרטי העסק שלכם' : 'נהל את הגדרות העסק והלוגו שלך'}
             </p>
+            <div style={{
+              background: '#fff3cd',
+              border: '1px solid #ffeaa7',
+              borderRadius: '8px',
+              padding: '12px',
+              marginTop: '15px',
+              fontSize: '14px',
+              color: '#856404'
+            }}>
+              💡 <strong>חשוב לדעת:</strong> הפרטים והלוגו שתמלאו כאן יופיעו על כל מסמכי הצעות המחיר שלכם
+            </div>
           </div>
+
+          {/* First-time user welcome */}
+          {isFirstTime && (
+            <div style={{
+              background: 'linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%)',
+              border: '1px solid #c3e6cb',
+              borderRadius: '15px',
+              padding: '20px',
+              marginBottom: '20px',
+              textAlign: 'center'
+            }}>
+              <div style={{ fontSize: '48px', marginBottom: '15px' }}>🎉</div>
+              <h2 style={{
+                fontSize: '24px',
+                fontWeight: 'bold',
+                color: '#155724',
+                margin: '0 0 10px 0'
+              }}>
+                ברוכים הבאים למערכת HIT Quote!
+              </h2>
+              <p style={{
+                color: '#155724',
+                margin: 0,
+                fontSize: '16px',
+                lineHeight: '1.5'
+              }}>
+                לפני שתתחילו ליצור הצעות מחיר, אנא מלאו את פרטי העסק שלכם למטה. 
+                המידע הזה יופיע על כל ההצעות שלכם ויעזור ללקוחות שלכם ליצור עמכם קשר.
+              </p>
+            </div>
+          )}
 
           {/* Alerts */}
           {error && (
