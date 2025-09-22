@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { getSession } from 'next-auth/react';
 import HamburgerMenu from '../components/HamburgerMenu';
 import { supabase } from '../../lib/supabaseClient';
+import { validateSessionAndGetBusinessUserId } from '../../lib/businessUserUtils';
 
 function SettingsContent() {
   const router = useRouter();
@@ -41,9 +42,15 @@ function SettingsContent() {
 
   const loadSettings = async () => {
     try {
+      // Get the user ID for proper filtering
+      const session = await getSession();
+      if (!session?.user?.id) return;
+      const userId = await validateSessionAndGetBusinessUserId(session);
+      
       const { data, error } = await supabase
         .from('settings')
         .select('business_name, business_email, business_phone, business_address, business_license, logo_url')
+        .eq('user_id', userId)
         .limit(1)
         .maybeSingle();
 
@@ -133,10 +140,15 @@ function SettingsContent() {
         logo_url: logoUrl
       };
 
-      // Check if settings exist
+      // Get the user ID for proper filtering
+      const session = await getSession();
+      const userId = await validateSessionAndGetBusinessUserId(session);
+      
+      // Check if settings exist for this user
       const { data: existingSettings } = await supabase
         .from('settings')
         .select('id')
+        .eq('user_id', userId)
         .limit(1)
         .maybeSingle();
 
@@ -148,10 +160,13 @@ function SettingsContent() {
           .update(updatedSettings)
           .eq('id', existingSettings.id);
       } else {
-        // Insert new settings
+        // Insert new settings with user_id
         result = await supabase
           .from('settings')
-          .insert([updatedSettings]);
+          .insert([{
+            ...updatedSettings,
+            user_id: userId
+          }]);
       }
 
       if (result.error) throw result.error;

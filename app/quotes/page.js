@@ -10,6 +10,7 @@ import { validateSessionAndGetBusinessUserId } from '../../lib/businessUserUtils
 export default function QuotesList() {
   const [rows, setRows] = useState([]);
   const [err, setErr] = useState(null);
+  const [settings, setSettings] = useState(null);
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -26,18 +27,33 @@ export default function QuotesList() {
       // Get properly converted user ID
       const userId = await validateSessionAndGetBusinessUserId(session);
       
-      const { data: result, error } = await supabase
-        .from('proposal')
-        .select('id, proposal_number, created_at, delivery_date, total, status, signature_status, signature_timestamp, signer_name, customer:customer (name)')
-        .eq('user_id', userId)
-        .order('created_at', { ascending: false });
+      // Load quotes and settings in parallel
+      const [quotesResult, settingsResult] = await Promise.all([
+        supabase
+          .from('proposal')
+          .select('id, proposal_number, created_at, delivery_date, total, status, signature_status, signature_timestamp, signer_name, customer:customer (name)')
+          .eq('user_id', userId)
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('settings')
+          .select('logo_url')
+          .eq('user_id', userId)
+          .limit(1)
+          .maybeSingle()
+      ]);
       
-      if (error) throw error;
-      let data = result || [];
+      if (quotesResult.error) throw quotesResult.error;
+      let data = quotesResult.data || [];
       
       setRows(data);
+      setSettings(settingsResult.data);
+      
+      // Debug logging
+      console.log('Settings loaded:', settingsResult.data);
+      console.log('Logo URL:', settingsResult.data?.logo_url);
     } catch (e) {
       setErr(e.message || String(e));
+      console.error('Error loading quotes/settings:', e);
     }
   };
 
@@ -151,15 +167,13 @@ export default function QuotesList() {
           gap: '15px'
         }}>
           <div className="mobile-header-content" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <picture>
-              <source media="(max-width: 768px)" srcSet="/image1-mobile.png?v=1737159000" />
-              <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
+            {settings?.logo_url && (
               <img 
-                src="/image1-mobile.png?v=1737159000" 
-                alt="תחנת לחם" 
+                src={settings.logo_url} 
+                alt="לוגו העסק" 
                 style={{ height: '50px', width: 'auto' }}
               />
-            </picture>
+            )}
             <div>
               <h1 style={{ 
                 margin: '0 0 8px 0', 

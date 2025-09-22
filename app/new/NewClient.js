@@ -358,15 +358,13 @@ export default function NewClient() {
           gap: '15px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <picture>
-              <source media="(max-width: 768px)" srcSet="/image1-mobile.png?v=1737159000" />
-              <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
+            {settings?.logo_url && (
               <img 
-                src="/image1-mobile.png?v=1737159000" 
-                alt="תחנת לחם" 
+                src={settings.logo_url} 
+                alt="לוגו העסק" 
                 style={{ height: '50px', width: 'auto' }}
               />
-            </picture>
+            )}
             <div>
               <h1 style={{ 
                 margin: '0 0 5px 0', 
