@@ -42,6 +42,9 @@ export default function CatalogUpload() {
     }
     
     setLoading(false);
+    
+    // Load existing products immediately when page loads
+    loadExistingProducts();
   };
 
   const parseCSV = (text) => {
@@ -94,46 +97,43 @@ export default function CatalogUpload() {
   };
 
   const uploadToDatabase = async () => {
-    if (!supabase) {
-      setMessage('שגיאה: Supabase לא זמין');
-      return;
-    }
-
     setUploading(true);
     setMessage('מעלה...');
 
     try {
-      // Delete existing products if requested
-      if (deleteExisting) {
-        const { error: deleteError } = await supabase
-          .from('product')
-          .delete()
-          .neq('id', '00000000-0000-0000-0000-000000000000'); // Delete all
-        
-        if (deleteError) throw deleteError;
-        setMessage('המוצרים הקיימים נמחקו. מוסיף מוצרים חדשים...');
+      const session = await getSession();
+      if (!session?.user?.id) {
+        setMessage('❌ שגיאה: משתמש לא מחובר');
+        setUploading(false);
+        return;
       }
 
-      // Prepare products for insertion
-      const productsToInsert = products.map(p => ({
-        category: p.category || null,
-        name: p.name || 'מוצר ללא שם',
-        unit_label: p.unit_label || null,
-        base_price: parseFloat(p.base_price) || 0,
-        notes: p.notes || null,
-        options: p.options || null
-      }));
+      // Use the admin API endpoint for CSV upload
+      const response = await fetch('/api/admin/update-catalog', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          products: products,
+          deleteExisting: deleteExisting
+        })
+      });
 
-      // Insert products
-      const { data, error } = await supabase
-        .from('product')
-        .insert(productsToInsert);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || `HTTP ${response.status}`);
+      }
 
-      if (error) throw error;
-
+      const result = await response.json();
       setMessage(`✅ ${products.length} מוצרים הועלו בהצלחה!`);
       setProducts([]);
       setCsvText('');
+      
+      // Load existing products to show the uploaded products immediately
+      if (showOnlineEditor) {
+        loadExistingProducts();
+      }
     } catch (err) {
       setMessage('❌ שגיאה בהעלאה: ' + err.message);
     } finally {
@@ -160,10 +160,18 @@ export default function CatalogUpload() {
   const loadExistingProducts = async () => {
     setLoadingProducts(true);
     try {
-      const response = await fetch('/api/debug-query');
+      // Use the API endpoint instead of direct Supabase calls
+      const response = await fetch('/api/products');
+      
       if (!response.ok) {
-        throw new Error('Failed to fetch products');
+        if (response.status === 401) {
+          setExistingProducts([]);
+          setLoadingProducts(false);
+          return;
+        }
+        throw new Error(`Failed to fetch products: ${response.status}`);
       }
+      
       const data = await response.json();
       setExistingProducts(data || []);
       
@@ -184,6 +192,15 @@ export default function CatalogUpload() {
     }
 
     try {
+      const session = await getSession();
+      if (!session?.user?.id) {
+        setMessage('❌ שגיאה: משתמש לא מחובר');
+        return;
+      }
+
+      // Get business user ID
+      const businessUserId = await validateSessionAndGetBusinessUserId(session);
+
       const productData = {
         category: product.category || null,
         name: product.name || 'מוצר ללא שם',
@@ -203,10 +220,15 @@ export default function CatalogUpload() {
         if (error) throw error;
         setMessage('✅ המוצר עודכן בהצלחה!');
       } else {
-        // Create new product
+        // Create new product - include user_id
+        const productDataWithUser = {
+          ...productData,
+          user_id: businessUserId
+        };
+
         const { error } = await supabase
           .from('product')
-          .insert([productData]);
+          .insert([productDataWithUser]);
         
         if (error) throw error;
         setMessage('✅ המוצר נוסף בהצלחה!');

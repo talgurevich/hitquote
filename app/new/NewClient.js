@@ -5,6 +5,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabaseClient';
 import HamburgerMenu from '../components/HamburgerMenu';
+import { useSession } from 'next-auth/react';
+import { validateSessionAndGetBusinessUserId } from '../../lib/businessUserUtils';
 
 const VAT_RATE_DEFAULT = 18;
 const currency = (n) => Number(n || 0).toFixed(2);
@@ -37,6 +39,7 @@ async function getNextProposalNumber() {
 
 export default function NewClient() {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const [editId, setEditId] = useState(null);
   useEffect(() => {
@@ -74,14 +77,24 @@ export default function NewClient() {
     const load = async () => {
       try {
         if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
-        const [{ data: st, error: e1 }, { data: cust, error: e2 }, { data: prods, error: e3 }] = await Promise.all([
-          supabase.from('settings').select('*').limit(1).maybeSingle(),
-          supabase.from('customer').select('id, name, phone, email, address').order('name'),
-          supabase.from('product').select('id, category, name, unit_label, base_price, notes, options').order('category').order('name')
+        if (!session?.user?.id) return;
+        
+        // Get properly converted user ID
+        const userId = await validateSessionAndGetBusinessUserId(session);
+        
+        const [{ data: stResult, error: e1 }, { data: custResult, error: e2 }, { data: prodsResult, error: e3 }] = await Promise.all([
+          supabase.from('settings').select('*').eq('user_id', userId).limit(1).maybeSingle(),
+          supabase.from('customer').select('id, name, phone, email, address').eq('user_id', userId).order('name'),
+          supabase.from('product').select('id, category, name, unit_label, base_price, notes, options').eq('user_id', userId).order('category').order('name')
         ]);
+        
         if (e1) throw e1;
         if (e2) throw e2;
         if (e3) throw e3;
+        
+        let st = stResult;
+        let cust = custResult || [];
+        let prods = prodsResult || [];
         setSettings(st ?? { vat_rate: VAT_RATE_DEFAULT, default_payment_terms: 'מזומן / המחאה / העברה בנקאית / שוטף +30' });
         setPaymentTerms((st?.default_payment_terms) || 'מזומן / המחאה / העברה בנקאית / שוטף +30');
         setCustomers(cust || []);
@@ -90,8 +103,10 @@ export default function NewClient() {
         setError(err.message || String(err));
       }
     };
-    load();
-  }, []);
+    if (session?.user?.id) {
+      load();
+    }
+  }, [session]);
 
   useEffect(() => {
     if (!editId) return;
@@ -212,6 +227,9 @@ export default function NewClient() {
       if (!customerId) throw new Error('בחר לקוח');
       if (!deliveryDate) throw new Error('בחר תאריך משלוח');
 
+      // Get business user ID
+      const userId = await validateSessionAndGetBusinessUserId(session);
+
       let proposalId = editId;
       let proposalNumber = null;
       if (!proposalId) {
@@ -229,7 +247,8 @@ export default function NewClient() {
         include_discount_row: discountValue > 0,
         vat_rate: vatRate,
         vat_amount: vatAmount,
-        total: total
+        total: total,
+        user_id: userId
       };
 
       if (!proposalId) {
@@ -251,7 +270,8 @@ export default function NewClient() {
         qty: Number(it.qty || 0),
         unit_price: Number(it.unit_price || 0),
         line_total: Number(it.qty || 0) * Number(it.unit_price || 0),
-        notes: it.notes || null
+        notes: it.notes || null,
+        user_id: userId
       }));
 
       if (rows.length) {

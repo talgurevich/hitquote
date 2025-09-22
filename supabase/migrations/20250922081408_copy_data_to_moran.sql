@@ -74,7 +74,10 @@ BEGIN
     -- 4. Copy Proposals (with new customer references)
     RAISE NOTICE 'Copying proposals...';
     FOR proposal_record IN 
-        SELECT p.*, c_old.name as customer_name FROM proposal p
+        SELECT p.id, p.tenant_id, p.proposal_number, p.customer_id, p.payment_terms, p.notes, p.delivery_date,
+               p.subtotal, p.discount_value, p.include_discount_row, p.vat_rate, p.vat_amount, p.total,
+               p.signature_status, p.signature_data, p.created_at, p.updated_at, c_old.name as customer_name 
+        FROM proposal p
         LEFT JOIN customer c_old ON p.customer_id = c_old.id
         WHERE p.tenant_id = tal_user_id
     LOOP
@@ -92,14 +95,14 @@ BEGIN
         INSERT INTO proposal (
             id, tenant_id, proposal_number, customer_id, payment_terms, notes, delivery_date,
             subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total,
-            signature_status, signed_at, signature_data, created_at, updated_at
+            signature_status, signature_data, created_at, updated_at
         ) VALUES (
             new_proposal_id, moran_user_id, proposal_record.proposal_number || '_COPY',
             (SELECT id FROM customer WHERE tenant_id = moran_user_id AND name = proposal_record.customer_name LIMIT 1),
             proposal_record.payment_terms, proposal_record.notes, proposal_record.delivery_date,
             proposal_record.subtotal, proposal_record.discount_value, proposal_record.include_discount_row,
             proposal_record.vat_rate, proposal_record.vat_amount, proposal_record.total,
-            proposal_record.signature_status, proposal_record.signed_at, proposal_record.signature_data,
+            proposal_record.signature_status, proposal_record.signature_data,
             proposal_record.created_at, proposal_record.updated_at
         );
         

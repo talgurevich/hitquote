@@ -4,24 +4,38 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { supabase } from '../../lib/supabaseClient';
 import HamburgerMenu from '../components/HamburgerMenu';
+import { useSession } from 'next-auth/react';
+import { validateSessionAndGetBusinessUserId } from '../../lib/businessUserUtils';
 
 export default function QuotesList() {
   const [rows, setRows] = useState([]);
   const [err, setErr] = useState(null);
+  const { data: session } = useSession();
 
   useEffect(() => {
-    loadQuotes();
-  }, []);
+    if (session?.user?.id) {
+      loadQuotes();
+    }
+  }, [session]);
 
   const loadQuotes = async () => {
     try {
       if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
-      const { data, error } = await supabase
+      if (!session?.user?.id) throw new Error('No user session');
+      
+      // Get properly converted user ID
+      const userId = await validateSessionAndGetBusinessUserId(session);
+      
+      const { data: result, error } = await supabase
         .from('proposal')
         .select('id, proposal_number, created_at, delivery_date, total, status, signature_status, signature_timestamp, signer_name, customer:customer (name)')
+        .eq('user_id', userId)
         .order('created_at', { ascending: false });
+      
       if (error) throw error;
-      setRows(data || []);
+      let data = result || [];
+      
+      setRows(data);
     } catch (e) {
       setErr(e.message || String(e));
     }

@@ -5,6 +5,7 @@ import { getSession } from 'next-auth/react';
 import Link from 'next/link';
 import HamburgerMenu from '../components/HamburgerMenu';
 import { supabase } from '../../lib/supabaseClient';
+import { validateSessionAndGetBusinessUserId } from '../../lib/businessUserUtils';
 
 export default function Home() {
   const [recentQuotes, setRecentQuotes] = useState([]);
@@ -30,8 +31,13 @@ export default function Home() {
 
   const loadDashboardData = async () => {
     try {
-      // Load recent quotes
-      const { data: quotes, error: quotesError } = await supabase
+      const session = await getSession();
+      if (!session?.user?.id) return;
+
+      // Get properly converted user ID
+      const userId = await validateSessionAndGetBusinessUserId(session);
+      
+      const { data: quotesResult, error: quotesError } = await supabase
         .from('proposal')
         .select(`
           id, 
@@ -41,18 +47,23 @@ export default function Home() {
           signature_status,
           customer:customer (name)
         `)
+        .eq('user_id', userId)
         .order('created_at', { ascending: false })
         .limit(5);
 
       if (quotesError) throw quotesError;
-      setRecentQuotes(quotes || []);
+      let quotes = quotesResult || [];
 
       // Load stats
-      const { data: allQuotes, error: statsError } = await supabase
+      const { data: statsResult, error: statsError } = await supabase
         .from('proposal')
-        .select('total, created_at, signature_status');
+        .select('total, created_at, signature_status')
+        .eq('user_id', userId);
 
       if (statsError) throw statsError;
+      let allQuotes = statsResult || [];
+
+      setRecentQuotes(quotes);
 
       const now = new Date();
       const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);

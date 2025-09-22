@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 export default function HamburgerMenu() {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -136,6 +137,65 @@ export default function HamburgerMenu() {
           }}>
             מערכת ניהול הצעות מחיר
           </p>
+          
+          {/* User Info */}
+          {session?.user && (
+            <div style={{
+              marginTop: '20px',
+              padding: '15px',
+              background: 'rgba(255,255,255,0.15)',
+              borderRadius: '10px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px'
+              }}>
+                {session.user.image ? (
+                  <img
+                    src={session.user.image}
+                    alt="User Avatar"
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '50%',
+                      border: '2px solid rgba(255,255,255,0.3)'
+                    }}
+                  />
+                ) : (
+                  <div style={{
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    background: 'rgba(255,255,255,0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '18px'
+                  }}>
+                    👤
+                  </div>
+                )}
+                <div style={{ flex: 1 }}>
+                  <div style={{
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    marginBottom: '2px'
+                  }}>
+                    {session.user.name || 'משתמש'}
+                  </div>
+                  <div style={{
+                    fontSize: '12px',
+                    opacity: 0.9,
+                    wordBreak: 'break-all'
+                  }}>
+                    {session.user.email}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Menu Items */}

@@ -1,8 +1,8 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
-import { supabase } from '../../../../lib/supabaseClient'
+import { createClient } from '@supabase/supabase-js'
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -10,7 +10,8 @@ const handler = NextAuth({
     })
   ],
   pages: {
-    signOut: '/'
+    signOut: '/',
+    signIn: '/auth/signin'
   },
   callbacks: {
     async signIn({ user, account, profile }) {
@@ -18,27 +19,32 @@ const handler = NextAuth({
       return true
     },
     async redirect({ url, baseUrl }) {
-      // Handle logout - if signing out, go to homepage
-      if (url.includes('/signout') || url.includes('callbackUrl=%2F')) {
+      // Always redirect to homepage after signout
+      if (url.startsWith(baseUrl + '/api/auth/signout') || url === baseUrl + '/' || url.includes('callbackUrl=%2F')) {
         return baseUrl + '/'
       }
       
       // Check if this is a first-time user by looking for their settings
-      try {
-        const { data: settings } = await supabase
-          .from('settings')
-          .select('id')
-          .eq('tenant_id', user?.id)
-          .limit(1)
-          .maybeSingle()
-        
-        // If no settings found, redirect to settings page for first-time setup
-        if (!settings) {
-          return baseUrl + '/settings?first_time=true'
-        }
-      } catch (error) {
-        console.error('Error checking user settings:', error)
-      }
+      // Temporarily disabled to fix client/server issues
+      // try {
+      //   const supabase = createClient(
+      //     process.env.NEXT_PUBLIC_SUPABASE_URL,
+      //     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+      //   )
+      //   const { data: settings } = await supabase
+      //     .from('settings')
+      //     .select('id')
+      //     .eq('tenant_id', user?.id)
+      //     .limit(1)
+      //     .maybeSingle()
+      //   
+      //   // If no settings found, redirect to settings page for first-time setup
+      //   if (!settings) {
+      //     return baseUrl + '/settings?first_time=true'
+      //   }
+      // } catch (error) {
+      //   console.error('Error checking user settings:', error)
+      // }
       
       // Redirect to dashboard for existing users
       return baseUrl + '/dashboard'
@@ -59,6 +65,8 @@ const handler = NextAuth({
     }
   },
   secret: process.env.NEXTAUTH_SECRET,
-})
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST }
