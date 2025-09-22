@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabaseClient';
 import Link from 'next/link';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 export default function CatalogUpload() {
   const [uploading, setUploading] = useState(false);
@@ -226,14 +227,16 @@ export default function CatalogUpload() {
   }, [showOnlineEditor]);
 
   return (
-    <main dir="rtl" style={{ 
-      maxWidth: 1200, 
-      margin: '0 auto', 
-      padding: 16, 
-      fontFamily: 'system-ui, Arial',
-      minHeight: '100vh',
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
-    }}>
+    <>
+      <HamburgerMenu />
+      <main dir="rtl" style={{ 
+        maxWidth: 1200, 
+        margin: '0 auto', 
+        padding: '16px 16px 16px 96px', // Extra padding on right for hamburger menu
+        fontFamily: 'system-ui, Arial',
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+      }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <h1>ניהול קטלוג מוצרים</h1>
         <Link href="/quotes" style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, textDecoration: 'none' }}>
@@ -679,5 +682,6 @@ export default function CatalogUpload() {
         </div>
       )}
     </main>
+    </>
   );
 }

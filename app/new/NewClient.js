@@ -4,6 +4,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '../../lib/supabaseClient';
+import HamburgerMenu from '../components/HamburgerMenu';
 
 const VAT_RATE_DEFAULT = 18;
 const currency = (n) => Number(n || 0).toFixed(2);
@@ -277,6 +278,7 @@ export default function NewClient() {
 
   return (
     <>
+      <HamburgerMenu />
       <style jsx>{`
         @media (max-width: 768px) {
           .mobile-header {
@@ -313,7 +315,7 @@ export default function NewClient() {
       <main dir="rtl" style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-        padding: '10px',
+        padding: '10px 10px 10px 80px', // Extra padding on right for hamburger menu
         fontFamily: 'system-ui, Arial'
       }}>
       <div style={{

@@ -1,59 +1,111 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { getSession } from 'next-auth/react';
 import Link from 'next/link';
-import UserMenu from '../components/UserMenu';
+import HamburgerMenu from '../components/HamburgerMenu';
+import { supabase } from '../../lib/supabaseClient';
 
 export default function Home() {
-  return (
-    <>
-      <UserMenu />
-      <style jsx>{`
-        .background-blur::before {
-          content: '';
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: url('https://breadstation.co.il/wp-content/uploads/sites/221/2021/10/fo_0009__P1A6761.jpg') center/cover;
-          filter: blur(3px);
-          z-index: -2;
-        }
-        .background-overlay::after {
-          content: '';
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
-          z-index: -1;
-        }
-      `}</style>
-      <main dir="rtl" className="background-blur background-overlay" style={{
+  const [recentQuotes, setRecentQuotes] = useState([]);
+  const [stats, setStats] = useState({
+    totalQuotes: 0,
+    pendingQuotes: 0,
+    thisMonthTotal: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    const session = await getSession();
+    if (!session) {
+      window.location.href = '/';
+      return;
+    }
+    loadDashboardData();
+  };
+
+  const loadDashboardData = async () => {
+    try {
+      // Load recent quotes
+      const { data: quotes, error: quotesError } = await supabase
+        .from('proposal')
+        .select(`
+          id, 
+          proposal_number, 
+          total, 
+          created_at, 
+          signature_status,
+          customer:customer (name)
+        `)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (quotesError) throw quotesError;
+      setRecentQuotes(quotes || []);
+
+      // Load stats
+      const { data: allQuotes, error: statsError } = await supabase
+        .from('proposal')
+        .select('total, created_at, signature_status');
+
+      if (statsError) throw statsError;
+
+      const now = new Date();
+      const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      
+      const totalQuotes = allQuotes?.length || 0;
+      const pendingQuotes = allQuotes?.filter(q => q.signature_status !== 'signed')?.length || 0;
+      const thisMonthTotal = allQuotes
+        ?.filter(q => new Date(q.created_at) >= firstDayOfMonth)
+        ?.reduce((sum, q) => sum + (Number(q.total) || 0), 0) || 0;
+
+      setStats({
+        totalQuotes,
+        pendingQuotes,
+        thisMonthTotal
+      });
+
+    } catch (err) {
+      console.error('Error loading dashboard data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div style={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: 'system-ui, Arial',
-        padding: '10px',
-        position: 'relative'
+        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+        color: '#666',
+        fontSize: '18px'
       }}>
-      <div style={{
-        background: 'rgba(255, 255, 255, 0.95)',
-        borderRadius: '20px',
-        boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-        border: '2px solid rgba(255, 255, 255, 0.8)',
-        padding: '40px 20px',
-        textAlign: 'center',
-        maxWidth: '600px',
-        width: '100%',
-        backdropFilter: 'blur(10px)',
-        WebkitBackdropFilter: 'blur(10px)',
-        margin: '20px 0'
+        טוען דשבורד...
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <HamburgerMenu />
+      <main dir="rtl" style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+        padding: '20px 20px 20px 80px', // Extra padding on right for hamburger menu
+        fontFamily: 'system-ui, Arial'
       }}>
-        {/* Logo/Title */}
-        <div style={{ marginBottom: '40px' }}>
+        {/* Header */}
+        <div style={{
+          marginBottom: '30px',
+          textAlign: 'center'
+        }}>
           <picture>
             <source media="(max-width: 768px)" srcSet="/logo-new.png?v=1758110947" />
             <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
@@ -61,245 +113,296 @@ export default function Home() {
               src="/logo-new.png?v=1758110947" 
               alt="תחנת לחם" 
               style={{ 
-                height: '50px', 
+                height: '40px', 
                 width: 'auto',
-                marginBottom: '20px'
+                marginBottom: '15px'
               }}
             />
           </picture>
-          <p style={{
-            fontSize: '20px',
+          <h1 style={{
+            fontSize: '28px',
+            fontWeight: 'bold',
             color: '#ffdc33',
-            margin: '0 0 10px 0',
-            fontWeight: 'bold'
+            margin: '0 0 10px 0'
           }}>
-            כשר למהדרין
-          </p>
-          <p style={{
-            fontSize: '18px',
-            color: '#4B4F58',
-            margin: '0 0 15px 0'
-          }}>
-            מערכת הצעות מחיר מקצועית
-          </p>
+            דשבורד ראשי
+          </h1>
           <p style={{
             fontSize: '16px',
-            color: '#3a3a3a',
-            margin: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px'
+            color: '#666',
+            margin: 0
           }}>
-            📍 צפירה 1 עכו
+            סקירה כללית של המערכת שלך
           </p>
         </div>
 
-        {/* Description */}
-        <p style={{
-          fontSize: '16px',
-          color: '#3a3a3a',
-          lineHeight: '1.6',
-          marginBottom: '50px'
-        }}>
-          ברוכים הבאים למערכת ניהול הצעות המחיר שלנו.<br/>
-          כאן תוכלו ליצור הצעות מחיר מקצועיות ולנהל את קטלוג המוצרים.
-        </p>
-
-        {/* Action Cards */}
+        {/* Stats Cards */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '20px',
           marginBottom: '30px'
         }}>
-          {/* Quotes Card */}
-          <Link href="/quotes" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
-              color: 'black',
-              padding: '30px 20px',
-              borderRadius: '15px',
-              textAlign: 'center',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: 'none'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.4)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}>
-              <div style={{ fontSize: '40px', marginBottom: '15px' }}>📄</div>
-              <h3 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>הצעות מחיר</h3>
-              <p style={{ margin: 0, fontSize: '14px', opacity: 0.9 }}>
-                צור והנהל הצעות מחיר חדשות
-              </p>
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+            border: '1px solid #e9ecef'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px'
+              }}>
+                📄
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  color: '#333',
+                  margin: '0 0 5px 0'
+                }}>
+                  {stats.totalQuotes}
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#666',
+                  margin: 0
+                }}>
+                  סה״כ הצעות מחיר
+                </p>
+              </div>
             </div>
-          </Link>
+          </div>
 
-          {/* Catalog Card */}
-          <Link href="/catalog" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)',
-              color: '#4B4F58',
-              padding: '30px 20px',
-              borderRadius: '15px',
-              textAlign: 'center',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '2px solid #ffdc33'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.2)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)';
-              e.currentTarget.style.color = 'white';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)';
-              e.currentTarget.style.color = '#4B4F58';
-            }}>
-              <div style={{ fontSize: '40px', marginBottom: '15px' }}>📁</div>
-              <h3 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>ניהול קטלוג</h3>
-              <p style={{ margin: 0, fontSize: '14px', opacity: 0.8 }}>
-                עדכון וניהול מוצרים במערכת
-              </p>
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+            border: '1px solid #e9ecef'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px'
+              }}>
+                ⏰
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  color: '#333',
+                  margin: '0 0 5px 0'
+                }}>
+                  {stats.pendingQuotes}
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#666',
+                  margin: 0
+                }}>
+                  ממתינות לאישור
+                </p>
+              </div>
             </div>
-          </Link>
+          </div>
 
-          {/* Schedule Card */}
-          <Link href="/schedule" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)',
-              color: '#4B4F58',
-              padding: '30px 20px',
-              borderRadius: '15px',
-              textAlign: 'center',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '2px solid #ffdc33'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.2)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)';
-              e.currentTarget.style.color = 'white';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)';
-              e.currentTarget.style.color = '#4B4F58';
-            }}>
-              <div style={{ fontSize: '40px', marginBottom: '15px' }}>📅</div>
-              <h3 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>לוח זמנים</h3>
-              <p style={{ margin: 0, fontSize: '14px', opacity: 0.8 }}>
-                צפייה בהצעות מאושרות לפי שבוע
-              </p>
+          <div style={{
+            background: 'white',
+            borderRadius: '15px',
+            padding: '25px',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+            border: '1px solid #e9ecef'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+              <div style={{
+                width: '50px',
+                height: '50px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #17a2b8 0%, #20c997 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '24px'
+              }}>
+                💰
+              </div>
+              <div>
+                <h3 style={{
+                  fontSize: '24px',
+                  fontWeight: 'bold',
+                  color: '#333',
+                  margin: '0 0 5px 0'
+                }}>
+                  ₪{stats.thisMonthTotal.toLocaleString()}
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#666',
+                  margin: 0
+                }}>
+                  סה״כ החודש
+                </p>
+              </div>
             </div>
-          </Link>
-          
-          {/* Settings Card */}
-          <Link href="/settings" style={{ textDecoration: 'none' }}>
-            <div style={{
-              background: 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)',
-              color: '#4B4F58',
-              padding: '30px 20px',
-              borderRadius: '15px',
-              textAlign: 'center',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '2px solid #ffdc33'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px)';
-              e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.2)';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)';
-              e.currentTarget.style.color = 'white';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-              e.currentTarget.style.background = 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)';
-              e.currentTarget.style.color = '#4B4F58';
-            }}>
-              <div style={{ fontSize: '40px', marginBottom: '15px' }}>⚙️</div>
-              <h3 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>הגדרות</h3>
-              <p style={{ margin: 0, fontSize: '14px', opacity: 0.8 }}>
-                ניהול פרטי עסק ולוגו
-              </p>
-            </div>
-          </Link>
+          </div>
         </div>
 
         {/* Quick Actions */}
         <div style={{
-          padding: '20px 0',
-          borderTop: '1px solid #eee',
-          marginTop: '30px'
+          background: 'white',
+          borderRadius: '15px',
+          padding: '25px',
+          marginBottom: '30px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          border: '1px solid #e9ecef'
         }}>
-          <p style={{
-            fontSize: '14px',
-            color: '#888',
-            margin: '0 0 15px 0'
+          <h2 style={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            color: '#333',
+            margin: '0 0 20px 0'
           }}>
-            פעולות מהירות:
-          </p>
+            פעולות מהירות
+          </h2>
           <div style={{
-            display: 'flex',
-            gap: '15px',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '15px'
           }}>
-            <Link href="/new" style={{
-              background: '#F5F5F5',
-              color: '#4B4F58',
-              padding: '8px 16px',
-              borderRadius: '25px',
-              textDecoration: 'none',
-              fontSize: '14px',
-              border: '1px solid #ffdc33',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#ffdc33';
-              e.currentTarget.style.color = 'white';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#F5F5F5';
-              e.currentTarget.style.color = '#4B4F58';
-            }}>
-              🆕 הצעה חדשה
+            <Link href="/new" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+                color: 'white',
+                padding: '20px',
+                borderRadius: '12px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'transform 0.2s ease',
+                border: 'none'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                <div style={{ fontSize: '32px', marginBottom: '10px' }}>🆕</div>
+                <div style={{ fontSize: '16px', fontWeight: 'bold' }}>הצעה חדשה</div>
+              </div>
             </Link>
-            <Link href="/health" style={{
-              background: '#F5F5F5',
-              color: '#3a3a3a',
-              padding: '8px 16px',
-              borderRadius: '25px',
-              textDecoration: 'none',
-              fontSize: '14px',
-              border: '1px solid #E5E5E5',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = '#E5E5E5';
-              e.currentTarget.style.borderColor = '#ffdc33';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = '#F5F5F5';
-              e.currentTarget.style.borderColor = '#E5E5E5';
-            }}>
-              ⚙️ בדיקת מערכת
+
+            <Link href="/quotes" style={{ textDecoration: 'none' }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+                color: '#333',
+                padding: '20px',
+                borderRadius: '12px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                transition: 'transform 0.2s ease',
+                border: '2px solid #ffdc33'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                <div style={{ fontSize: '32px', marginBottom: '10px' }}>📄</div>
+                <div style={{ fontSize: '16px', fontWeight: 'bold' }}>כל ההצעות</div>
+              </div>
             </Link>
           </div>
         </div>
-      </div>
+
+        {/* Recent Quotes */}
+        <div style={{
+          background: 'white',
+          borderRadius: '15px',
+          padding: '25px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          border: '1px solid #e9ecef'
+        }}>
+          <h2 style={{
+            fontSize: '20px',
+            fontWeight: 'bold',
+            color: '#333',
+            margin: '0 0 20px 0'
+          }}>
+            הצעות אחרונות
+          </h2>
+          {recentQuotes.length === 0 ? (
+            <p style={{ color: '#666', textAlign: 'center', margin: '40px 0' }}>
+              עדיין לא נוצרו הצעות מחיר
+            </p>
+          ) : (
+            <div style={{ overflowX: 'auto' }}>
+              <table style={{
+                width: '100%',
+                borderCollapse: 'collapse',
+                minWidth: '600px'
+              }}>
+                <thead>
+                  <tr style={{
+                    background: '#f8f9fa',
+                    borderBottom: '2px solid #e9ecef'
+                  }}>
+                    <th style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold' }}>מספר הצעה</th>
+                    <th style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold' }}>לקוח</th>
+                    <th style={{ padding: '12px', textAlign: 'center', fontWeight: 'bold' }}>סכום</th>
+                    <th style={{ padding: '12px', textAlign: 'center', fontWeight: 'bold' }}>סטטוס</th>
+                    <th style={{ padding: '12px', textAlign: 'center', fontWeight: 'bold' }}>תאריך</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentQuotes.map((quote) => (
+                    <tr key={quote.id} style={{ borderBottom: '1px solid #e9ecef' }}>
+                      <td style={{ padding: '12px' }}>
+                        <Link href={`/quote/${quote.id}`} style={{
+                          color: '#ffdc33',
+                          textDecoration: 'none',
+                          fontWeight: 'bold'
+                        }}>
+                          #{quote.proposal_number || quote.id.slice(0,8)}
+                        </Link>
+                      </td>
+                      <td style={{ padding: '12px' }}>
+                        {quote.customer?.name || 'לא צוין'}
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>
+                        ₪{Number(quote.total || 0).toLocaleString()}
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'center' }}>
+                        <span style={{
+                          padding: '4px 8px',
+                          borderRadius: '12px',
+                          fontSize: '12px',
+                          fontWeight: 'bold',
+                          background: quote.signature_status === 'signed' ? '#d4edda' : '#fff3cd',
+                          color: quote.signature_status === 'signed' ? '#155724' : '#856404'
+                        }}>
+                          {quote.signature_status === 'signed' ? 'חתום' : 'ממתין'}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px', textAlign: 'center', fontSize: '14px', color: '#666' }}>
+                        {new Date(quote.created_at).toLocaleDateString('he-IL')}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </main>
     </>
   );

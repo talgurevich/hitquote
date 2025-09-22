@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getSession } from 'next-auth/react';
-import UserMenu from '../components/UserMenu';
+import HamburgerMenu from '../components/HamburgerMenu';
 import { supabase } from '../../lib/supabaseClient';
 
 export default function SettingsPage() {
@@ -182,11 +182,11 @@ export default function SettingsPage() {
 
   return (
     <>
-      <UserMenu />
+      <HamburgerMenu />
       <div style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-        padding: '20px'
+        padding: '20px 20px 20px 80px' // Extra padding on right for hamburger menu
       }}>
         <div style={{
           maxWidth: '800px',
@@ -202,9 +202,6 @@ export default function SettingsPage() {
             border: '1px solid #e9ecef'
           }}>
             <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
               marginBottom: '10px'
             }}>
               <h1 style={{
@@ -215,31 +212,6 @@ export default function SettingsPage() {
               }}>
                 ⚙️ הגדרות מערכת
               </h1>
-              
-              <button
-                onClick={() => router.push('/dashboard')}
-                style={{
-                  padding: '8px 16px',
-                  background: '#f8f9fa',
-                  color: '#ffdc33',
-                  border: '2px solid #ffdc33',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = '#ffdc33';
-                  e.target.style.color = 'white';
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = '#f8f9fa';
-                  e.target.style.color = '#ffdc33';
-                }}
-              >
-                ← חזור לדשבורד
-              </button>
             </div>
             
             <p style={{

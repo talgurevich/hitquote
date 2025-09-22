@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getSession } from 'next-auth/react';
-import UserMenu from '../components/UserMenu';
+import HamburgerMenu from '../components/HamburgerMenu';
 import { supabase } from '../../lib/supabaseClient';
 
 export default function SchedulePage() {
@@ -128,11 +128,11 @@ export default function SchedulePage() {
 
   return (
     <>
-      <UserMenu />
+      <HamburgerMenu />
       <div style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-        padding: '20px'
+        padding: '20px 20px 20px 80px' // Extra padding on right for hamburger menu
       }}>
         <div style={{
           maxWidth: '1400px',
