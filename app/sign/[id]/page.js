@@ -77,7 +77,7 @@ export default function SignPage() {
       // Load settings
       const { data: settingsData } = await supabase
         .from('settings')
-        .select('*')
+        .select('business_name, business_email, business_phone, business_address, business_license, logo_url')
         .limit(1)
         .maybeSingle();
 
@@ -282,16 +282,36 @@ export default function SignPage() {
           </h3>
 
           {/* Business Info */}
-          {settings.business_name && (
+          {(settings.business_name || settings.logo_url) && (
             <div style={{
               marginBottom: '20px',
               padding: '15px',
               background: '#f8f9fa',
-              borderRadius: '8px'
+              borderRadius: '8px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '15px'
             }}>
-              <strong>{settings.business_name}</strong>
-              {settings.business_email && <div>{settings.business_email}</div>}
-              {settings.business_phone && <div>{settings.business_phone}</div>}
+              {settings.logo_url && (
+                <img 
+                  src={settings.logo_url} 
+                  alt="לוגו העסק" 
+                  style={{ 
+                    height: '40px', 
+                    width: 'auto', 
+                    maxWidth: '120px', 
+                    objectFit: 'contain',
+                    borderRadius: '4px'
+                  }}
+                />
+              )}
+              <div>
+                {settings.business_name && <div><strong>{settings.business_name}</strong></div>}
+                {settings.business_email && <div>📧 {settings.business_email}</div>}
+                {settings.business_phone && <div>📞 {settings.business_phone}</div>}
+                {settings.business_address && <div>📍 {settings.business_address}</div>}
+                {settings.business_license && <div>🏢 עוסק מורשה: {settings.business_license}</div>}
+              </div>
             </div>
           )}
 

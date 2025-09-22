@@ -204,6 +204,38 @@ export default function Home() {
               </p>
             </div>
           </Link>
+          
+          {/* Settings Card */}
+          <Link href="/settings" style={{ textDecoration: 'none' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)',
+              color: '#4B4F58',
+              padding: '30px 20px',
+              borderRadius: '15px',
+              textAlign: 'center',
+              cursor: 'pointer',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              border: '2px solid #ffdc33'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px)';
+              e.currentTarget.style.boxShadow = '0 15px 30px rgba(1, 112, 185, 0.2)';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)';
+              e.currentTarget.style.color = 'white';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+              e.currentTarget.style.background = 'linear-gradient(135deg, #F5F5F5 0%, #E5E5E5 100%)';
+              e.currentTarget.style.color = '#4B4F58';
+            }}>
+              <div style={{ fontSize: '40px', marginBottom: '15px' }}>⚙️</div>
+              <h3 style={{ margin: '0 0 10px 0', fontSize: '20px' }}>הגדרות</h3>
+              <p style={{ margin: 0, fontSize: '14px', opacity: 0.8 }}>
+                ניהול פרטי עסק ולוגו
+              </p>
+            </div>
+          </Link>
         </div>
 
         {/* Quick Actions */}

@@ -37,7 +37,7 @@ export default function QuoteClient({ id }) {
         if (!supabase) throw new Error('Supabase לא זמין בדפדפן');
 
         const [{ data: st, error: e1 }, { data: p, error: e2 }] = await Promise.all([
-          supabase.from('settings').select('*').limit(1).maybeSingle(),
+          supabase.from('settings').select('business_name, business_email, business_phone, business_address, business_license, logo_url').limit(1).maybeSingle(),
           supabase
             .from('proposal')
             .select('id, proposal_number, customer_id, payment_terms, notes, subtotal, discount_value, include_discount_row, vat_rate, vat_amount, total, created_at, delivery_date, signature_status, signature_timestamp, signer_name, signature_data, customer:customer (name, phone, email, address)')
@@ -175,24 +175,43 @@ export default function QuoteClient({ id }) {
           gap: '15px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <picture>
-              <source media="(max-width: 768px)" srcSet="/image1-mobile.png?v=1737159000" />
-              <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
+            {settings?.logo_url ? (
               <img 
-                src="/image1-mobile.png?v=1737159000" 
-                alt="תחנת לחם" 
-                style={{ height: '50px', width: 'auto' }}
+                src={settings.logo_url} 
+                alt="לוגו העסק" 
+                style={{ height: '50px', width: 'auto', maxWidth: '150px', objectFit: 'contain' }}
               />
-            </picture>
+            ) : (
+              <picture>
+                <source media="(max-width: 768px)" srcSet="/image1-mobile.png?v=1737159000" />
+                <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
+                <img 
+                  src="/image1-mobile.png?v=1737159000" 
+                  alt="תחנת לחם" 
+                  style={{ height: '50px', width: 'auto' }}
+                />
+              </picture>
+            )}
             <div>
-              <p style={{
-                margin: '0 0 12px 0',
-                fontSize: '14px',
-                color: 'rgba(255,255,255,0.95)',
-                fontWeight: 'bold'
-              }}>
-                כשר למהדרין
-              </p>
+              {settings?.business_name && (
+                <p style={{
+                  margin: '0 0 12px 0',
+                  fontSize: '16px',
+                  color: 'rgba(255,255,255,0.95)',
+                  fontWeight: 'bold'
+                }}>
+                  {settings.business_name}
+                </p>
+              )}
+              {settings?.business_license && (
+                <p style={{
+                  margin: '0 0 8px 0',
+                  fontSize: '12px',
+                  color: 'rgba(255,255,255,0.8)'
+                }}>
+                  עוסק מורשה: {settings.business_license}
+                </p>
+              )}
               <h1 style={{ 
                 margin: '0 0 8px 0', 
                 fontSize: '28px', 
@@ -215,9 +234,15 @@ export default function QuoteClient({ id }) {
                 fontWeight: '500',
                 marginTop: '6px'
               }}>
-                <div style={{ marginBottom: '2px' }}>אל יזמות ופיתוח ע.מ. • 312333263</div>
-                <div style={{ marginBottom: '2px' }}>ברכה צפירה 3, עכו • 0502670040 • 0508386698</div>
-                <div>moran.marmus@gmail.com</div>
+                {settings?.business_email && (
+                  <div style={{ marginBottom: '2px' }}>📧 {settings.business_email}</div>
+                )}
+                {settings?.business_phone && (
+                  <div style={{ marginBottom: '2px' }}>📞 {settings.business_phone}</div>
+                )}
+                {settings?.business_address && (
+                  <div style={{ marginBottom: '2px' }}>📍 {settings.business_address}</div>
+                )}
               </div>
             </div>
           </div>
