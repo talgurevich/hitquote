@@ -1,0 +1,35 @@
+/* Coolors Exported Palette - https://coolors.co/393d3f-fdfdff-c6c5b9-62929e-546a7b */
+
+- Tailwind
+
+{ 'onyx': { DEFAULT: '#393d3f', 100: '#0c0c0d', 200: '#17191a', 300: '#232527', 400: '#2f3233', 500: '#393d3f', 600: '#5f6669', 700: '#858d91', 800: '#aeb3b5', 900: '#d6d9da' }, 'white': { DEFAULT: '#fdfdff', 100: '#000066', 200: '#0000cc', 300: '#3333ff', 400: '#9999ff', 500: '#fdfdff', 600: '#ffffff', 700: '#ffffff', 800: '#ffffff', 900: '#ffffff' }, 'silver': { DEFAULT: '#c6c5b9', 100: '#2a2922', 200: '#545345', 300: '#7e7c67', 400: '#a3a28f', 500: '#c6c5b9', 600: '#d1d0c7', 700: '#dddcd5', 800: '#e8e8e3', 900: '#f4f3f1' }, 'blue_(munsell)': { DEFAULT: '#62929e', 100: '#131d20', 200: '#273a3f', 300: '#3a585f', 400: '#4e757e', 500: '#62929e', 600: '#81a8b1', 700: '#a0bec5', 800: '#c0d3d8', 900: '#dfe9ec' }, 'payne's_gray': { DEFAULT: '#546a7b', 100: '#111519', 200: '#222b32', 300: '#33404b', 400: '#445664', 500: '#546a7b', 600: '#708a9e', 700: '#94a7b6', 800: '#b7c4ce', 900: '#dbe2e7' } }
+
+- CSV
+
+393d3f,fdfdff,c6c5b9,62929e,546a7b
+
+- With #
+
+#393d3f, #fdfdff, #c6c5b9, #62929e, #546a7b
+
+- Array
+
+["393d3f","fdfdff","c6c5b9","62929e","546a7b"]
+
+- Object
+
+{"Onyx":"393d3f","White":"fdfdff","Silver":"c6c5b9","Blue (Munsell)":"62929e","Payne's gray":"546a7b"}
+
+- Extended Array
+
+[{"name":"Onyx","hex":"393d3f","rgb":[57,61,63],"cmyk":[10,3,0,75],"hsb":[200,10,25],"hsl":[200,5,24],"lab":[25,-1,-2]},{"name":"White","hex":"fdfdff","rgb":[253,253,255],"cmyk":[1,1,0,0],"hsb":[240,1,100],"hsl":[240,100,100],"lab":[99,0,-1]},{"name":"Silver","hex":"c6c5b9","rgb":[198,197,185],"cmyk":[0,1,7,22],"hsb":[55,7,78],"hsl":[55,10,75],"lab":[79,-2,6]},{"name":"Blue (Munsell)","hex":"62929e","rgb":[98,146,158],"cmyk":[38,8,0,38],"hsb":[192,38,62],"hsl":[192,24,50],"lab":[58,-13,-11]},{"name":"Payne's gray","hex":"546a7b","rgb":[84,106,123],"cmyk":[32,14,0,52],"hsb":[206,32,48],"hsl":[206,19,41],"lab":[44,-4,-12]}]
+
+- XML
+
+<palette>
+  <color name="Onyx" hex="393d3f" r="57" g="61" b="63" />
+  <color name="White" hex="fdfdff" r="253" g="253" b="255" />
+  <color name="Silver" hex="c6c5b9" r="198" g="197" b="185" />
+  <color name="Blue (Munsell)" hex="62929e" r="98" g="146" b="158" />
+  <color name="Payne's gray" hex="546a7b" r="84" g="106" b="123" />
+</palette>

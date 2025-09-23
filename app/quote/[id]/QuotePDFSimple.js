@@ -360,17 +360,30 @@ export const SimplePDFButton = ({ proposal }) => {
     <button
       onClick={handleClick}
       style={{
-        background: '#dc3545',
+        background: '#393d3f',
         color: 'white',
-        padding: '12px 24px',
-        borderRadius: '8px',
+        padding: '12px 20px',
+        borderRadius: '10px',
         border: 'none',
-        fontSize: '16px',
+        fontSize: '14px',
         fontWeight: 'bold',
         cursor: 'pointer',
-        display: 'inline-flex',
+        transition: 'all 0.2s ease',
+        display: 'flex',
         alignItems: 'center',
-        gap: '8px'
+        gap: '8px',
+        boxShadow: '0 2px 8px rgba(57, 61, 63, 0.3)',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = '#546a7b';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 4px 12px rgba(57, 61, 63, 0.4)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = '#393d3f';
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 2px 8px rgba(57, 61, 63, 0.3)';
       }}
     >
       📄 הורד PDF

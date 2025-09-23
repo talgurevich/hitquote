@@ -41,7 +41,7 @@ export default function Diag() {
   return (
     <main dir="rtl" style={{ 
       padding: 16, 
-      fontFamily: 'system-ui, Arial',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
     }}>

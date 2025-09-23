@@ -73,7 +73,7 @@ export default function QuotesList() {
           alignItems: 'center',
           gap: '4px'
         }}>
-          ✍️ נחתם
+          &#x270D; נחתם
         </span>
       );
     }
@@ -92,7 +92,7 @@ export default function QuotesList() {
         alignItems: 'center',
         gap: '4px'
       }}>
-        ⏳ ממתין
+        &#x23F3; ממתין
       </span>
     );
   };
@@ -143,9 +143,9 @@ export default function QuotesList() {
       `}</style>
       <main dir="rtl" style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
         padding: '10px 10px 10px 80px', // Extra padding on right for hamburger menu
-        fontFamily: 'system-ui, Arial'
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
       }}>
       <div style={{
         maxWidth: '1200px',
@@ -157,8 +157,8 @@ export default function QuotesList() {
       }}>
         {/* Header */}
         <div className="mobile-header" style={{
-          background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
-          color: 'black',
+          background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
+          color: '#fdfdff',
           padding: '40px 30px',
           display: 'flex',
           justifyContent: 'space-between',
@@ -186,7 +186,7 @@ export default function QuotesList() {
                 margin: 0, 
                 opacity: 0.9, 
                 fontSize: '16px',
-                color: 'rgba(255,255,255,0.9)'
+                color: 'rgba(253,253,255,0.9)'
               }}>
                 ניהול וצפייה בהצעות המחיר שלך
               </p>
@@ -194,81 +194,9 @@ export default function QuotesList() {
           </div>
           
           <div className="mobile-buttons" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <Link href="/dashboard" style={{
-              background: 'rgba(255,255,255,0.2)',
-              color: 'white',
-              padding: '12px 20px',
-              borderRadius: '25px',
-              textDecoration: 'none',
-              fontSize: '14px',
-              border: '1px solid rgba(255,255,255,0.3)',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-              🏠 דף הבית
-            </Link>
-            
-            <Link href="/catalog" style={{
-              background: 'rgba(255,255,255,0.2)',
-              color: 'white',
-              padding: '12px 20px',
-              borderRadius: '25px',
-              textDecoration: 'none',
-              fontSize: '14px',
-              border: '1px solid rgba(255,255,255,0.3)',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-              📁 ניהול קטלוג
-            </Link>
-            
-            <Link href="/schedule" style={{
-              background: 'rgba(255,255,255,0.2)',
-              color: 'white',
-              padding: '12px 20px',
-              borderRadius: '25px',
-              textDecoration: 'none',
-              fontSize: '14px',
-              border: '1px solid rgba(255,255,255,0.3)',
-              transition: 'all 0.2s ease',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}>
-              📅 לוח זמנים
-            </Link>
-            
             <Link href="/new" style={{
-              background: '#ffdc33',
-              color: 'white',
+              background: '#62929e',
+              color: '#fdfdff',
               padding: '12px 24px',
               borderRadius: '8px',
               textDecoration: 'none',
@@ -276,20 +204,20 @@ export default function QuotesList() {
               fontWeight: 'bold',
               border: 'none',
               transition: 'all 0.2s ease',
-              boxShadow: '0 2px 8px rgba(1, 112, 185, 0.3)',
+              boxShadow: '0 2px 8px rgba(98, 146, 158, 0.3)',
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = '#e6c52d';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(1, 112, 185, 0.4)';
+              e.currentTarget.style.background = '#546a7b';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(98, 146, 158, 0.4)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#ffdc33';
-              e.currentTarget.style.boxShadow = '0 2px 8px rgba(1, 112, 185, 0.3)';
+              e.currentTarget.style.background = '#62929e';
+              e.currentTarget.style.boxShadow = '0 2px 8px rgba(98, 146, 158, 0.3)';
             }}>
-              🆕 הצעה חדשה
+              ✚ הצעה חדשה
             </Link>
           </div>
         </div>
@@ -298,17 +226,17 @@ export default function QuotesList() {
         <div className="mobile-content" style={{ padding: '30px' }}>
           {err && (
             <div style={{
-              background: '#fee',
-              border: '1px solid #fcc',
+              background: '#fdfdff',
+              border: '1px solid #c6c5b9',
               borderRadius: '10px',
               padding: '15px',
               marginBottom: '20px',
-              color: '#c33',
+              color: '#393d3f',
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
             }}>
-              ⚠️ <strong>שגיאה:</strong> {err}
+              &#x26A0; <strong>שגיאה:</strong> {err}
             </div>
           )}
 
@@ -316,18 +244,18 @@ export default function QuotesList() {
             <div style={{
               textAlign: 'center',
               padding: '60px 20px',
-              color: '#666'
+              color: '#546a7b'
             }}>
-              <div style={{ fontSize: '64px', marginBottom: '20px', opacity: 0.5 }}>📄</div>
-              <h3 style={{ fontSize: '24px', marginBottom: '10px', color: '#555' }}>
+              <div style={{ fontSize: '64px', marginBottom: '20px', opacity: 0.5 }}>📋</div>
+              <h3 style={{ fontSize: '24px', marginBottom: '10px', color: '#393d3f' }}>
                 אין הצעות מחיר עדיין
               </h3>
               <p style={{ fontSize: '16px', marginBottom: '30px', opacity: 0.8 }}>
                 התחל ביצירת הצעת המחיר הראשונה שלך
               </p>
               <Link href="/new" style={{
-                background: '#ffdc33',
-                color: 'white',
+                background: '#62929e',
+                color: '#fdfdff',
                 padding: '15px 30px',
                 borderRadius: '8px',
                 textDecoration: 'none',
@@ -337,17 +265,17 @@ export default function QuotesList() {
                 alignItems: 'center',
                 gap: '10px',
                 transition: 'all 0.2s ease',
-                boxShadow: '0 3px 10px rgba(1, 112, 185, 0.3)'
+                boxShadow: '0 3px 10px rgba(98, 146, 158, 0.3)'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#e6c52d';
-                e.currentTarget.style.boxShadow = '0 5px 15px rgba(1, 112, 185, 0.4)';
+                e.currentTarget.style.background = '#546a7b';
+                e.currentTarget.style.boxShadow = '0 5px 15px rgba(98, 146, 158, 0.4)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#ffdc33';
-                e.currentTarget.style.boxShadow = '0 3px 10px rgba(1, 112, 185, 0.3)';
+                e.currentTarget.style.background = '#62929e';
+                e.currentTarget.style.boxShadow = '0 3px 10px rgba(98, 146, 158, 0.3)';
               }}>
-                🚀 צור הצעה חדשה
+                ⚙ צור הצעה חדשה
               </Link>
             </div>
           ) : (
@@ -361,7 +289,7 @@ export default function QuotesList() {
               }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
-                    <tr style={{ background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)', color: 'white' }}>
+                    <tr style={{ background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)', color: '#fdfdff' }}>
                       <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>מס׳ הצעה</th>
                       <th style={{ textAlign: 'right', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>לקוח</th>
                       <th style={{ textAlign: 'center', padding: '18px', fontSize: '16px', fontWeight: 'bold' }}>תאריך יצירה</th>
@@ -381,26 +309,26 @@ export default function QuotesList() {
                           transition: 'background-color 0.2s ease'
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = '#e3f2fd';
+                          e.currentTarget.style.backgroundColor = '#c6c5b9';
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.backgroundColor = index % 2 === 0 ? '#ffffff' : '#f8f9fa';
                         }}
                       >
-                        <td style={{ padding: '18px', fontSize: '16px', fontWeight: 'bold', color: '#333' }}>
+                        <td style={{ padding: '18px', fontSize: '16px', fontWeight: 'bold', color: '#393d3f' }}>
                           #{r.proposal_number || r.id.slice(0,8)}
                         </td>
-                        <td style={{ padding: '18px', fontSize: '16px', color: '#495057' }}>
+                        <td style={{ padding: '18px', fontSize: '16px', color: '#393d3f' }}>
                           {r.customer?.name || 'לא צוין'}
                         </td>
-                        <td style={{ padding: '18px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                        <td style={{ padding: '18px', fontSize: '14px', color: '#546a7b', textAlign: 'center' }}>
                           {new Date(r.created_at).toLocaleDateString('he-IL', {
                             year: 'numeric',
                             month: '2-digit',
                             day: '2-digit'
                           })}
                         </td>
-                        <td style={{ padding: '18px', fontSize: '14px', color: '#666', textAlign: 'center' }}>
+                        <td style={{ padding: '18px', fontSize: '14px', color: '#546a7b', textAlign: 'center' }}>
                           {r.delivery_date ? new Date(r.delivery_date).toLocaleDateString('he-IL', {
                             year: 'numeric',
                             month: '2-digit',
@@ -411,7 +339,7 @@ export default function QuotesList() {
                           padding: '18px', 
                           fontSize: '18px', 
                           fontWeight: 'bold', 
-                          color: '#ffdc33',
+                          color: '#62929e',
                           textAlign: 'left'
                         }}>
                           ₪{Number(r.total || 0).toLocaleString('he-IL')}
@@ -425,8 +353,8 @@ export default function QuotesList() {
                               href={`/quote/${r.id}`}
                               title="צפייה בהצעה"
                               style={{
-                                background: '#ffdc33',
-                                color: 'white',
+                                background: '#62929e',
+                                color: '#fdfdff',
                                 padding: '8px 16px',
                                 borderRadius: '6px',
                                 textDecoration: 'none',
@@ -439,15 +367,15 @@ export default function QuotesList() {
                                 gap: '6px'
                               }}
                               onMouseEnter={(e) => {
-                                e.currentTarget.style.background = '#e6c52d';
+                                e.currentTarget.style.background = '#546a7b';
                                 e.currentTarget.style.transform = 'translateY(-2px)';
                               }}
                               onMouseLeave={(e) => {
-                                e.currentTarget.style.background = '#ffdc33';
+                                e.currentTarget.style.background = '#62929e';
                                 e.currentTarget.style.transform = 'translateY(0)';
                               }}
                             >
-                              👁️ צפייה
+                              &#x1F441; צפייה
                             </Link>
                           </div>
                         </td>
@@ -459,12 +387,12 @@ export default function QuotesList() {
                           colSpan={6} 
                           style={{ 
                             padding: '40px', 
-                            color: '#666', 
+                            color: '#546a7b', 
                             textAlign: 'center',
                             fontSize: '16px'
                           }}
                         >
-                          📝 אין הצעות מחיר עדיין
+                          &#x1F4DD; אין הצעות מחיר עדיין
                         </td>
                       </tr>
                     )}
@@ -493,21 +421,21 @@ export default function QuotesList() {
                         <div style={{
                           fontSize: '18px',
                           fontWeight: 'bold',
-                          color: '#ffdc33',
+                          color: '#62929e',
                           marginBottom: '8px'
                         }}>
                           #{r.proposal_number || r.id.slice(0,8)}
                         </div>
                         <div style={{
                           fontSize: '16px',
-                          color: '#495057',
+                          color: '#393d3f',
                           marginBottom: '6px'
                         }}>
                           {r.customer?.name || 'לא צוין'}
                         </div>
                         <div style={{
                           fontSize: '14px',
-                          color: '#6c757d',
+                          color: '#546a7b',
                           marginBottom: '4px'
                         }}>
                           יצירה: {new Date(r.created_at).toLocaleDateString('he-IL', {
@@ -530,7 +458,7 @@ export default function QuotesList() {
                       <div style={{
                         fontSize: '20px',
                         fontWeight: 'bold',
-                        color: '#ffdc33'
+                        color: '#62929e'
                       }}>
                         ₪{Number(r.total || 0).toLocaleString('he-IL')}
                       </div>
@@ -538,8 +466,8 @@ export default function QuotesList() {
                     <Link 
                       href={`/quote/${r.id}`}
                       style={{
-                        background: '#ffdc33',
-                        color: 'white',
+                        background: '#62929e',
+                        color: '#fdfdff',
                         padding: '12px',
                         borderRadius: '8px',
                         textDecoration: 'none',
@@ -553,13 +481,13 @@ export default function QuotesList() {
                         width: '100%'
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#e6c52d';
+                        e.currentTarget.style.background = '#546a7b';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#ffdc33';
+                        e.currentTarget.style.background = '#62929e';
                       }}
                     >
-                      👁️ צפייה בהצעה
+                      &#x1F441; צפייה בהצעה
                     </Link>
                   </div>
                 ))}

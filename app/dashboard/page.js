@@ -94,8 +94,8 @@ export default function Home() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-        color: '#666',
+        background: 'linear-gradient(135deg, #546a7b 0%, #393d3f 100%)',
+        color: '#fdfdff',
         fontSize: '18px'
       }}>
         טוען דשבורד...
@@ -108,9 +108,9 @@ export default function Home() {
       <HamburgerMenu />
       <main dir="rtl" style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
         padding: '20px 20px 20px 80px', // Extra padding on right for hamburger menu
-        fontFamily: 'system-ui, Arial'
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
       }}>
         {/* Header */}
         <div style={{
@@ -129,14 +129,14 @@ export default function Home() {
           <h1 style={{
             fontSize: '28px',
             fontWeight: 'bold',
-            color: '#ffdc33',
+            color: '#62929e',
             margin: '0 0 10px 0'
           }}>
             דשבורד ראשי
           </h1>
           <p style={{
             fontSize: '16px',
-            color: '#666',
+            color: '#546a7b',
             margin: 0
           }}>
             סקירה כללית של המערכת שלך
@@ -151,37 +151,37 @@ export default function Home() {
           marginBottom: '30px'
         }}>
           <div style={{
-            background: 'white',
+            background: '#fdfdff',
             borderRadius: '15px',
             padding: '25px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-            border: '1px solid #e9ecef'
+            boxShadow: '0 4px 20px rgba(57,61,63,0.15)',
+            border: '1px solid #c6c5b9'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               <div style={{
                 width: '50px',
                 height: '50px',
                 borderRadius: '12px',
-                background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+                background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '24px'
               }}>
-                📄
+                📋
               </div>
               <div>
                 <h3 style={{
                   fontSize: '24px',
                   fontWeight: 'bold',
-                  color: '#333',
+                  color: '#393d3f',
                   margin: '0 0 5px 0'
                 }}>
                   {stats.totalQuotes}
                 </h3>
                 <p style={{
                   fontSize: '14px',
-                  color: '#666',
+                  color: '#546a7b',
                   margin: 0
                 }}>
                   סה״כ הצעות מחיר
@@ -191,37 +191,37 @@ export default function Home() {
           </div>
 
           <div style={{
-            background: 'white',
+            background: '#fdfdff',
             borderRadius: '15px',
             padding: '25px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-            border: '1px solid #e9ecef'
+            boxShadow: '0 4px 20px rgba(57,61,63,0.15)',
+            border: '1px solid #c6c5b9'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               <div style={{
                 width: '50px',
                 height: '50px',
                 borderRadius: '12px',
-                background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
+                background: 'linear-gradient(135deg, #546a7b 0%, #393d3f 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '24px'
               }}>
-                ⏰
+                &#x23F0;
               </div>
               <div>
                 <h3 style={{
                   fontSize: '24px',
                   fontWeight: 'bold',
-                  color: '#333',
+                  color: '#393d3f',
                   margin: '0 0 5px 0'
                 }}>
                   {stats.pendingQuotes}
                 </h3>
                 <p style={{
                   fontSize: '14px',
-                  color: '#666',
+                  color: '#546a7b',
                   margin: 0
                 }}>
                   ממתינות לאישור
@@ -231,37 +231,37 @@ export default function Home() {
           </div>
 
           <div style={{
-            background: 'white',
+            background: '#fdfdff',
             borderRadius: '15px',
             padding: '25px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-            border: '1px solid #e9ecef'
+            boxShadow: '0 4px 20px rgba(57,61,63,0.15)',
+            border: '1px solid #c6c5b9'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
               <div style={{
                 width: '50px',
                 height: '50px',
                 borderRadius: '12px',
-                background: 'linear-gradient(135deg, #17a2b8 0%, #20c997 100%)',
+                background: 'linear-gradient(135deg, #c6c5b9 0%, #62929e 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '24px'
               }}>
-                💰
+                &#x1F4B0;
               </div>
               <div>
                 <h3 style={{
                   fontSize: '24px',
                   fontWeight: 'bold',
-                  color: '#333',
+                  color: '#393d3f',
                   margin: '0 0 5px 0'
                 }}>
                   ₪{stats.thisMonthTotal.toLocaleString()}
                 </h3>
                 <p style={{
                   fontSize: '14px',
-                  color: '#666',
+                  color: '#546a7b',
                   margin: 0
                 }}>
                   סה״כ החודש
@@ -283,7 +283,7 @@ export default function Home() {
           <h2 style={{
             fontSize: '20px',
             fontWeight: 'bold',
-            color: '#333',
+            color: '#393d3f',
             margin: '0 0 20px 0'
           }}>
             פעולות מהירות
@@ -295,7 +295,7 @@ export default function Home() {
           }}>
             <Link href="/new" style={{ textDecoration: 'none' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+                background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
                 color: 'white',
                 padding: '20px',
                 borderRadius: '12px',
@@ -306,25 +306,25 @@ export default function Home() {
               }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>🆕</div>
+                <div style={{ fontSize: '32px', marginBottom: '10px' }}>✚</div>
                 <div style={{ fontSize: '16px', fontWeight: 'bold' }}>הצעה חדשה</div>
               </div>
             </Link>
 
             <Link href="/quotes" style={{ textDecoration: 'none' }}>
               <div style={{
-                background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-                color: '#333',
+                background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
+                color: '#393d3f',
                 padding: '20px',
                 borderRadius: '12px',
                 textAlign: 'center',
                 cursor: 'pointer',
                 transition: 'transform 0.2s ease',
-                border: '2px solid #ffdc33'
+                border: '2px solid #62929e'
               }}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-3px)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>📄</div>
+                <div style={{ fontSize: '32px', marginBottom: '10px' }}>📋</div>
                 <div style={{ fontSize: '16px', fontWeight: 'bold' }}>כל ההצעות</div>
               </div>
             </Link>
@@ -342,7 +342,7 @@ export default function Home() {
           <h2 style={{
             fontSize: '20px',
             fontWeight: 'bold',
-            color: '#333',
+            color: '#393d3f',
             margin: '0 0 20px 0'
           }}>
             הצעות אחרונות
@@ -360,8 +360,8 @@ export default function Home() {
               }}>
                 <thead>
                   <tr style={{
-                    background: '#f8f9fa',
-                    borderBottom: '2px solid #e9ecef'
+                    background: '#c6c5b9',
+                    borderBottom: '2px solid #546a7b'
                   }}>
                     <th style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold' }}>מספר הצעה</th>
                     <th style={{ padding: '12px', textAlign: 'right', fontWeight: 'bold' }}>לקוח</th>
@@ -372,10 +372,10 @@ export default function Home() {
                 </thead>
                 <tbody>
                   {recentQuotes.map((quote) => (
-                    <tr key={quote.id} style={{ borderBottom: '1px solid #e9ecef' }}>
+                    <tr key={quote.id} style={{ borderBottom: '1px solid #c6c5b9' }}>
                       <td style={{ padding: '12px' }}>
                         <Link href={`/quote/${quote.id}`} style={{
-                          color: '#ffdc33',
+                          color: '#62929e',
                           textDecoration: 'none',
                           fontWeight: 'bold'
                         }}>
@@ -394,8 +394,8 @@ export default function Home() {
                           borderRadius: '12px',
                           fontSize: '12px',
                           fontWeight: 'bold',
-                          background: quote.signature_status === 'signed' ? '#d4edda' : '#fff3cd',
-                          color: quote.signature_status === 'signed' ? '#155724' : '#856404'
+                          background: quote.signature_status === 'signed' ? '#62929e' : '#c6c5b9',
+                          color: quote.signature_status === 'signed' ? '#fdfdff' : '#393d3f'
                         }}>
                           {quote.signature_status === 'signed' ? 'חתום' : 'ממתין'}
                         </span>

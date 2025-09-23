@@ -121,7 +121,7 @@ export default function Health() {
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
         padding: '20px 20px 20px 80px',
-        fontFamily: 'system-ui, Arial'
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
       }}>
         <div style={{
           maxWidth: '800px',

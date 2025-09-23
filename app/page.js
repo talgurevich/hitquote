@@ -38,7 +38,7 @@ function HomeContent() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: 'system-ui, Arial'
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
       }}>
         <div style={{
           background: 'white',
@@ -47,7 +47,7 @@ function HomeContent() {
           textAlign: 'center',
           boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
         }}>
-          <div style={{ fontSize: '18px', color: '#666' }}>⏳ טוען...</div>
+          <div style={{ fontSize: '18px', color: '#666' }}>&#x23F3; טוען...</div>
         </div>
       </main>
     );
@@ -120,7 +120,7 @@ function HomeContent() {
       <main dir="rtl" style={{
         minHeight: '100vh',
         background: 'white',
-        fontFamily: 'system-ui, Arial',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
         color: '#333'
       }}>
         
@@ -202,7 +202,7 @@ function HomeContent() {
                 padding: '20px',
                 border: '1px solid rgba(1, 112, 185, 0.2)'
               }}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>⚡</div>
+                <div style={{ fontSize: '32px', marginBottom: '10px' }}>&#x26A1;</div>
                 <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>מהיר ויעיל</div>
                 <div style={{ fontSize: '14px', color: '#666' }}>יצירת הצעות מחיר בקליקים ספורים</div>
               </div>
@@ -212,7 +212,7 @@ function HomeContent() {
                 padding: '20px',
                 border: '1px solid rgba(1, 112, 185, 0.2)'
               }}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>📊</div>
+                <div style={{ fontSize: '32px', marginBottom: '10px' }}>&#x1F4CA;</div>
                 <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>ניהול מתקדם</div>
                 <div style={{ fontSize: '14px', color: '#666' }}>קטלוג מוצרים וניהול לקוחות</div>
               </div>
@@ -222,7 +222,7 @@ function HomeContent() {
                 padding: '20px',
                 border: '1px solid rgba(1, 112, 185, 0.2)'
               }}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>🔒</div>
+                <div style={{ fontSize: '32px', marginBottom: '10px' }}>&#x1F512;</div>
                 <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>מאובטח</div>
                 <div style={{ fontSize: '14px', color: '#666' }}>אימות Google ובטיחות מירבית</div>
               </div>
@@ -254,7 +254,7 @@ function HomeContent() {
                 e.currentTarget.style.boxShadow = '0 4px 15px rgba(1, 112, 185, 0.3)';
               }}
             >
-              🚀 התחל עכשיו
+              ⚙ התחל עכשיו
             </a>
           </div>
         </section>
@@ -311,7 +311,7 @@ function HomeContent() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
               }}>
-                <div style={{ fontSize: '64px', marginBottom: '20px' }}>📄</div>
+                <div style={{ fontSize: '64px', marginBottom: '20px' }}>📋</div>
                 <h3 style={{ fontSize: '24px', marginBottom: '15px', color: '#333' }}>יצירת הצעות מחיר</h3>
                 <p style={{ fontSize: '16px', color: '#666', lineHeight: '1.6' }}>
                   צרו הצעות מחיר מקצועיות עם חישובים אוטומטיים, מע"מ והנחות. ייצוא ישיר ל-PDF ושיתוף בוואטסאפ.
@@ -338,7 +338,7 @@ function HomeContent() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
               }}>
-                <div style={{ fontSize: '64px', marginBottom: '20px' }}>📁</div>
+                <div style={{ fontSize: '64px', marginBottom: '20px' }}>&#x1F4C1;</div>
                 <h3 style={{ fontSize: '24px', marginBottom: '15px', color: '#333' }}>ניהול קטלוג</h3>
                 <p style={{ fontSize: '16px', color: '#666', lineHeight: '1.6' }}>
                   נהלו את קטלוג המוצרים שלכם בקלות. העלאת CSV או עריכה ישירה במערכת עם תמיכה בקטגוריות ואפשרויות.
@@ -365,7 +365,7 @@ function HomeContent() {
                 e.currentTarget.style.transform = 'translateY(0)';
                 e.currentTarget.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
               }}>
-                <div style={{ fontSize: '64px', marginBottom: '20px' }}>👥</div>
+                <div style={{ fontSize: '64px', marginBottom: '20px' }}>&#x1F465;</div>
                 <h3 style={{ fontSize: '24px', marginBottom: '15px', color: '#333' }}>ניהול לקוחות</h3>
                 <p style={{ fontSize: '16px', color: '#666', lineHeight: '1.6' }}>
                   שמרו פרטי לקוחות, עקבו אחר הצעות מחיר קודמות וצרו מסד נתונים מאורגן של כל הפעילות העסקית.
@@ -477,7 +477,7 @@ function HomeContent() {
                 margin: 0,
                 fontWeight: '600'
               }}>
-                🔒 כניסה מאובטחת למערכת
+                &#x1F512; כניסה מאובטחת למערכת
               </p>
               <p style={{
                 fontSize: '13px',

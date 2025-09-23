@@ -30,7 +30,7 @@ export default function HamburgerMenu() {
           top: '20px',
           right: '20px',
           zIndex: 1001,
-          background: isOpen ? '#ffdc33' : 'rgba(255, 220, 51, 0.9)',
+          background: isOpen ? '#62929e' : 'rgba(98, 146, 158, 0.9)',
           border: 'none',
           borderRadius: '12px',
           padding: '12px',
@@ -41,10 +41,10 @@ export default function HamburgerMenu() {
           WebkitBackdropFilter: 'blur(10px)'
         }}
         onMouseEnter={(e) => {
-          if (!isOpen) e.target.style.background = '#ffdc33';
+          if (!isOpen) e.target.style.background = '#62929e';
         }}
         onMouseLeave={(e) => {
-          if (!isOpen) e.target.style.background = 'rgba(255, 220, 51, 0.9)';
+          if (!isOpen) e.target.style.background = 'rgba(98, 146, 158, 0.9)';
         }}
       >
         <div style={{
@@ -58,7 +58,7 @@ export default function HamburgerMenu() {
           <div style={{
             width: '100%',
             height: '2px',
-            backgroundColor: isOpen ? 'white' : '#333',
+            backgroundColor: isOpen ? '#fdfdff' : '#393d3f',
             borderRadius: '1px',
             transform: isOpen ? 'rotate(45deg) translate(6px, 6px)' : 'none',
             transition: 'all 0.3s ease'
@@ -66,7 +66,7 @@ export default function HamburgerMenu() {
           <div style={{
             width: '100%',
             height: '2px',
-            backgroundColor: isOpen ? 'white' : '#333',
+            backgroundColor: isOpen ? '#fdfdff' : '#393d3f',
             borderRadius: '1px',
             opacity: isOpen ? 0 : 1,
             transition: 'all 0.3s ease'
@@ -74,7 +74,7 @@ export default function HamburgerMenu() {
           <div style={{
             width: '100%',
             height: '2px',
-            backgroundColor: isOpen ? 'white' : '#333',
+            backgroundColor: isOpen ? '#fdfdff' : '#393d3f',
             borderRadius: '1px',
             transform: isOpen ? 'rotate(-45deg) translate(6px, -6px)' : 'none',
             transition: 'all 0.3s ease'
@@ -108,19 +108,20 @@ export default function HamburgerMenu() {
           right: isOpen ? 0 : '-350px',
           width: '320px',
           height: '100vh',
-          background: 'linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)',
+          background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
           zIndex: 1000,
           transition: 'right 0.3s ease',
           boxShadow: isOpen ? '-10px 0 30px rgba(0,0,0,0.2)' : 'none',
           overflowY: 'auto',
-          direction: 'rtl'
+          direction: 'rtl',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
         }}
       >
         {/* Menu Header */}
         <div style={{
-          padding: '80px 30px 30px 30px',
-          borderBottom: '1px solid #e9ecef',
-          background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+          padding: '70px 25px 20px 25px',
+          borderBottom: '1px solid #c6c5b9',
+          background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
           color: 'white'
         }}>
           <h2 style={{
@@ -141,8 +142,8 @@ export default function HamburgerMenu() {
           {/* User Info */}
           {session?.user && (
             <div style={{
-              marginTop: '20px',
-              padding: '15px',
+              marginTop: '15px',
+              padding: '10px',
               background: 'rgba(255,255,255,0.15)',
               borderRadius: '10px',
               backdropFilter: 'blur(10px)'
@@ -174,7 +175,7 @@ export default function HamburgerMenu() {
                     justifyContent: 'center',
                     fontSize: '18px'
                   }}>
-                    👤
+                    &#x1F464;
                   </div>
                 )}
                 <div style={{ flex: 1 }}>
@@ -199,40 +200,40 @@ export default function HamburgerMenu() {
         </div>
 
         {/* Menu Items */}
-        <div style={{ padding: '20px 0' }}>
+        <div style={{ padding: '15px 0' }}>
           {/* Primary Actions */}
           <div style={{
-            marginBottom: '30px',
-            paddingBottom: '20px',
+            marginBottom: '20px',
+            paddingBottom: '15px',
             borderBottom: '1px solid #e9ecef'
           }}>
             <h3 style={{
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: 'bold',
-              color: '#333',
-              margin: '0 0 15px 0',
-              padding: '0 30px'
+              color: '#393d3f',
+              margin: '0 0 12px 0',
+              padding: '0 25px'
             }}>
               פעולות עיקריות
             </h3>
 
             <Link href="/dashboard" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>🏠</span>
+                <span style={{ fontSize: '24px' }}>⌂</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     דשבורד
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     חזרה לדף הבית
                   </div>
                 </div>
@@ -241,21 +242,21 @@ export default function HamburgerMenu() {
             
             <Link href="/quotes" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>📄</span>
+                <span style={{ fontSize: '24px' }}>📋</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     הצעות מחיר
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     צפה ונהל הצעות קיימות
                   </div>
                 </div>
@@ -264,21 +265,21 @@ export default function HamburgerMenu() {
 
             <Link href="/new" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>🆕</span>
+                <span style={{ fontSize: '24px' }}>✚</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     הצעה חדשה
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     צור הצעת מחיר חדשה
                   </div>
                 </div>
@@ -288,37 +289,37 @@ export default function HamburgerMenu() {
 
           {/* Management */}
           <div style={{
-            marginBottom: '30px',
-            paddingBottom: '20px',
+            marginBottom: '20px',
+            paddingBottom: '15px',
             borderBottom: '1px solid #e9ecef'
           }}>
             <h3 style={{
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: 'bold',
-              color: '#333',
-              margin: '0 0 15px 0',
-              padding: '0 30px'
+              color: '#393d3f',
+              margin: '0 0 12px 0',
+              padding: '0 25px'
             }}>
               ניהול
             </h3>
 
             <Link href="/catalog" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>📁</span>
+                <span style={{ fontSize: '24px' }}>&#x1F4C1;</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     קטלוג מוצרים
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     עדכון וניהול מוצרים
                   </div>
                 </div>
@@ -327,21 +328,21 @@ export default function HamburgerMenu() {
 
             <Link href="/schedule" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>📅</span>
+                <span style={{ fontSize: '24px' }}>&#x1F4C5;</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     לוח זמנים
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     הצעות מאושרות לפי שבוע
                   </div>
                 </div>
@@ -350,21 +351,21 @@ export default function HamburgerMenu() {
 
             <Link href="/settings" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>⚙️</span>
+                <span style={{ fontSize: '24px' }}>⚙</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     הגדרות
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     ניהול פרטי עסק ולוגו
                   </div>
                 </div>
@@ -374,37 +375,37 @@ export default function HamburgerMenu() {
 
           {/* System */}
           <div style={{
-            marginBottom: '30px',
-            paddingBottom: '20px',
+            marginBottom: '20px',
+            paddingBottom: '15px',
             borderBottom: '1px solid #e9ecef'
           }}>
             <h3 style={{
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: 'bold',
-              color: '#333',
-              margin: '0 0 15px 0',
-              padding: '0 30px'
+              color: '#393d3f',
+              margin: '0 0 12px 0',
+              padding: '0 25px'
             }}>
               מערכת
             </h3>
 
             <Link href="/health" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>⚙️</span>
+                <span style={{ fontSize: '24px' }}>⚙</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     בדיקת מערכת
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     סטטוס ובדיקות
                   </div>
                 </div>
@@ -413,21 +414,21 @@ export default function HamburgerMenu() {
 
             <Link href="/support" onClick={closeMenu} style={{ textDecoration: 'none' }}>
               <div style={{
-                padding: '15px 30px',
+                padding: '12px 25px',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '12px',
                 transition: 'background 0.2s ease',
                 cursor: 'pointer'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c6c5b9'}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}>
-                <span style={{ fontSize: '24px' }}>💬</span>
+                <span style={{ fontSize: '24px' }}>&#x1F4AC;</span>
                 <div>
-                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#333' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', color: '#393d3f' }}>
                     תמיכה
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#546a7b' }}>
                     יצירת קשר ועזרה
                   </div>
                 </div>
@@ -436,12 +437,12 @@ export default function HamburgerMenu() {
           </div>
 
           {/* Sign Out */}
-          <div style={{ padding: '0 30px' }}>
+          <div style={{ padding: '0 25px' }}>
             <button
               onClick={handleSignOut}
               style={{
                 width: '100%',
-                padding: '15px',
+                padding: '12px',
                 background: 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)',
                 color: 'white',
                 border: 'none',
@@ -464,7 +465,7 @@ export default function HamburgerMenu() {
                 e.target.style.transform = 'translateY(0)';
               }}
             >
-              <span>🚪</span>
+              <span>&#x1F6AA;</span>
               התנתק
             </button>
           </div>

@@ -294,27 +294,27 @@ export default function CatalogUpload() {
         maxWidth: 1200, 
         margin: '0 auto', 
         padding: '16px 16px 16px 96px', // Extra padding on right for hamburger menu
-        fontFamily: 'system-ui, Arial',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)'
       }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
         <h1>ניהול קטלוג מוצרים</h1>
-        <Link href="/quotes" style={{ padding: '8px 12px', border: '1px solid #ddd', borderRadius: 8, textDecoration: 'none' }}>
+        <Link href="/quotes" style={{ padding: '8px 12px', border: '1px solid #c6c5b9', borderRadius: 8, textDecoration: 'none' }}>
           חזרה להצעות
         </Link>
       </div>
 
       {/* Navigation tabs */}
-      <div style={{ display: 'flex', gap: '10px', marginBottom: 30, borderBottom: '2px solid #f0f0f0' }}>
+      <div style={{ display: 'flex', gap: '10px', marginBottom: 30, borderBottom: '2px solid #c6c5b9' }}>
         <button
           onClick={() => setShowOnlineEditor(false)}
           style={{
             padding: '10px 20px',
-            background: !showOnlineEditor ? '#ffdc33' : 'transparent',
-            color: !showOnlineEditor ? 'white' : '#ffdc33',
+            background: !showOnlineEditor ? '#62929e' : 'transparent',
+            color: !showOnlineEditor ? 'white' : '#62929e',
             border: 'none',
-            borderBottom: !showOnlineEditor ? '3px solid #ffdc33' : '3px solid transparent',
+            borderBottom: !showOnlineEditor ? '3px solid #62929e' : '3px solid transparent',
             cursor: 'pointer',
             fontWeight: 'bold'
           }}
@@ -325,10 +325,10 @@ export default function CatalogUpload() {
           onClick={() => setShowOnlineEditor(true)}
           style={{
             padding: '10px 20px',
-            background: showOnlineEditor ? '#ffdc33' : 'transparent',
-            color: showOnlineEditor ? 'white' : '#ffdc33',
+            background: showOnlineEditor ? '#62929e' : 'transparent',
+            color: showOnlineEditor ? 'white' : '#62929e',
             border: 'none',
-            borderBottom: showOnlineEditor ? '3px solid #ffdc33' : '3px solid transparent',
+            borderBottom: showOnlineEditor ? '3px solid #62929e' : '3px solid transparent',
             cursor: 'pointer',
             fontWeight: 'bold'
           }}
@@ -343,7 +343,7 @@ export default function CatalogUpload() {
           marginBottom: 20, 
           borderRadius: 8, 
           background: message.includes('✅') ? '#e8f4ff' : message.includes('❌') ? '#f8f9fa' : '#e8f4ff',
-          border: `1px solid ${message.includes('✅') ? '#ffdc33' : message.includes('❌') ? '#4B4F58' : '#ffdc33'}`
+          border: `1px solid ${message.includes('✅') ? '#62929e' : message.includes('❌') ? '#4B4F58' : '#62929e'}`
         }}>
           {message}
         </div>
@@ -384,7 +384,7 @@ export default function CatalogUpload() {
               height: 200, 
               padding: 10, 
               borderRadius: 8, 
-              border: '1px solid #ddd',
+              border: '1px solid #c6c5b9',
               fontFamily: 'monospace'
             }}
           />
@@ -409,12 +409,12 @@ export default function CatalogUpload() {
             <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: 20 }}>
               <thead>
                 <tr>
-                  <th style={{ textAlign: 'right', borderBottom: '2px solid #ddd', padding: 8 }}>קטגוריה</th>
-                  <th style={{ textAlign: 'right', borderBottom: '2px solid #ddd', padding: 8 }}>שם מוצר</th>
-                  <th style={{ textAlign: 'right', borderBottom: '2px solid #ddd', padding: 8 }}>יחידה</th>
-                  <th style={{ textAlign: 'right', borderBottom: '2px solid #ddd', padding: 8 }}>מחיר</th>
-                  <th style={{ textAlign: 'right', borderBottom: '2px solid #ddd', padding: 8 }}>הערות</th>
-                  <th style={{ textAlign: 'right', borderBottom: '2px solid #ddd', padding: 8 }}>אפשרויות</th>
+                  <th style={{ textAlign: 'right', borderBottom: '2px solid #c6c5b9', padding: 8 }}>קטגוריה</th>
+                  <th style={{ textAlign: 'right', borderBottom: '2px solid #c6c5b9', padding: 8 }}>שם מוצר</th>
+                  <th style={{ textAlign: 'right', borderBottom: '2px solid #c6c5b9', padding: 8 }}>יחידה</th>
+                  <th style={{ textAlign: 'right', borderBottom: '2px solid #c6c5b9', padding: 8 }}>מחיר</th>
+                  <th style={{ textAlign: 'right', borderBottom: '2px solid #c6c5b9', padding: 8 }}>הערות</th>
+                  <th style={{ textAlign: 'right', borderBottom: '2px solid #c6c5b9', padding: 8 }}>אפשרויות</th>
                 </tr>
               </thead>
               <tbody>
@@ -446,7 +446,7 @@ export default function CatalogUpload() {
               padding: '12px 24px', 
               fontWeight: 700, 
               fontSize: 16,
-              background: uploading ? '#ccc' : '#ffdc33',
+              background: uploading ? '#ccc' : '#62929e',
               color: 'white',
               border: 'none',
               borderRadius: 8,
@@ -490,7 +490,7 @@ export default function CatalogUpload() {
               onClick={() => setEditingProduct({ category: '', name: '', unit_label: '', base_price: '', notes: '', options: '' })}
               style={{
                 padding: '10px 20px',
-                background: '#ffdc33',
+                background: '#62929e',
                 color: 'white',
                 border: 'none',
                 borderRadius: 8,
@@ -542,7 +542,7 @@ export default function CatalogUpload() {
                           onClick={() => setEditingProduct(product)}
                           style={{
                             padding: '6px 12px',
-                            background: '#ffdc33',
+                            background: '#62929e',
                             color: 'white',
                             border: 'none',
                             borderRadius: 4,
@@ -611,7 +611,7 @@ export default function CatalogUpload() {
                       style={{
                         width: '100%',
                         padding: 10,
-                        border: '1px solid #ddd',
+                        border: '1px solid #c6c5b9',
                         borderRadius: 4,
                         fontSize: 14
                       }}
@@ -628,7 +628,7 @@ export default function CatalogUpload() {
                       style={{
                         width: '100%',
                         padding: 10,
-                        border: '1px solid #ddd',
+                        border: '1px solid #c6c5b9',
                         borderRadius: 4,
                         fontSize: 14
                       }}
@@ -646,7 +646,7 @@ export default function CatalogUpload() {
                         style={{
                           width: '100%',
                           padding: 10,
-                          border: '1px solid #ddd',
+                          border: '1px solid #c6c5b9',
                           borderRadius: 4,
                           fontSize: 14
                         }}
@@ -663,7 +663,7 @@ export default function CatalogUpload() {
                         style={{
                           width: '100%',
                           padding: 10,
-                          border: '1px solid #ddd',
+                          border: '1px solid #c6c5b9',
                           borderRadius: 4,
                           fontSize: 14
                         }}
@@ -681,7 +681,7 @@ export default function CatalogUpload() {
                       style={{
                         width: '100%',
                         padding: 10,
-                        border: '1px solid #ddd',
+                        border: '1px solid #c6c5b9',
                         borderRadius: 4,
                         fontSize: 14,
                         minHeight: 60
@@ -699,7 +699,7 @@ export default function CatalogUpload() {
                       style={{
                         width: '100%',
                         padding: 10,
-                        border: '1px solid #ddd',
+                        border: '1px solid #c6c5b9',
                         borderRadius: 4,
                         fontSize: 14
                       }}
@@ -715,7 +715,7 @@ export default function CatalogUpload() {
                       padding: '10px 20px',
                       background: '#f5f5f5',
                       color: '#333',
-                      border: '1px solid #ddd',
+                      border: '1px solid #c6c5b9',
                       borderRadius: 4,
                       cursor: 'pointer'
                     }}
@@ -727,7 +727,7 @@ export default function CatalogUpload() {
                     disabled={!editingProduct.name.trim()}
                     style={{
                       padding: '10px 20px',
-                      background: editingProduct.name.trim() ? '#ffdc33' : '#ccc',
+                      background: editingProduct.name.trim() ? '#62929e' : '#ccc',
                       color: 'white',
                       border: 'none',
                       borderRadius: 4,

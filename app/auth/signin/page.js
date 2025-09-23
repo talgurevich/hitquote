@@ -36,7 +36,7 @@ function SignInContent() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: 'system-ui, Arial'
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
       }}>
         <div style={{
           background: 'white',
@@ -81,7 +81,7 @@ function SignInContent() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontFamily: 'system-ui, Arial',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
         padding: '20px',
         position: 'relative'
       }}>

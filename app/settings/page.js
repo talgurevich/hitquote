@@ -210,7 +210,7 @@ function SettingsContent() {
       <HamburgerMenu />
       <div style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
         padding: '20px 20px 20px 80px' // Extra padding on right for hamburger menu
       }}>
         <div style={{
@@ -224,7 +224,7 @@ function SettingsContent() {
             padding: '30px',
             marginBottom: '30px',
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-            border: '1px solid #e9ecef'
+            border: '1px solid #c6c5b9'
           }}>
             <div style={{
               marginBottom: '10px'
@@ -232,54 +232,54 @@ function SettingsContent() {
               <h1 style={{
                 fontSize: '32px',
                 fontWeight: 'bold',
-                color: '#ffdc33',
+                color: '#62929e',
                 margin: 0
               }}>
-                ⚙️ הגדרות מערכת
+                ⚙ הגדרות מערכת
               </h1>
             </div>
             
             <p style={{
-              color: '#666',
+              color: '#546a7b',
               margin: 0,
               fontSize: '16px'
             }}>
               {isFirstTime ? 'ברוכים הבאים! בואו נגדיר את פרטי העסק שלכם' : 'נהל את הגדרות העסק והלוגו שלך'}
             </p>
             <div style={{
-              background: '#fff3cd',
-              border: '1px solid #ffeaa7',
+              background: '#c6c5b9',
+              border: '1px solid #62929e',
               borderRadius: '8px',
               padding: '12px',
               marginTop: '15px',
               fontSize: '14px',
-              color: '#856404'
+              color: '#393d3f'
             }}>
-              💡 <strong>חשוב לדעת:</strong> הפרטים והלוגו שתמלאו כאן יופיעו על כל מסמכי הצעות המחיר שלכם
+              &#x1F4A1; <strong>חשוב לדעת:</strong> הפרטים והלוגו שתמלאו כאן יופיעו על כל מסמכי הצעות המחיר שלכם
             </div>
           </div>
 
           {/* First-time user welcome */}
           {isFirstTime && (
             <div style={{
-              background: 'linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%)',
-              border: '1px solid #c3e6cb',
+              background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
+              border: '1px solid #62929e',
               borderRadius: '15px',
               padding: '20px',
               marginBottom: '20px',
               textAlign: 'center'
             }}>
-              <div style={{ fontSize: '48px', marginBottom: '15px' }}>🎉</div>
+              <div style={{ fontSize: '48px', marginBottom: '15px' }}>&#x1F389;</div>
               <h2 style={{
                 fontSize: '24px',
                 fontWeight: 'bold',
-                color: '#155724',
+                color: '#393d3f',
                 margin: '0 0 10px 0'
               }}>
                 ברוכים הבאים למערכת HIT Quote!
               </h2>
               <p style={{
-                color: '#155724',
+                color: '#393d3f',
                 margin: 0,
                 fontSize: '16px',
                 lineHeight: '1.5'
@@ -293,27 +293,27 @@ function SettingsContent() {
           {/* Alerts */}
           {error && (
             <div style={{
-              background: '#fee',
-              border: '1px solid #fcc',
+              background: '#fdfdff',
+              border: '1px solid #c6c5b9',
               borderRadius: '10px',
               padding: '15px',
               marginBottom: '20px',
-              color: '#c33'
+              color: '#393d3f'
             }}>
-              ⚠️ {error}
+              &#x26A0; {error}
             </div>
           )}
 
           {success && (
             <div style={{
-              background: '#efe',
-              border: '1px solid #cfc',
+              background: '#c6c5b9',
+              border: '1px solid #62929e',
               borderRadius: '10px',
               padding: '15px',
               marginBottom: '20px',
-              color: '#3c3'
+              color: '#393d3f'
             }}>
-              ✅ {success}
+              &#x2705; {success}
             </div>
           )}
 
@@ -323,14 +323,14 @@ function SettingsContent() {
             borderRadius: '15px',
             padding: '30px',
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-            border: '1px solid #e9ecef'
+            border: '1px solid #c6c5b9'
           }}>
             <h2 style={{
               fontSize: '24px',
               fontWeight: 'bold',
-              color: '#333',
+              color: '#393d3f',
               marginBottom: '30px',
-              borderBottom: '2px solid #ffdc33',
+              borderBottom: '2px solid #62929e',
               paddingBottom: '10px'
             }}>
               פרטי העסק
@@ -359,7 +359,7 @@ function SettingsContent() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e9ecef',
+                    border: '1px solid #c6c5b9',
                     borderRadius: '8px',
                     fontSize: '16px',
                     boxSizing: 'border-box'
@@ -386,7 +386,7 @@ function SettingsContent() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e9ecef',
+                    border: '1px solid #c6c5b9',
                     borderRadius: '8px',
                     fontSize: '16px',
                     boxSizing: 'border-box'
@@ -413,7 +413,7 @@ function SettingsContent() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e9ecef',
+                    border: '1px solid #c6c5b9',
                     borderRadius: '8px',
                     fontSize: '16px',
                     boxSizing: 'border-box'
@@ -440,7 +440,7 @@ function SettingsContent() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e9ecef',
+                    border: '1px solid #c6c5b9',
                     borderRadius: '8px',
                     fontSize: '16px',
                     boxSizing: 'border-box'
@@ -467,7 +467,7 @@ function SettingsContent() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e9ecef',
+                    border: '1px solid #c6c5b9',
                     borderRadius: '8px',
                     fontSize: '16px',
                     boxSizing: 'border-box'
@@ -490,9 +490,9 @@ function SettingsContent() {
                   <div style={{
                     marginBottom: '15px',
                     padding: '15px',
-                    border: '1px solid #e9ecef',
+                    border: '1px solid #c6c5b9',
                     borderRadius: '8px',
-                    background: '#f8f9fa',
+                    background: '#fdfdff',
                     textAlign: 'center'
                   }}>
                     <img
@@ -514,7 +514,7 @@ function SettingsContent() {
                   style={{
                     width: '100%',
                     padding: '12px',
-                    border: '1px solid #e9ecef',
+                    border: '1px solid #c6c5b9',
                     borderRadius: '8px',
                     fontSize: '16px',
                     boxSizing: 'border-box'
@@ -522,7 +522,7 @@ function SettingsContent() {
                 />
                 <p style={{
                   fontSize: '12px',
-                  color: '#666',
+                  color: '#546a7b',
                   marginTop: '5px',
                   margin: '5px 0 0 0'
                 }}>
@@ -541,7 +541,7 @@ function SettingsContent() {
                 disabled={saving}
                 style={{
                   padding: '15px 40px',
-                  background: saving ? '#ccc' : '#ffdc33',
+                  background: saving ? '#c6c5b9' : '#62929e',
                   color: 'white',
                   border: 'none',
                   borderRadius: '10px',
@@ -552,10 +552,10 @@ function SettingsContent() {
                   boxShadow: '0 4px 15px rgba(255, 220, 51, 0.3)'
                 }}
                 onMouseEnter={(e) => {
-                  if (!saving) e.target.style.background = '#e6c52d';
+                  if (!saving) e.target.style.background = '#546a7b';
                 }}
                 onMouseLeave={(e) => {
-                  if (!saving) e.target.style.background = '#ffdc33';
+                  if (!saving) e.target.style.background = '#62929e';
                 }}
               >
                 {saving ? 'שומר...' : 'שמור הגדרות'}
@@ -576,8 +576,8 @@ export default function SettingsPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
-        color: '#666',
+        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
+        color: '#546a7b',
         fontSize: '18px'
       }}>
         טוען הגדרות...

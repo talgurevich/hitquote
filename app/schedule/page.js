@@ -131,7 +131,7 @@ export default function SchedulePage() {
       <HamburgerMenu />
       <div style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
         padding: '20px 20px 20px 80px' // Extra padding on right for hamburger menu
       }}>
         <div style={{
@@ -145,7 +145,7 @@ export default function SchedulePage() {
             padding: '30px',
             marginBottom: '30px',
             boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-            border: '1px solid #e9ecef'
+            border: '1px solid #c6c5b9'
           }}>
             <div style={{
               display: 'flex',
@@ -158,7 +158,7 @@ export default function SchedulePage() {
               <h1 style={{
                 fontSize: '32px',
                 fontWeight: 'bold',
-                color: '#ffdc33',
+                color: '#62929e',
                 margin: 0,
                 textAlign: 'right'
               }}>
@@ -174,7 +174,7 @@ export default function SchedulePage() {
                   onClick={() => navigateWeek(-1)}
                   style={{
                     padding: '10px 20px',
-                    background: '#ffdc33',
+                    background: '#62929e',
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
@@ -182,8 +182,8 @@ export default function SchedulePage() {
                     fontSize: '16px',
                     transition: 'all 0.2s ease'
                   }}
-                  onMouseEnter={(e) => e.target.style.background = '#e6c52d'}
-                  onMouseLeave={(e) => e.target.style.background = '#ffdc33'}
+                  onMouseEnter={(e) => e.target.style.background = '#546a7b'}
+                  onMouseLeave={(e) => e.target.style.background = '#62929e'}
                 >
                   ← שבוע קודם
                 </button>
@@ -191,7 +191,7 @@ export default function SchedulePage() {
                 <span style={{
                   fontSize: '18px',
                   fontWeight: 'bold',
-                  color: '#333',
+                  color: '#393d3f',
                   padding: '0 15px'
                 }}>
                   {weekDates.length > 0 && `${formatDate(weekDates[0])} - ${formatDate(weekDates[6])}`}
@@ -201,7 +201,7 @@ export default function SchedulePage() {
                   onClick={() => navigateWeek(1)}
                   style={{
                     padding: '10px 20px',
-                    background: '#ffdc33',
+                    background: '#62929e',
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
@@ -209,8 +209,8 @@ export default function SchedulePage() {
                     fontSize: '16px',
                     transition: 'all 0.2s ease'
                   }}
-                  onMouseEnter={(e) => e.target.style.background = '#e6c52d'}
-                  onMouseLeave={(e) => e.target.style.background = '#ffdc33'}
+                  onMouseEnter={(e) => e.target.style.background = '#546a7b'}
+                  onMouseLeave={(e) => e.target.style.background = '#62929e'}
                 >
                   שבוע הבא →
                 </button>
@@ -224,7 +224,7 @@ export default function SchedulePage() {
               gap: '15px'
             }}>
               <p style={{
-                color: '#666',
+                color: '#546a7b',
                 margin: 0,
                 fontSize: '16px'
               }}>
@@ -235,9 +235,9 @@ export default function SchedulePage() {
                 onClick={() => router.push('/dashboard')}
                 style={{
                   padding: '8px 16px',
-                  background: '#f8f9fa',
-                  color: '#ffdc33',
-                  border: '2px solid #ffdc33',
+                  background: '#fdfdff',
+                  color: '#62929e',
+                  border: '2px solid #62929e',
                   borderRadius: '8px',
                   cursor: 'pointer',
                   fontSize: '14px',
@@ -245,12 +245,12 @@ export default function SchedulePage() {
                   transition: 'all 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = '#ffdc33';
+                  e.target.style.background = '#62929e';
                   e.target.style.color = 'white';
                 }}
                 onMouseLeave={(e) => {
-                  e.target.style.background = '#f8f9fa';
-                  e.target.style.color = '#ffdc33';
+                  e.target.style.background = '#fdfdff';
+                  e.target.style.color = '#62929e';
                 }}
               >
                 ← חזור לדשבורד
@@ -273,8 +273,8 @@ export default function SchedulePage() {
                 <div
                   key={index}
                   style={{
-                    background: today ? '#e3f2fd' : 'white',
-                    border: today ? '2px solid #ffdc33' : '1px solid #e9ecef',
+                    background: today ? '#c6c5b9' : 'white',
+                    border: today ? '2px solid #62929e' : '1px solid #c6c5b9',
                     borderRadius: '12px',
                     padding: '15px',
                     minHeight: '300px',
@@ -287,11 +287,11 @@ export default function SchedulePage() {
                     textAlign: 'center',
                     marginBottom: '15px',
                     paddingBottom: '10px',
-                    borderBottom: '2px solid #f8f9fa'
+                    borderBottom: '2px solid #fdfdff'
                   }}>
                     <div style={{
                       fontSize: '14px',
-                      color: '#666',
+                      color: '#546a7b',
                       marginBottom: '5px'
                     }}>
                       {getDayName(date)}
@@ -299,14 +299,14 @@ export default function SchedulePage() {
                     <div style={{
                       fontSize: '20px',
                       fontWeight: 'bold',
-                      color: today ? '#ffdc33' : '#333'
+                      color: today ? '#62929e' : '#333'
                     }}>
                       {formatDate(date)}
                     </div>
                     {dayQuotes.length > 0 && (
                       <div style={{
                         fontSize: '12px',
-                        color: '#ffdc33',
+                        color: '#62929e',
                         fontWeight: 'bold',
                         marginTop: '5px'
                       }}>
@@ -322,7 +322,7 @@ export default function SchedulePage() {
                         key={quote.id}
                         onClick={() => router.push(`/quote/${quote.id}`)}
                         style={{
-                          background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+                          background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
                           color: 'white',
                           padding: '12px',
                           borderRadius: '8px',
@@ -358,7 +358,7 @@ export default function SchedulePage() {
                     
                     {dayQuotes.length === 0 && (
                       <div style={{
-                        color: '#999',
+                        color: '#546a7b',
                         textAlign: 'center',
                         fontSize: '14px',
                         padding: '20px 0',
