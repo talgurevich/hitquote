@@ -211,7 +211,8 @@ function SettingsContent() {
       <div style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
-        padding: '20px 20px 20px 80px' // Extra padding on right for hamburger menu
+        padding: '20px 20px 20px 80px', // Extra padding on right for hamburger menu
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
       }}>
         <div style={{
           maxWidth: '800px',

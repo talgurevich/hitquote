@@ -158,9 +158,9 @@ function HomeContent() {
               alt="Logo" 
               className="hero-logo"
               style={{ 
-                height: '240px', 
+                height: '480px', 
                 width: 'auto',
-                marginBottom: '40px'
+                marginBottom: '20px'
               }}
             />
             
@@ -169,10 +169,7 @@ function HomeContent() {
               fontSize: '48px',
               fontWeight: 'bold',
               margin: '0 0 20px 0',
-              background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
+              color: '#62929e'
             }}>
               מערכת הצעות מחיר מקצועית
             </h1>
@@ -192,39 +189,87 @@ function HomeContent() {
             {/* Key Benefits */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '20px',
-              marginBottom: '40px'
+              gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+              gap: '30px',
+              marginBottom: '50px'
             }}>
               <div style={{
-                background: 'rgba(1, 112, 185, 0.1)',
-                borderRadius: '15px',
-                padding: '20px',
-                border: '1px solid rgba(1, 112, 185, 0.2)'
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '20px',
+                padding: '25px',
+                border: '2px solid #62929e',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.2)',
+                transform: 'translateY(0)',
+                transition: 'all 0.3s ease',
+                textAlign: 'center'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.2)';
               }}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>&#x26A1;</div>
-                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>מהיר ויעיל</div>
-                <div style={{ fontSize: '14px', color: '#666' }}>יצירת הצעות מחיר בקליקים ספורים</div>
+                <div style={{ marginBottom: '15px' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ margin: '0 auto', display: 'block' }}>
+                    <path d="M13 10V3L4 14h7v7l9-11h-7z" fill="#62929e"/>
+                  </svg>
+                </div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>מהיר ויעיל</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>יצירת הצעות מחיר בקליקים ספורים</div>
               </div>
               <div style={{
-                background: 'rgba(1, 112, 185, 0.1)',
-                borderRadius: '15px',
-                padding: '20px',
-                border: '1px solid rgba(1, 112, 185, 0.2)'
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '20px',
+                padding: '25px',
+                border: '2px solid #62929e',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.2)',
+                transform: 'translateY(0)',
+                transition: 'all 0.3s ease',
+                textAlign: 'center'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.2)';
               }}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>&#x1F4CA;</div>
-                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>ניהול מתקדם</div>
-                <div style={{ fontSize: '14px', color: '#666' }}>קטלוג מוצרים וניהול לקוחות</div>
+                <div style={{ marginBottom: '15px' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ margin: '0 auto', display: 'block' }}>
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v4h8V3h-8z" fill="#62929e"/>
+                  </svg>
+                </div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>ניהול מתקדם</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>קטלוג מוצרים וניהול לקוחות</div>
               </div>
               <div style={{
-                background: 'rgba(1, 112, 185, 0.1)',
-                borderRadius: '15px',
-                padding: '20px',
-                border: '1px solid rgba(1, 112, 185, 0.2)'
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '20px',
+                padding: '25px',
+                border: '2px solid #62929e',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.2)',
+                transform: 'translateY(0)',
+                transition: 'all 0.3s ease',
+                textAlign: 'center'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.2)';
               }}>
-                <div style={{ fontSize: '32px', marginBottom: '10px' }}>&#x1F512;</div>
-                <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#ffdc33', marginBottom: '5px' }}>מאובטח</div>
-                <div style={{ fontSize: '14px', color: '#666' }}>אימות Google ובטיחות מירבית</div>
+                <div style={{ marginBottom: '15px' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ margin: '0 auto', display: 'block' }}>
+                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM15.1 8H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="#62929e"/>
+                  </svg>
+                </div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>מאובטח</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>אימות Google ובטיחות מירבית</div>
               </div>
             </div>
             
@@ -232,7 +277,7 @@ function HomeContent() {
             <a 
               href="#login" 
               style={{
-                background: 'linear-gradient(135deg, #ffdc33 0%, #e6c52d 100%)',
+                background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
                 color: 'white',
                 padding: '15px 30px',
                 borderRadius: '25px',
@@ -243,15 +288,15 @@ function HomeContent() {
                 alignItems: 'center',
                 gap: '10px',
                 transition: 'all 0.3s ease',
-                boxShadow: '0 4px 15px rgba(1, 112, 185, 0.3)'
+                boxShadow: '0 4px 15px rgba(98, 146, 158, 0.3)'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 6px 20px rgba(1, 112, 185, 0.4)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(98, 146, 158, 0.4)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 15px rgba(1, 112, 185, 0.3)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(98, 146, 158, 0.3)';
               }}
             >
               ⚙ התחל עכשיו
@@ -262,8 +307,8 @@ function HomeContent() {
         {/* Features Section */}
         <section style={{
           padding: '80px 20px',
-          background: '#f8f9fa',
-          borderTop: '1px solid #e9ecef'
+          background: '#fdfdff',
+          borderTop: '1px solid #c6c5b9'
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h2 style={{
@@ -413,7 +458,7 @@ function HomeContent() {
             
             {error === 'AccessDenied' && (
               <div style={{
-                background: '#f8f9fa',
+                background: '#fdfdff',
                 border: '1px solid #4B4F58',
                 borderRadius: '8px',
                 padding: '15px',
@@ -467,13 +512,13 @@ function HomeContent() {
             <div style={{
               marginTop: '30px',
               padding: '20px',
-              background: 'rgba(1, 112, 185, 0.1)',
+              background: 'rgba(98, 146, 158, 0.1)',
               borderRadius: '10px',
-              border: '1px solid rgba(1, 112, 185, 0.2)'
+              border: '1px solid rgba(98, 146, 158, 0.2)'
             }}>
               <p style={{
                 fontSize: '14px',
-                color: '#ffdc33',
+                color: '#62929e',
                 margin: 0,
                 fontWeight: '600'
               }}>
@@ -494,7 +539,7 @@ function HomeContent() {
         {/* Footer */}
         <footer style={{
           background: '#333',
-          borderTop: '1px solid #e9ecef',
+          borderTop: '1px solid #c6c5b9',
           padding: '40px 20px',
           textAlign: 'center'
         }}>
@@ -513,16 +558,16 @@ function HomeContent() {
                 target="_blank" 
                 rel="noopener noreferrer"
                 style={{
-                  color: '#ffdc33',
+                  color: '#62929e',
                   textDecoration: 'none',
                   fontWeight: 'bold',
                   transition: 'color 0.2s ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#e6c52d';
+                  e.currentTarget.style.color = '#546a7b';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#ffdc33';
+                  e.currentTarget.style.color = '#62929e';
                 }}
               >
                 Tal Gurevich

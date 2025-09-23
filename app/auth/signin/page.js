@@ -32,7 +32,7 @@ function SignInContent() {
     return (
       <main dir="rtl" style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -100,22 +100,18 @@ function SignInContent() {
         }}>
           {/* Logo */}
           <div style={{ marginBottom: '40px' }}>
-            <picture>
-              <source media="(max-width: 768px)" srcSet="/logo-new.png?v=1758110947" />
-              <source media="(min-width: 769px)" srcSet="/logo-new.png?v=1758110947" />
-              <img 
-                src="/logo-new.png?v=1758110947" 
-                alt="תחנת לחם" 
-                style={{ 
-                  height: '100px', 
-                  width: 'auto',
-                  marginBottom: '20px'
-                }}
-              />
-            </picture>
+            <img 
+              src="/logo2.png" 
+              alt="Hit Quote" 
+              style={{ 
+                height: '120px', 
+                width: 'auto',
+                marginBottom: '20px'
+              }}
+            />
             <p style={{
               fontSize: '24px',
-              color: '#ffdc33',
+              color: '#62929e',
               margin: '0 0 10px 0',
               fontWeight: 'bold'
             }}>
@@ -123,7 +119,7 @@ function SignInContent() {
             </p>
             <p style={{
               fontSize: '20px',
-              color: '#4B4F58',
+              color: '#393d3f',
               margin: '0 0 15px 0'
             }}>
               מערכת הצעות מחיר מקצועית
@@ -153,7 +149,7 @@ function SignInContent() {
             </h2>
             <p style={{
               fontSize: '16px',
-              color: '#4B4F58',
+              color: '#393d3f',
               marginBottom: '30px',
               lineHeight: '1.5'
             }}>
@@ -216,13 +212,13 @@ function SignInContent() {
           <div style={{
             marginTop: '30px',
             padding: '20px',
-            background: 'rgba(1, 112, 185, 0.1)',
+            background: 'rgba(98, 146, 158, 0.1)',
             borderRadius: '10px',
-            border: '1px solid rgba(1, 112, 185, 0.2)'
+            border: '1px solid rgba(98, 146, 158, 0.2)'
           }}>
             <p style={{
               fontSize: '14px',
-              color: '#ffdc33',
+              color: '#62929e',
               margin: 0,
               fontWeight: '600'
             }}>
@@ -230,7 +226,7 @@ function SignInContent() {
             </p>
             <p style={{
               fontSize: '13px',
-              color: '#4B4F58',
+              color: '#393d3f',
               margin: '8px 0 0 0'
             }}>
               המערכת מוגנת באמצעות אימות Google לביטחון מירבי
