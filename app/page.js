@@ -9,6 +9,8 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
   
 
   useEffect(() => {
@@ -28,6 +30,59 @@ function HomeContent() {
     setIsLoading(true);
     await signIn('google', { callbackUrl: '/dashboard' });
   };
+
+  const screenshots = [
+    {
+      src: '/screenshot-newquote.png',
+      alt: 'יצירת הצעת מחיר חדשה',
+      title: 'יצירת הצעת מחיר',
+      description: 'ממשק פשוט ואינטואיטיבי ליצירת הצעות מחיר מקצועיות'
+    },
+    {
+      src: '/screenshot-catalog.png',
+      alt: 'ניהול קטלוג מוצרים',
+      title: 'קטלוג מוצרים',
+      description: 'ניהול מתקדם של מוצרים עם חיפוש וסינון מהיר'
+    },
+    {
+      src: '/screenshot-pdf.png',
+      alt: 'ייצוא PDF מקצועי',
+      title: 'ייצוא PDF',
+      description: 'הפקת מסמכים מקצועיים עם הלוגו שלכם'
+    },
+    {
+      src: '/screenshot-signature.png',
+      alt: 'חתימה דיגיטלית',
+      title: 'חתימה דיגיטלית',
+      description: 'אישור מקוון מחייב עם חתימה דיגיטלית מאובטחת'
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % screenshots.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + screenshots.length) % screenshots.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
+
+  const openImageModal = (imageData) => {
+    setSelectedImage(imageData);
+  };
+
+  const closeImageModal = () => {
+    setSelectedImage(null);
+  };
+
+  // Auto-rotate carousel
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+  }, []);
   
 
   if (isLoading) {
@@ -478,202 +533,176 @@ function HomeContent() {
               מבט על התכונות המתקדמות והממשק הידידותי של המערכת
             </p>
             
+            {/* Carousel Container */}
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '30px'
+              position: 'relative',
+              background: 'white',
+              borderRadius: '20px',
+              padding: '40px',
+              boxShadow: '0 15px 50px rgba(98, 146, 158, 0.2)',
+              border: '2px solid rgba(98, 146, 158, 0.1)',
+              overflow: 'hidden'
             }}>
-              {/* New Quote Screenshot */}
+              {/* Current Screenshot */}
               <div style={{
-                background: 'white',
-                borderRadius: '20px',
-                padding: '20px',
-                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
-                border: '2px solid rgba(98, 146, 158, 0.1)',
-                transition: 'all 0.3s ease',
-                overflow: 'hidden'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
+                display: 'flex',
+                alignItems: 'center',
+                gap: '40px',
+                minHeight: '400px'
               }}>
-                <img 
-                  src="/screenshot-newquote.png" 
-                  alt="יצירת הצעת מחיר חדשה"
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    objectFit: 'cover',
-                    borderRadius: '10px',
-                    marginBottom: '15px'
-                  }}
-                />
-                <h3 style={{
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  color: '#393d3f',
-                  marginBottom: '8px',
+                {/* Image */}
+                <div style={{
+                  flex: '1',
+                  maxWidth: '60%',
                   textAlign: 'center'
                 }}>
-                  יצירת הצעת מחיר
-                </h3>
-                <p style={{
-                  fontSize: '14px',
-                  color: '#546a7b',
-                  lineHeight: '1.5',
-                  textAlign: 'center'
+                  <img 
+                    src={screenshots[currentSlide].src}
+                    alt={screenshots[currentSlide].alt}
+                    onClick={() => openImageModal(screenshots[currentSlide])}
+                    style={{
+                      width: '100%',
+                      maxWidth: '500px',
+                      height: 'auto',
+                      borderRadius: '15px',
+                      boxShadow: '0 10px 30px rgba(98, 146, 158, 0.3)',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(98, 146, 158, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.boxShadow = '0 10px 30px rgba(98, 146, 158, 0.3)';
+                    }}
+                  />
+                  <p style={{
+                    fontSize: '12px',
+                    color: '#546a7b',
+                    marginTop: '15px',
+                    fontStyle: 'italic'
+                  }}>
+                    🔍 לחץ על התמונה לצפייה מלאה
+                  </p>
+                </div>
+                
+                {/* Content */}
+                <div style={{
+                  flex: '1',
+                  maxWidth: '40%',
+                  textAlign: 'right'
                 }}>
-                  ממשק פשוט ואינטואיטיבי ליצירת הצעות מחיר מקצועיות
-                </p>
+                  <h3 style={{
+                    fontSize: '28px',
+                    fontWeight: 'bold',
+                    color: '#393d3f',
+                    marginBottom: '20px'
+                  }}>
+                    {screenshots[currentSlide].title}
+                  </h3>
+                  <p style={{
+                    fontSize: '18px',
+                    color: '#546a7b',
+                    lineHeight: '1.6',
+                    marginBottom: '30px'
+                  }}>
+                    {screenshots[currentSlide].description}
+                  </p>
+                  
+                  {/* Navigation Dots */}
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '12px',
+                    marginBottom: '20px'
+                  }}>
+                    {screenshots.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        style={{
+                          width: currentSlide === index ? '30px' : '12px',
+                          height: '12px',
+                          borderRadius: '6px',
+                          border: 'none',
+                          background: currentSlide === index ? '#62929e' : '#c6c5b9',
+                          cursor: 'pointer',
+                          transition: 'all 0.3s ease'
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
-
-              {/* Catalog Screenshot */}
-              <div style={{
-                background: 'white',
-                borderRadius: '20px',
-                padding: '20px',
-                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
-                border: '2px solid rgba(98, 146, 158, 0.1)',
-                transition: 'all 0.3s ease',
-                overflow: 'hidden'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
-              }}>
-                <img 
-                  src="/screenshot-catalog.png" 
-                  alt="ניהול קטלוג מוצרים"
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    objectFit: 'cover',
-                    borderRadius: '10px',
-                    marginBottom: '15px'
-                  }}
-                />
-                <h3 style={{
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  color: '#393d3f',
-                  marginBottom: '8px',
-                  textAlign: 'center'
-                }}>
-                  קטלוג מוצרים
-                </h3>
-                <p style={{
-                  fontSize: '14px',
-                  color: '#546a7b',
-                  lineHeight: '1.5',
-                  textAlign: 'center'
-                }}>
-                  ניהול מתקדם של מוצרים עם חיפוש וסינון מהיר
-                </p>
-              </div>
-
-              {/* PDF Screenshot */}
-              <div style={{
-                background: 'white',
-                borderRadius: '20px',
-                padding: '20px',
-                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
-                border: '2px solid rgba(98, 146, 158, 0.1)',
-                transition: 'all 0.3s ease',
-                overflow: 'hidden'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
-              }}>
-                <img 
-                  src="/screenshot-pdf.png" 
-                  alt="ייצוא PDF מקצועי"
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    objectFit: 'cover',
-                    borderRadius: '10px',
-                    marginBottom: '15px'
-                  }}
-                />
-                <h3 style={{
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  color: '#393d3f',
-                  marginBottom: '8px',
-                  textAlign: 'center'
-                }}>
-                  ייצוא PDF
-                </h3>
-                <p style={{
-                  fontSize: '14px',
-                  color: '#546a7b',
-                  lineHeight: '1.5',
-                  textAlign: 'center'
-                }}>
-                  הפקת מסמכים מקצועיים עם הלוגו שלכם
-                </p>
-              </div>
-
-              {/* Digital Signature Screenshot */}
-              <div style={{
-                background: 'white',
-                borderRadius: '20px',
-                padding: '20px',
-                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
-                border: '2px solid rgba(98, 146, 158, 0.1)',
-                transition: 'all 0.3s ease',
-                overflow: 'hidden'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
-              }}>
-                <img 
-                  src="/screenshot-signature.png" 
-                  alt="חתימה דיגיטלית"
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    objectFit: 'cover',
-                    borderRadius: '10px',
-                    marginBottom: '15px'
-                  }}
-                />
-                <h3 style={{
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  color: '#393d3f',
-                  marginBottom: '8px',
-                  textAlign: 'center'
-                }}>
-                  חתימה דיגיטלית
-                </h3>
-                <p style={{
-                  fontSize: '14px',
-                  color: '#546a7b',
-                  lineHeight: '1.5',
-                  textAlign: 'center'
-                }}>
-                  אישור מקוון מחייב עם חתימה דיגיטלית מאובטחת
-                </p>
-              </div>
+              
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevSlide}
+                style={{
+                  position: 'absolute',
+                  left: '20px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'rgba(98, 146, 158, 0.9)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontSize: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 15px rgba(98, 146, 158, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#546a7b';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(98, 146, 158, 0.9)';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                ←
+              </button>
+              
+              <button
+                onClick={nextSlide}
+                style={{
+                  position: 'absolute',
+                  right: '20px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'rgba(98, 146, 158, 0.9)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '50px',
+                  height: '50px',
+                  cursor: 'pointer',
+                  fontSize: '20px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 15px rgba(98, 146, 158, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#546a7b';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1.1)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(98, 146, 158, 0.9)';
+                  e.currentTarget.style.transform = 'translateY(-50%) scale(1)';
+                }}
+              >
+                →
+              </button>
             </div>
 
             {/* Call to Action */}
@@ -868,6 +897,59 @@ function HomeContent() {
           </div>
         </footer>
       </main>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(0, 0, 0, 0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}
+        onClick={closeImageModal}>
+          <div style={{
+            position: 'relative',
+            maxWidth: '90%',
+            maxHeight: '90%'
+          }}>
+            <img 
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '10px'
+              }}
+            />
+            <button
+              onClick={closeImageModal}
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                background: 'rgba(255, 255, 255, 0.8)',
+                border: 'none',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                fontSize: '20px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
