@@ -271,6 +271,37 @@ function HomeContent() {
                 <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>מאובטח</div>
                 <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>אימות Google ובטיחות מירבית</div>
               </div>
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.95)',
+                borderRadius: '20px',
+                padding: '25px',
+                border: '2px solid #62929e',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.2)',
+                transform: 'translateY(0)',
+                transition: 'all 0.3s ease',
+                textAlign: 'center'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.3)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.2)';
+              }}>
+                <div style={{ marginBottom: '15px' }}>
+                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ margin: '0 auto', display: 'block' }}>
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" fill="none" stroke="#62929e" strokeWidth="2"/>
+                    <path d="M14 2v6h6" fill="none" stroke="#62929e" strokeWidth="2"/>
+                    <path d="M16 13H8" fill="none" stroke="#62929e" strokeWidth="2"/>
+                    <path d="M16 17H8" fill="none" stroke="#62929e" strokeWidth="2"/>
+                    <path d="M10 9H8" fill="none" stroke="#62929e" strokeWidth="2"/>
+                    <path d="M12 19l2-2-2-2" fill="none" stroke="#62929e" strokeWidth="2"/>
+                  </svg>
+                </div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>חתימה דיגיטלית</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>אישור מקוון מחייב בקליק אחד</div>
+              </div>
             </div>
             
             {/* CTA to Login Section */}
@@ -416,6 +447,267 @@ function HomeContent() {
                   שמרו פרטי לקוחות, עקבו אחר הצעות מחיר קודמות וצרו מסד נתונים מאורגן של כל הפעילות העסקית.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Screenshots Section */}
+        <section style={{
+          padding: '80px 20px',
+          background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
+          borderTop: '1px solid #c6c5b9'
+        }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: '36px',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginBottom: '20px',
+              color: '#393d3f'
+            }}>
+              ראה את המערכת בפעולה
+            </h2>
+            <p style={{
+              fontSize: '18px',
+              textAlign: 'center',
+              marginBottom: '60px',
+              color: '#546a7b',
+              maxWidth: '600px',
+              margin: '0 auto 60px auto'
+            }}>
+              מבט על התכונות המתקדמות והממשק הידידותי של המערכת
+            </p>
+            
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '30px'
+            }}>
+              {/* New Quote Screenshot */}
+              <div style={{
+                background: 'white',
+                borderRadius: '20px',
+                padding: '20px',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
+                border: '2px solid rgba(98, 146, 158, 0.1)',
+                transition: 'all 0.3s ease',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
+              }}>
+                <img 
+                  src="/screenshot-newquote.png" 
+                  alt="יצירת הצעת מחיר חדשה"
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover',
+                    borderRadius: '10px',
+                    marginBottom: '15px'
+                  }}
+                />
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  color: '#393d3f',
+                  marginBottom: '8px',
+                  textAlign: 'center'
+                }}>
+                  יצירת הצעת מחיר
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#546a7b',
+                  lineHeight: '1.5',
+                  textAlign: 'center'
+                }}>
+                  ממשק פשוט ואינטואיטיבי ליצירת הצעות מחיר מקצועיות
+                </p>
+              </div>
+
+              {/* Catalog Screenshot */}
+              <div style={{
+                background: 'white',
+                borderRadius: '20px',
+                padding: '20px',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
+                border: '2px solid rgba(98, 146, 158, 0.1)',
+                transition: 'all 0.3s ease',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
+              }}>
+                <img 
+                  src="/screenshot-catalog.png" 
+                  alt="ניהול קטלוג מוצרים"
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover',
+                    borderRadius: '10px',
+                    marginBottom: '15px'
+                  }}
+                />
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  color: '#393d3f',
+                  marginBottom: '8px',
+                  textAlign: 'center'
+                }}>
+                  קטלוג מוצרים
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#546a7b',
+                  lineHeight: '1.5',
+                  textAlign: 'center'
+                }}>
+                  ניהול מתקדם של מוצרים עם חיפוש וסינון מהיר
+                </p>
+              </div>
+
+              {/* PDF Screenshot */}
+              <div style={{
+                background: 'white',
+                borderRadius: '20px',
+                padding: '20px',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
+                border: '2px solid rgba(98, 146, 158, 0.1)',
+                transition: 'all 0.3s ease',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
+              }}>
+                <img 
+                  src="/screenshot-pdf.png" 
+                  alt="ייצוא PDF מקצועי"
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover',
+                    borderRadius: '10px',
+                    marginBottom: '15px'
+                  }}
+                />
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  color: '#393d3f',
+                  marginBottom: '8px',
+                  textAlign: 'center'
+                }}>
+                  ייצוא PDF
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#546a7b',
+                  lineHeight: '1.5',
+                  textAlign: 'center'
+                }}>
+                  הפקת מסמכים מקצועיים עם הלוגו שלכם
+                </p>
+              </div>
+
+              {/* Digital Signature Screenshot */}
+              <div style={{
+                background: 'white',
+                borderRadius: '20px',
+                padding: '20px',
+                boxShadow: '0 8px 25px rgba(98, 146, 158, 0.15)',
+                border: '2px solid rgba(98, 146, 158, 0.1)',
+                transition: 'all 0.3s ease',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = '0 15px 35px rgba(98, 146, 158, 0.25)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 25px rgba(98, 146, 158, 0.15)';
+              }}>
+                <img 
+                  src="/screenshot-signature.png" 
+                  alt="חתימה דיגיטלית"
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover',
+                    borderRadius: '10px',
+                    marginBottom: '15px'
+                  }}
+                />
+                <h3 style={{
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  color: '#393d3f',
+                  marginBottom: '8px',
+                  textAlign: 'center'
+                }}>
+                  חתימה דיגיטלית
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  color: '#546a7b',
+                  lineHeight: '1.5',
+                  textAlign: 'center'
+                }}>
+                  אישור מקוון מחייב עם חתימה דיגיטלית מאובטחת
+                </p>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div style={{
+              textAlign: 'center',
+              marginTop: '50px'
+            }}>
+              <a 
+                href="#login" 
+                style={{
+                  background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
+                  color: 'white',
+                  padding: '15px 30px',
+                  borderRadius: '25px',
+                  textDecoration: 'none',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 15px rgba(98, 146, 158, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(98, 146, 158, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(98, 146, 158, 0.3)';
+                }}
+              >
+                🚀 התחל לעבוד עם המערכת
+              </a>
             </div>
           </div>
         </section>
