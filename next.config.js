@@ -15,9 +15,8 @@ const nextConfig = {
   // Enable compression
   compress: true,
   
-  // Performance optimization
+  // Performance optimization - removed experimental optimizeCss due to critters dependency
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['@mui/material', '@mui/icons-material'],
   },
   
