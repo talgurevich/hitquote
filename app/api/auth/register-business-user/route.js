@@ -27,11 +27,11 @@ export async function POST(req) {
     const { email, name, id } = session.user
 
     // Check if business user already exists (by auth_user_id OR email)
-    const { data: existingUserByAuthId } = await supabase
+    const { data: existingUserByAuthId, error: authIdError } = await supabase
       .from('users')
       .select('id')
       .eq('auth_user_id', id)
-      .single()
+      .maybeSingle()
 
     if (existingUserByAuthId) {
       return new Response(JSON.stringify({ 
@@ -45,11 +45,11 @@ export async function POST(req) {
     }
 
     // Check if email already exists (to prevent duplicate email constraint violation)
-    const { data: existingUserByEmail } = await supabase
+    const { data: existingUserByEmail, error: emailError } = await supabase
       .from('users')
       .select('id, auth_user_id')
       .eq('email', email)
-      .single()
+      .maybeSingle()
 
     if (existingUserByEmail) {
       // Email exists but with different auth_user_id - update the existing record
