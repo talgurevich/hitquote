@@ -148,6 +148,139 @@ function HomeContent() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
       
+      {/* Navigation Header */}
+      <header style={{
+        position: 'sticky',
+        top: 0,
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(98, 146, 158, 0.1)',
+        padding: '15px 20px',
+        zIndex: 1000,
+        boxShadow: '0 2px 10px rgba(98, 146, 158, 0.1)',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+      }}>
+        <nav style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          {/* Logo */}
+          <div style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+            color: '#000',
+            fontFamily: 'inherit'
+          }}>
+            Hit-Quote
+          </div>
+          
+          {/* Navigation Menu */}
+          <ul style={{
+            display: 'flex',
+            listStyle: 'none',
+            margin: 0,
+            padding: 0,
+            gap: '30px',
+            alignItems: 'center',
+            fontFamily: 'inherit'
+          }}>
+            <li>
+              <a 
+                href="#features" 
+                style={{
+                  textDecoration: 'none',
+                  color: '#393d3f',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease',
+                  fontFamily: 'inherit'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#62929e';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#393d3f';
+                }}
+              >
+                תכונות
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#about" 
+                style={{
+                  textDecoration: 'none',
+                  color: '#393d3f',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease',
+                  fontFamily: 'inherit'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#62929e';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#393d3f';
+                }}
+              >
+                אודותינו
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#faq" 
+                style={{
+                  textDecoration: 'none',
+                  color: '#393d3f',
+                  fontSize: '16px',
+                  fontWeight: '500',
+                  transition: 'color 0.2s ease',
+                  fontFamily: 'inherit'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#62929e';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#393d3f';
+                }}
+              >
+                שאלות נפוצות
+              </a>
+            </li>
+            <li>
+              <a 
+                href="#login" 
+                style={{
+                  textDecoration: 'none',
+                  background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
+                  color: 'white',
+                  padding: '10px 20px',
+                  borderRadius: '25px',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 2px 8px rgba(98, 146, 158, 0.3)',
+                  fontFamily: 'inherit'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(98, 146, 158, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 2px 8px rgba(98, 146, 158, 0.3)';
+                }}
+              >
+                כניסה למערכת
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
       <style jsx>{`
         .hero-bg::before {
           content: '';
@@ -429,7 +562,7 @@ function HomeContent() {
         </section>
 
         {/* Features Section */}
-        <section style={{
+        <section id="features" style={{
           padding: '80px 20px',
           background: '#fdfdff',
           borderTop: '1px solid #c6c5b9'
@@ -779,9 +912,161 @@ function HomeContent() {
           </div>
         </section>
 
+        {/* FAQ Section for SEO */}
+        <section id="faq" style={{
+          padding: '80px 20px',
+          background: 'linear-gradient(135deg, #fdfdff 0%, rgba(98, 146, 158, 0.05) 100%)',
+          borderTop: '1px solid #c6c5b9'
+        }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: '32px',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginBottom: '50px',
+              color: '#393d3f'
+            }}>
+              שאלות נפוצות - מערכת הצעות מחיר
+            </h2>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  איך יוצרים הצעת מחיר במערכת?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  יצירת הצעת מחיר במערכת Hit Quote היא פשוטה ומהירה. לחצו על "הצעת מחיר חדשה", בחרו מוצרים מהקטלוג, הוסיפו פרטי לקוח ותקבלו הצעת מחיר מקצועית מוכנה להדפסה או לשליחה דיגיטלית.
+                </p>
+              </div>
+              
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  האם ניתן להתאים אישית את הצעת המחיר?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  כן! המערכת מאפשרת להתאים את הצעת המחיר לעסק שלכם - הוספת לוגו אישי, עיצוב מותאם, הוספת תנאים מיוחדים ופרטי חברה. כל הצעת מחיר תיראה מקצועית ותשקף את המותג שלכם.
+                </p>
+              </div>
+              
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  איך עובדת החתימה הדיגיטלית?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  החתימה הדיגיטלית במערכת Hit Quote מאפשרת ללקוחות לאשר הצעת מחיר באופן מקוון ומאובטח. הלקוח מקבל קישור לאישור, חותם דיגיטלית ואתם מקבלים עדכון מיידי על סטטוס ההצעה.
+                </p>
+              </div>
+              
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  האם המערכת מתאימה לעסקים קטנים?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  בהחלט! המערכת תוכננה במיוחד עבור עסקים קטנים ובינוניים בישראל. היא פשוטה לשימוש, לא דורשת הכשרה מיוחדת ומתאימה לכל סוג עסק הזקוק לניהול הצעות מחיר מקצועיות.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* About Section */}
+        <section id="about" style={{
+          padding: '80px 20px',
+          background: 'linear-gradient(135deg, rgba(98, 146, 158, 0.05) 0%, #fdfdff 100%)',
+          borderTop: '1px solid #c6c5b9'
+        }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: '32px',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginBottom: '30px',
+              color: '#393d3f'
+            }}>
+              אודותינו - הסיפור שלנו
+            </h2>
+            
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.95)',
+              borderRadius: '20px',
+              padding: '40px',
+              boxShadow: '0 10px 30px rgba(98, 146, 158, 0.1)',
+              textAlign: 'center',
+              marginBottom: '40px'
+            }}>
+              <p style={{
+                fontSize: '20px',
+                color: '#393d3f',
+                lineHeight: '1.7',
+                marginBottom: '25px',
+                fontWeight: '500'
+              }}>
+                אנחנו שני יזמים שהגיעו מהנוף של עסקים קטנים וזיהו בעיה יומיומית משותפת
+              </p>
+              
+              <p style={{
+                fontSize: '18px',
+                color: '#546a7b',
+                lineHeight: '1.6',
+                marginBottom: '25px'
+              }}>
+                כל יום, עסקים קטנים ובינוניים מתמודדים עם אתגר יצירת הצעות מחיר מקצועיות. המציאות הייתה מורכבת: 
+                קבצי Word לא עקביים, חישובים ידניים מועדים לטעויות, ותהליכים איטיים שגוזלים זמן יקר.
+              </p>
+              
+              <p style={{
+                fontSize: '18px',
+                color: '#546a7b',
+                lineHeight: '1.6',
+                marginBottom: '30px'
+              }}>
+                מתוך הבנה עמוקה של הצרכים הללו, פיתחנו את Hit Quote - פתרון פשוט, מהיר ומקצועי שהופך את יצירת 
+                הצעות המחיר מתהליך מתיש למשימה של דקות ספורות. המטרה שלנו היא לאפשר לכל עסק, גדול כקטן, 
+                להתמקד במה שהם עושים הכי טוב - במקום לבזבז זמן על משימות אדמיניסטרטיביות.
+              </p>
+              
+              <div style={{
+                background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
+                color: 'white',
+                padding: '20px',
+                borderRadius: '15px',
+                fontSize: '16px',
+                fontWeight: '500',
+                maxWidth: '600px',
+                margin: '0 auto'
+              }}>
+                ב-Hit Quote, אנו מאמינים שכל עסק זכאי לכלים מקצועיים ופשוטים שיעזרו לו לצמוח ולהצליח
+              </div>
+            </div>
+          </div>
+        </section>
+
+
         {/* Login Section */}
         <section id="login" style={{
           padding: '80px 20px',
+          background: 'linear-gradient(135deg, rgba(98, 146, 158, 0.08) 0%, #fdfdff 100%)',
+          borderTop: '1px solid #c6c5b9',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
@@ -894,121 +1179,149 @@ function HomeContent() {
           </div>
         </section>
 
-
-        {/* FAQ Section for SEO */}
-        <section style={{
-          padding: '80px 20px',
-          background: 'linear-gradient(135deg, #fdfdff 0%, rgba(98, 146, 158, 0.05) 100%)',
-          borderTop: '1px solid #c6c5b9'
-        }}>
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            <h2 style={{
-              fontSize: '32px',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              marginBottom: '50px',
-              color: '#393d3f'
-            }}>
-              שאלות נפוצות - מערכת הצעות מחיר
-            </h2>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-              <div style={{
-                background: 'white',
-                borderRadius: '15px',
-                padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
-              }}>
-                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
-                  איך יוצרים הצעת מחיר במערכת?
-                </h3>
-                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
-                  יצירת הצעת מחיר במערכת Hit Quote היא פשוטה ומהירה. לחצו על "הצעת מחיר חדשה", בחרו מוצרים מהקטלוג, הוסיפו פרטי לקוח ותקבלו הצעת מחיר מקצועית מוכנה להדפסה או לשליחה דיגיטלית.
-                </p>
-              </div>
-              
-              <div style={{
-                background: 'white',
-                borderRadius: '15px',
-                padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
-              }}>
-                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
-                  האם ניתן להתאים אישית את הצעת המחיר?
-                </h3>
-                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
-                  כן! המערכת מאפשרת להתאים את הצעת המחיר לעסק שלכם - הוספת לוגו אישי, עיצוב מותאם, הוספת תנאים מיוחדים ופרטי חברה. כל הצעת מחיר תיראה מקצועית ותשקף את המותג שלכם.
-                </p>
-              </div>
-              
-              <div style={{
-                background: 'white',
-                borderRadius: '15px',
-                padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
-              }}>
-                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
-                  איך עובדת החתימה הדיגיטלית?
-                </h3>
-                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
-                  החתימה הדיגיטלית במערכת Hit Quote מאפשרת ללקוחות לאשר הצעת מחיר באופן מקוון ומאובטח. הלקוח מקבל קישור לאישור, חותם דיגיטלית ואתם מקבלים עדכון מיידי על סטטוס ההצעה.
-                </p>
-              </div>
-              
-              <div style={{
-                background: 'white',
-                borderRadius: '15px',
-                padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
-              }}>
-                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
-                  האם המערכת מתאימה לעסקים קטנים?
-                </h3>
-                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
-                  בהחלט! המערכת תוכננה במיוחד עבור עסקים קטנים ובינוניים בישראל. היא פשוטה לשימוש, לא דורשת הכשרה מיוחדת ומתאימה לכל סוג עסק הזקוק לניהול הצעות מחיר מקצועיות.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Footer */}
         <footer style={{
           background: '#333',
           borderTop: '1px solid #c6c5b9',
-          padding: '40px 20px',
-          textAlign: 'center'
+          padding: '50px 20px 30px 20px',
+          color: '#ccc'
         }}>
           <div style={{
             maxWidth: '1200px',
             margin: '0 auto'
           }}>
-            <p style={{
-              fontSize: '14px',
-              color: '#ccc',
-              margin: 0
+            {/* Main Footer Content */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+              gap: '40px',
+              marginBottom: '40px',
+              textAlign: 'right'
             }}>
-              Vibe coded with a simple stack by{' '}
-              <a 
-                href="https://www.linkedin.com/in/talgurevich/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{
+              {/* Company Info */}
+              <div>
+                <h3 style={{
                   color: '#62929e',
-                  textDecoration: 'none',
-                  fontWeight: 'bold',
-                  transition: 'color 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#546a7b';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = '#62929e';
-                }}
-              >
-                Tal Gurevich
-              </a>
-            </p>
+                  fontSize: '18px',
+                  marginBottom: '20px',
+                  fontWeight: 'bold'
+                }}>
+                  Hit Quote - מערכת הצעות מחיר
+                </h3>
+                <p style={{
+                  fontSize: '14px',
+                  lineHeight: '1.6',
+                  color: '#bbb',
+                  margin: 0
+                }}>
+                  פתרון מקצועי ופשוט לניהול הצעות מחיר עבור עסקים קטנים ובינוניים בישראל. 
+                  יצירת הצעות מחיר מהירה, ניהול קטלוג מוצרים וחתימה דיגיטלית מאובטחת.
+                </p>
+              </div>
+
+              {/* Contact Info */}
+              <div>
+                <h3 style={{
+                  color: '#62929e',
+                  fontSize: '18px',
+                  marginBottom: '20px',
+                  fontWeight: 'bold'
+                }}>
+                  צור קשר
+                </h3>
+                <div style={{ fontSize: '14px', lineHeight: '1.8' }}>
+                  <p style={{ margin: '0 0 10px 0' }}>
+                    <strong style={{ color: '#fff' }}>כתובת:</strong> ברכה צפירה, עכו
+                  </p>
+                  <p style={{ margin: '0 0 10px 0' }}>
+                    <strong style={{ color: '#fff' }}>LinkedIn:</strong>{' '}
+                    <a 
+                      href="https://www.linkedin.com/in/talgurevich/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      style={{
+                        color: '#62929e',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#87c5d6';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#62929e';
+                      }}
+                    >
+                      Tal Gurevich
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              {/* Legal Links */}
+              <div>
+                <h3 style={{
+                  color: '#62929e',
+                  fontSize: '18px',
+                  marginBottom: '20px',
+                  fontWeight: 'bold'
+                }}>
+                  מידע משפטי
+                </h3>
+                <div style={{ fontSize: '14px', lineHeight: '1.8' }}>
+                  <p style={{ margin: '0 0 10px 0' }}>
+                    <a 
+                      href="/terms"
+                      style={{
+                        color: '#bbb',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#62929e';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#bbb';
+                      }}
+                    >
+                      תנאי שימוש
+                    </a>
+                  </p>
+                  <p style={{ margin: '0 0 10px 0' }}>
+                    <a 
+                      href="/privacy"
+                      style={{
+                        color: '#bbb',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.color = '#62929e';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.color = '#bbb';
+                      }}
+                    >
+                      מדיניות פרטיות
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Footer */}
+            <div style={{
+              borderTop: '1px solid #444',
+              paddingTop: '20px',
+              textAlign: 'center'
+            }}>
+              <p style={{
+                fontSize: '14px',
+                color: '#999',
+                margin: 0
+              }}>
+                © 2024 Hit Quote. כל הזכויות שמורות. | פותח בישראל עם ❤️ עבור עסקים קטנים
+              </p>
+            </div>
           </div>
         </footer>
       </main>
