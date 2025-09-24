@@ -155,7 +155,7 @@ function HomeContent() {
         background: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(10px)',
         borderBottom: '1px solid rgba(98, 146, 158, 0.1)',
-        padding: '15px 20px',
+        padding: '10px 15px',
         zIndex: 1000,
         boxShadow: '0 2px 10px rgba(98, 146, 158, 0.1)',
         fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
@@ -164,28 +164,20 @@ function HomeContent() {
           maxWidth: '1200px',
           margin: '0 auto',
           display: 'flex',
-          justifyContent: 'space-between',
+          justifyContent: 'center',
           alignItems: 'center'
         }}>
-          {/* Logo */}
-          <div style={{
-            fontSize: '24px',
-            fontWeight: 'bold',
-            color: '#000',
-            fontFamily: 'inherit'
-          }}>
-            Hit-Quote
-          </div>
-          
           {/* Navigation Menu */}
           <ul style={{
             display: 'flex',
             listStyle: 'none',
             margin: 0,
             padding: 0,
-            gap: '30px',
+            gap: '20px',
             alignItems: 'center',
-            fontFamily: 'inherit'
+            fontFamily: 'inherit',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
           }}>
             <li>
               <a 
@@ -193,10 +185,11 @@ function HomeContent() {
                 style={{
                   textDecoration: 'none',
                   color: '#393d3f',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   fontWeight: '500',
                   transition: 'color 0.2s ease',
-                  fontFamily: 'inherit'
+                  fontFamily: 'inherit',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = '#62929e';
@@ -214,10 +207,11 @@ function HomeContent() {
                 style={{
                   textDecoration: 'none',
                   color: '#393d3f',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   fontWeight: '500',
                   transition: 'color 0.2s ease',
-                  fontFamily: 'inherit'
+                  fontFamily: 'inherit',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = '#62929e';
@@ -235,10 +229,11 @@ function HomeContent() {
                 style={{
                   textDecoration: 'none',
                   color: '#393d3f',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   fontWeight: '500',
                   transition: 'color 0.2s ease',
-                  fontFamily: 'inherit'
+                  fontFamily: 'inherit',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.color = '#62929e';
@@ -257,13 +252,14 @@ function HomeContent() {
                   textDecoration: 'none',
                   background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
                   color: 'white',
-                  padding: '10px 20px',
-                  borderRadius: '25px',
-                  fontSize: '16px',
+                  padding: '8px 16px',
+                  borderRadius: '20px',
+                  fontSize: '14px',
                   fontWeight: '600',
                   transition: 'all 0.2s ease',
                   boxShadow: '0 2px 8px rgba(98, 146, 158, 0.3)',
-                  fontFamily: 'inherit'
+                  fontFamily: 'inherit',
+                  whiteSpace: 'nowrap'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
