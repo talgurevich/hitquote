@@ -347,7 +347,7 @@ function HomeContent() {
       }}>
         
         {/* Hero Section */}
-        <section style={{
+        <section className="parallax-bg" style={{
           minHeight: '100vh',
           display: 'flex',
           flexDirection: 'column',
@@ -360,7 +360,8 @@ function HomeContent() {
           backgroundImage: 'url("/bg1.jpg")',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'fixed'
         }}>
           {/* Background Image */}
           <div className="hero-bg"></div>

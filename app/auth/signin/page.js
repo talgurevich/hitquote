@@ -32,7 +32,7 @@ function SignInContent() {
     return (
       <main dir="rtl" style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
+        background: 'white',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -53,30 +53,7 @@ function SignInContent() {
 
   return (
     <>
-      <style jsx>{`
-        .background-blur::before {
-          content: '';
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: url('https://breadstation.co.il/wp-content/uploads/sites/221/2021/10/fo_0009__P1A6761.jpg') center/cover;
-          filter: blur(3px);
-          z-index: -2;
-        }
-        .background-overlay::after {
-          content: '';
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3));
-          z-index: -1;
-        }
-      `}</style>
-      <main dir="rtl" className="background-blur background-overlay" style={{
+      <main dir="rtl" style={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
