@@ -6,6 +6,7 @@ import { getSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import HamburgerMenu from '../components/HamburgerMenu';
+import { validateSessionAndGetBusinessUserId } from '../../lib/businessUserUtils';
 
 export default function CatalogUpload() {
   const router = useRouter();
