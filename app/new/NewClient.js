@@ -49,6 +49,7 @@ export default function NewClient() {
     }
   }, []);
 
+  const [userId, setUserId] = useState(null);
   const [settings, setSettings] = useState(null);
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -80,12 +81,13 @@ export default function NewClient() {
         if (!session?.user?.id) return;
         
         // Get properly converted user ID
-        const userId = await validateSessionAndGetBusinessUserId(session);
+        const businessUserId = await validateSessionAndGetBusinessUserId(session);
+        setUserId(businessUserId);
         
         const [{ data: stResult, error: e1 }, { data: custResult, error: e2 }, { data: prodsResult, error: e3 }] = await Promise.all([
-          supabase.from('settings').select('*').eq('user_id', userId).limit(1).maybeSingle(),
-          supabase.from('customer').select('id, name, phone, email, address').eq('user_id', userId).order('name'),
-          supabase.from('product').select('id, category, name, unit_label, base_price, notes, options').eq('user_id', userId).order('category').order('name')
+          supabase.from('settings').select('*').eq('user_id', businessUserId).limit(1).maybeSingle(),
+          supabase.from('customer').select('id, name, phone, email, address').eq('user_id', businessUserId).order('name'),
+          supabase.from('product').select('id, category, name, unit_label, base_price, notes, options').eq('user_id', businessUserId).order('category').order('name')
         ]);
         
         if (e1) throw e1;
@@ -227,8 +229,8 @@ export default function NewClient() {
       if (!customerId) throw new Error('בחר לקוח');
       if (!deliveryDate) throw new Error('בחר תאריך משלוח');
 
-      // Get business user ID
-      const userId = await validateSessionAndGetBusinessUserId(session);
+      // Use the already fetched user ID from state
+      if (!userId) throw new Error('User ID not found');
 
       let proposalId = editId;
       let proposalNumber = null;
@@ -568,7 +570,8 @@ export default function NewClient() {
                         name: newCust.name.trim(),
                         phone: newCust.phone?.trim() || null,
                         email: newCust.email?.trim() || null,
-                        address: newCust.address?.trim() || null
+                        address: newCust.address?.trim() || null,
+                        user_id: userId
                       }).select('id, name').maybeSingle();
                       if (error) throw error;
                       setCustomers((prev)=>[...prev, data]);
