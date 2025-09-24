@@ -640,6 +640,14 @@ export default function QuoteClient({ id }) {
         </div>
       </div>
     </main>
+    
+    <style jsx>{`
+      @media (max-width: 768px) {
+        main {
+          padding: 10px 5px !important;
+        }
+      }
+    `}</style>
     </>
   );
 }

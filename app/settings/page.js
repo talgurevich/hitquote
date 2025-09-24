@@ -208,7 +208,7 @@ function SettingsContent() {
   return (
     <>
       <HamburgerMenu />
-      <div style={{
+      <div className="settings-container" style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #fdfdff 0%, #c6c5b9 100%)',
         padding: '20px 20px 20px 80px', // Extra padding on right for hamburger menu
@@ -565,6 +565,14 @@ function SettingsContent() {
           </div>
         </div>
       </div>
+      
+      <style jsx>{`
+        @media (max-width: 768px) {
+          .settings-container {
+            padding: 10px 5px !important;
+          }
+        }
+      `}</style>
     </>
   );
 }
