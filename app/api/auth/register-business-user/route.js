@@ -26,18 +26,52 @@ export async function POST(req) {
 
     const { email, name, id } = session.user
 
-    // Check if business user already exists
-    const { data: existingUser } = await supabase
+    // Check if business user already exists (by auth_user_id OR email)
+    const { data: existingUserByAuthId } = await supabase
       .from('users')
       .select('id')
       .eq('auth_user_id', id)
       .single()
 
-    if (existingUser) {
+    if (existingUserByAuthId) {
       return new Response(JSON.stringify({ 
         success: true, 
         message: 'Business user already exists',
-        businessUserId: existingUser.id 
+        businessUserId: existingUserByAuthId.id 
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    // Check if email already exists (to prevent duplicate email constraint violation)
+    const { data: existingUserByEmail } = await supabase
+      .from('users')
+      .select('id, auth_user_id')
+      .eq('email', email)
+      .single()
+
+    if (existingUserByEmail) {
+      // Email exists but with different auth_user_id - update the existing record
+      const { data: updatedUser, error: updateError } = await supabase
+        .from('users')
+        .update({
+          auth_user_id: id,
+          name: name || email
+        })
+        .eq('email', email)
+        .select('id')
+        .single()
+
+      if (updateError) {
+        console.error('Error updating existing user:', updateError)
+        throw updateError
+      }
+
+      return new Response(JSON.stringify({ 
+        success: true, 
+        message: 'Existing business user updated with new auth ID',
+        businessUserId: updatedUser.id 
       }), {
         status: 200,
         headers: { 'Content-Type': 'application/json' }
