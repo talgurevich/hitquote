@@ -3,6 +3,7 @@
 import { signIn, getSession } from 'next-auth/react';
 import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import ContactForm from '../components/ContactForm';
 
 function HomeContent() {
   const router = useRouter();
@@ -912,7 +913,7 @@ function HomeContent() {
         {/* FAQ Section for SEO */}
         <section id="faq" style={{
           padding: '80px 20px',
-          background: 'linear-gradient(135deg, #fdfdff 0%, rgba(98, 146, 158, 0.05) 100%)',
+          background: 'linear-gradient(135deg, #546a7b 0%, #393d3f 100%)',
           borderTop: '1px solid #c6c5b9'
         }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
@@ -921,17 +922,18 @@ function HomeContent() {
               fontWeight: 'bold',
               textAlign: 'center',
               marginBottom: '50px',
-              color: '#393d3f'
+              color: '#fdfdff'
             }}>
               שאלות נפוצות - מערכת הצעות מחיר
             </h2>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
               <div style={{
-                background: 'white',
+                background: 'rgba(253, 253, 255, 0.95)',
                 borderRadius: '15px',
                 padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                border: '1px solid rgba(198, 197, 185, 0.3)'
               }}>
                 <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
                   איך יוצרים הצעת מחיר במערכת?
@@ -942,10 +944,11 @@ function HomeContent() {
               </div>
               
               <div style={{
-                background: 'white',
+                background: 'rgba(253, 253, 255, 0.95)',
                 borderRadius: '15px',
                 padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                border: '1px solid rgba(198, 197, 185, 0.3)'
               }}>
                 <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
                   האם ניתן להתאים אישית את הצעת המחיר?
@@ -956,10 +959,11 @@ function HomeContent() {
               </div>
               
               <div style={{
-                background: 'white',
+                background: 'rgba(253, 253, 255, 0.95)',
                 borderRadius: '15px',
                 padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                border: '1px solid rgba(198, 197, 185, 0.3)'
               }}>
                 <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
                   איך עובדת החתימה הדיגיטלית?
@@ -970,10 +974,11 @@ function HomeContent() {
               </div>
               
               <div style={{
-                background: 'white',
+                background: 'rgba(253, 253, 255, 0.95)',
                 borderRadius: '15px',
                 padding: '25px',
-                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                border: '1px solid rgba(198, 197, 185, 0.3)'
               }}>
                 <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
                   האם המערכת מתאימה לעסקים קטנים?
@@ -989,8 +994,8 @@ function HomeContent() {
         {/* About Section */}
         <section id="about" style={{
           padding: '80px 20px',
-          background: 'linear-gradient(135deg, rgba(98, 146, 158, 0.05) 0%, #fdfdff 100%)',
-          borderTop: '1px solid #c6c5b9'
+          background: 'linear-gradient(135deg, #c6c5b9 0%, #fdfdff 100%)',
+          borderTop: '1px solid #546a7b'
         }}>
           <div style={{ maxWidth: '900px', margin: '0 auto' }}>
             <h2 style={{
@@ -1062,23 +1067,23 @@ function HomeContent() {
         {/* Login Section */}
         <section id="login" style={{
           padding: '80px 20px',
-          background: 'linear-gradient(135deg, rgba(98, 146, 158, 0.08) 0%, #fdfdff 100%)',
+          background: 'linear-gradient(135deg, #62929e 0%, #546a7b 100%)',
           borderTop: '1px solid #c6c5b9',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center'
         }}>
           <div className="login-card" style={{
-            background: 'rgba(255, 255, 255, 0.95)',
+            background: 'rgba(253, 253, 255, 0.98)',
             borderRadius: '25px',
             padding: '50px 40px',
             textAlign: 'center',
             maxWidth: '500px',
             width: '100%',
-            boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-            border: '2px solid rgba(255, 255, 255, 0.8)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)'
+            boxShadow: '0 25px 70px rgba(0,0,0,0.4)',
+            border: '2px solid rgba(198, 197, 185, 0.4)',
+            backdropFilter: 'blur(15px)',
+            WebkitBackdropFilter: 'blur(15px)'
           }}>
             <h2 style={{
               fontSize: '28px',
@@ -1091,11 +1096,39 @@ function HomeContent() {
             <p style={{
               fontSize: '16px',
               color: '#4B4F58',
-              marginBottom: '30px',
+              marginBottom: '20px',
               lineHeight: '1.5'
             }}>
               יש להתחבר עם חשבון Google כדי לגשת למערכת ניהול הצעות המחיר
             </p>
+            
+            {/* New User Notice */}
+            <div style={{
+              background: 'rgba(98, 146, 158, 0.1)',
+              border: '1px solid rgba(98, 146, 158, 0.3)',
+              borderRadius: '10px',
+              padding: '15px',
+              marginBottom: '25px',
+              textAlign: 'right'
+            }}>
+              <p style={{
+                fontSize: '14px',
+                color: '#393d3f',
+                margin: '0 0 8px 0',
+                fontWeight: '600'
+              }}>
+                🆕 משתמש חדש?
+              </p>
+              <p style={{
+                fontSize: '13px',
+                color: '#546a7b',
+                margin: 0,
+                lineHeight: '1.4'
+              }}>
+                אם זו הפעם הראשונה שלך במערכת, לאחר ההתחברות תתבקש לשלוח בקשת אישור. 
+                השתמש בטופס יצירת הקשר למטה כדי לבקש גישה למערכת.
+              </p>
+            </div>
             
             {error === 'AccessDenied' && (
               <div style={{
@@ -1175,6 +1208,9 @@ function HomeContent() {
             </div>
           </div>
         </section>
+
+        {/* Contact Form */}
+        <ContactForm />
 
         {/* Footer */}
         <footer style={{
