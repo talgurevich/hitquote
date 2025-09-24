@@ -108,8 +108,46 @@ function HomeContent() {
     );
   }
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Hit Quote - מערכת הצעות מחיר מקצועית",
+    "description": "מערכת מתקדמת לניהול הצעות מחיר, יצירת הצעות מחיר אונליין, ניהול קטלוג מוצרים וחתימה דיגיטלית. פתרון מקצועי לעסקים קטנים ובינוניים בישראל.",
+    "url": "https://hitquote-3af50317cd73.herokuapp.com",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "ILS"
+    },
+    "featureList": [
+      "יצירת הצעות מחיר מקצועיות",
+      "ניהול קטלוג מוצרים",
+      "חתימה דיגיטלית מאובטחת",
+      "ניהול לקוחות CRM",
+      "ייצוא PDF מקצועי",
+      "אימות Google מאובטח"
+    ],
+    "inLanguage": "he",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Hit Quote",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://hitquote-3af50317cd73.herokuapp.com/logo2.png"
+      }
+    }
+  };
+
   return (
     <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
       <style jsx>{`
         .hero-bg::before {
           content: '';
@@ -238,7 +276,7 @@ function HomeContent() {
               maxWidth: '600px',
               textAlign: 'center'
             }}>
-              פתרון מתקדם וחכם לניהול הצעות מחיר, ניהול קטלוג מוצרים ויצירת מסמכים מקצועיים
+              יצירת הצעות מחיר מקצועיות בקליקים ספורים | ניהול קטלוג מוצרים מתקדם | חתימה דיגיטלית מאובטחת | פתרון CRM מושלם לעסקים קטנים ובינוניים בישראל
             </p>
             
             {/* Key Benefits */}
@@ -271,8 +309,8 @@ function HomeContent() {
                     <path d="M13 10V3L4 14h7v7l9-11h-7z" fill="#62929e"/>
                   </svg>
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>מהיר ויעיל</div>
-                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>יצירת הצעות מחיר בקליקים ספורים</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>יצירת הצעות מחיר מהירה</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>הכנת הצעת מחיר מקצועית בקליקים ספורים - חסכו זמן ויוצרים הצעות מחיר מושלמות תוך דקות</div>
               </div>
               <div style={{
                 background: 'rgba(255, 255, 255, 0.95)',
@@ -297,8 +335,8 @@ function HomeContent() {
                     <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v4h8V3h-8z" fill="#62929e"/>
                   </svg>
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>ניהול מתקדם</div>
-                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>קטלוג מוצרים וניהול לקוחות</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>ניהול קטלוג מוצרים מתקדם</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>ניהול מלאי מוצרים, עדכון מחירים באופן מיידי, ויצירת בסיס נתונים מותאם לעסק שלכם</div>
               </div>
               <div style={{
                 background: 'rgba(255, 255, 255, 0.95)',
@@ -323,8 +361,8 @@ function HomeContent() {
                     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM15.1 8H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" fill="#62929e"/>
                   </svg>
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>מאובטח</div>
-                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>אימות Google ובטיחות מירבית</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>אבטחת נתונים מתקדמת</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>אימות Google מאובטח, הגנה על נתונים רגישים, וגיבוי אוטומטי של כל המידע העסקי</div>
               </div>
               <div style={{
                 background: 'rgba(255, 255, 255, 0.95)',
@@ -354,8 +392,8 @@ function HomeContent() {
                     <path d="M12 19l2-2-2-2" fill="none" stroke="#62929e" strokeWidth="2"/>
                   </svg>
                 </div>
-                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>חתימה דיגיטלית</div>
-                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>אישור מקוון מחייב בקליק אחד</div>
+                <div style={{ fontSize: '18px', fontWeight: 'bold', color: '#393d3f', marginBottom: '10px' }}>חתימה דיגיטלית מתקדמת</div>
+                <div style={{ fontSize: '14px', color: '#393d3f', lineHeight: '1.5' }}>אישור הצעות מחיר דיגיטלי מאובטח, חתימה אלקטרונית מחייבת ומעקב סטטוס בזמן אמת</div>
               </div>
             </div>
             
@@ -404,17 +442,17 @@ function HomeContent() {
               marginBottom: '20px',
               color: '#333'
             }}>
-              תכונות מתקדמות
+              מערכת הצעות מחיר מקצועית - תכונות מתקדמות לעסק שלכם
             </h2>
             <p style={{
               fontSize: '18px',
               textAlign: 'center',
               marginBottom: '60px',
               color: '#666',
-              maxWidth: '600px',
+              maxWidth: '700px',
               margin: '0 auto 60px auto'
             }}>
-              כל מה שצריך לניהול מקצועי של הצעות מחיר ולקוחות
+              מערכת CRM מושלמת לניהול הצעות מחיר, לקוחות ומוצרים - הכל במקום אחד. פתרון דיגיטלי מתקדם לעסקים קטנים ובינוניים הזקוקים לכלי ניהול מקצועי בישראל
             </p>
             
             <div className="features-grid" style={{
@@ -856,6 +894,83 @@ function HomeContent() {
           </div>
         </section>
 
+
+        {/* FAQ Section for SEO */}
+        <section style={{
+          padding: '80px 20px',
+          background: 'linear-gradient(135deg, #fdfdff 0%, rgba(98, 146, 158, 0.05) 100%)',
+          borderTop: '1px solid #c6c5b9'
+        }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <h2 style={{
+              fontSize: '32px',
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginBottom: '50px',
+              color: '#393d3f'
+            }}>
+              שאלות נפוצות - מערכת הצעות מחיר
+            </h2>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  איך יוצרים הצעת מחיר במערכת?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  יצירת הצעת מחיר במערכת Hit Quote היא פשוטה ומהירה. לחצו על "הצעת מחיר חדשה", בחרו מוצרים מהקטלוג, הוסיפו פרטי לקוח ותקבלו הצעת מחיר מקצועית מוכנה להדפסה או לשליחה דיגיטלית.
+                </p>
+              </div>
+              
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  האם ניתן להתאים אישית את הצעת המחיר?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  כן! המערכת מאפשרת להתאים את הצעת המחיר לעסק שלכם - הוספת לוגו אישי, עיצוב מותאם, הוספת תנאים מיוחדים ופרטי חברה. כל הצעת מחיר תיראה מקצועית ותשקף את המותג שלכם.
+                </p>
+              </div>
+              
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  איך עובדת החתימה הדיגיטלית?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  החתימה הדיגיטלית במערכת Hit Quote מאפשרת ללקוחות לאשר הצעת מחיר באופן מקוון ומאובטח. הלקוח מקבל קישור לאישור, חותם דיגיטלית ואתם מקבלים עדכון מיידי על סטטוס ההצעה.
+                </p>
+              </div>
+              
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '25px',
+                boxShadow: '0 5px 15px rgba(98, 146, 158, 0.1)'
+              }}>
+                <h3 style={{ fontSize: '20px', fontWeight: 'bold', color: '#393d3f', marginBottom: '15px' }}>
+                  האם המערכת מתאימה לעסקים קטנים?
+                </h3>
+                <p style={{ fontSize: '16px', color: '#546a7b', lineHeight: '1.6', margin: 0 }}>
+                  בהחלט! המערכת תוכננה במיוחד עבור עסקים קטנים ובינוניים בישראל. היא פשוטה לשימוש, לא דורשת הכשרה מיוחדת ומתאימה לכל סוג עסק הזקוק לניהול הצעות מחיר מקצועיות.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Footer */}
         <footer style={{

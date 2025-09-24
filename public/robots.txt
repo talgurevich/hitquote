@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Block access to admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Allow all crawlers access to CSS and JS files
+Allow: /_next/static/
+Allow: /favicon.ico
+Allow: /logo*.png
+Allow: /screenshot*.png
+
+# Sitemap location
+Sitemap: https://hitquote-3af50317cd73.herokuapp.com/sitemap.xml
+
+# Additional directives for Hebrew content optimization
+Allow: /quote/
+Allow: /catalog/
