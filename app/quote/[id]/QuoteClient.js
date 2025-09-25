@@ -105,6 +105,58 @@ export default function QuoteClient({ id }) {
     }
   };
 
+  const duplicateQuote = async () => {
+    try {
+      const response = await fetch('/api/duplicate-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quoteId: id })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to duplicate quote');
+      }
+
+      const data = await response.json();
+      
+      // Redirect to edit page for the new quote
+      window.location.href = `/new?id=${data.newQuoteId}`;
+      
+    } catch (error) {
+      console.error('Error duplicating quote:', error);
+      alert('שגיאה בשכפול הצעת המחיר');
+    }
+  };
+
+  const deleteQuote = async () => {
+    if (!confirm('האם אתה בטוח שברצונך למחוק הצעת מחיר זו? פעולה זו לא ניתנת לביטול.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/delete-quote', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ quoteId: id })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete quote');
+      }
+
+      // Redirect to quotes list
+      window.location.href = '/quotes';
+      
+    } catch (error) {
+      console.error('Error deleting quote:', error);
+      alert('שגיאה במחיקת הצעת המחיר');
+    }
+  };
+
 
   if (error) {
     return <main dir="rtl" style={{ padding:16 }}><div style={{ background:'#fdfdff', border:'1px solid #c6c5b9', padding:8, borderRadius:8 }}>שגיאה: {error}</div></main>;
@@ -332,6 +384,37 @@ export default function QuoteClient({ id }) {
             >
               💬 שיתוף וואטסאפ
             </button>
+            <button 
+              onClick={duplicateQuote} 
+              style={{
+                background: '#8b89a1',
+                color: 'white',
+                padding: '12px 20px',
+                borderRadius: '10px',
+                border: 'none',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 8px rgba(139, 137, 161, 0.3)',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#6b698f';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(139, 137, 161, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#8b89a1';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(139, 137, 161, 0.3)';
+              }}
+            >
+              📋 שכפול
+            </button>
             <Link 
               href={`/new?id=${proposal.id}`} 
               style={{
@@ -365,6 +448,37 @@ export default function QuoteClient({ id }) {
             >
               ✏️ עריכה
             </Link>
+            <button 
+              onClick={deleteQuote} 
+              style={{
+                background: '#d32f2f',
+                color: 'white',
+                padding: '12px 20px',
+                borderRadius: '10px',
+                border: 'none',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 8px rgba(211, 47, 47, 0.3)',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Inter", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#b71c1c';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 4px 12px rgba(211, 47, 47, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#d32f2f';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 2px 8px rgba(211, 47, 47, 0.3)';
+              }}
+            >
+              🗑️ מחק
+            </button>
           </div>
         </div>
 
