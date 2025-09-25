@@ -1,23 +1,40 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { supabase } from '../../lib/supabaseClient';
 import HamburgerMenu from '../components/HamburgerMenu';
 import { useSession } from 'next-auth/react';
 import { validateSessionAndGetBusinessUserId } from '../../lib/businessUserUtils';
+import { useRouter } from 'next/navigation';
 
 export default function QuotesList() {
   const [rows, setRows] = useState([]);
   const [err, setErr] = useState(null);
   const [settings, setSettings] = useState(null);
+  const [openMenuId, setOpenMenuId] = useState(null);
   const { data: session } = useSession();
+  const router = useRouter();
+  const menuRefs = useRef({});
 
   useEffect(() => {
     if (session?.user?.id) {
       loadQuotes();
     }
   }, [session]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (openMenuId && menuRefs.current[openMenuId] && !menuRefs.current[openMenuId].contains(event.target)) {
+        setOpenMenuId(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openMenuId]);
 
   const loadQuotes = async () => {
     try {
@@ -55,6 +72,72 @@ export default function QuotesList() {
       setErr(e.message || String(e));
       console.error('Error loading quotes/settings:', e);
     }
+  };
+
+  const duplicateQuote = async (quoteId) => {
+    try {
+      const response = await fetch('/api/duplicate-quote', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quoteId }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        router.push(`/quote/${data.newQuoteId}?edit=true`);
+      } else {
+        throw new Error('Failed to duplicate quote');
+      }
+    } catch (error) {
+      console.error('Error duplicating quote:', error);
+      alert('שגיאה בשכפול הצעת המחיר');
+    }
+  };
+
+  const deleteQuote = async (quoteId) => {
+    if (!confirm('האם אתה בטוח שברצונך למחוק הצעת מחיר זו? פעולה זו לא ניתנת לביטול.')) {
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/delete-quote', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quoteId }),
+      });
+
+      if (response.ok) {
+        setRows(rows.filter(row => row.id !== quoteId));
+        alert('הצעת המחיר נמחקה בהצלחה');
+      } else {
+        throw new Error('Failed to delete quote');
+      }
+    } catch (error) {
+      console.error('Error deleting quote:', error);
+      alert('שגיאה במחיקת הצעת המחיר');
+    }
+  };
+
+  const sendForSignature = (quoteId) => {
+    router.push(`/quote/${quoteId}/signature`);
+  };
+
+  const downloadPDF = (quoteId) => {
+    router.push(`/quote/${quoteId}/pdf`);
+  };
+
+  const shareWhatsApp = (quote) => {
+    const message = `הצעת מחיר מס׳ ${quote.proposal_number || quote.id.slice(0,8)} - סכום: ₪${Number(quote.total || 0).toLocaleString('he-IL')}`;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+  };
+
+  const toggleMenu = (quoteId) => {
+    setOpenMenuId(openMenuId === quoteId ? null : quoteId);
   };
 
   const getStatusBadge = (status, signatureStatus) => {
@@ -153,7 +236,7 @@ export default function QuotesList() {
         background: 'white',
         borderRadius: '20px',
         boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-        overflow: 'hidden'
+        overflow: 'visible'
       }}>
         {/* Header */}
         <div className="mobile-header" style={{
@@ -285,7 +368,7 @@ export default function QuotesList() {
                 background: 'white',
                 borderRadius: '15px',
                 boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
-                overflow: 'hidden'
+                overflow: 'visible'
               }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
@@ -348,23 +431,25 @@ export default function QuotesList() {
                           {getStatusBadge(r.status || 'pending', r.signature_status)}
                         </td>
                         <td style={{ padding: '12px', textAlign: 'center' }}>
-                          <div style={{ display: 'flex', gap: '4px', justifyContent: 'center', alignItems: 'center', flexWrap: 'nowrap' }}>
-                            <Link 
-                              href={`/quote/${r.id}`}
-                              title="צפייה בהצעה"
+                          <div style={{ position: 'relative', display: 'inline-block' }}>
+                            <button
+                              ref={(el) => {
+                                if (el) menuRefs.current[r.id] = el;
+                              }}
+                              onClick={() => toggleMenu(r.id)}
                               style={{
                                 background: '#62929e',
                                 color: '#fdfdff',
-                                padding: '8px 16px',
+                                padding: '8px 12px',
                                 borderRadius: '6px',
-                                textDecoration: 'none',
+                                border: 'none',
                                 fontSize: '14px',
                                 display: 'inline-flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
                                 transition: 'all 0.2s ease',
                                 fontWeight: 'bold',
-                                gap: '6px'
+                                cursor: 'pointer'
                               }}
                               onMouseEnter={(e) => {
                                 e.currentTarget.style.background = '#546a7b';
@@ -375,8 +460,191 @@ export default function QuotesList() {
                                 e.currentTarget.style.transform = 'translateY(0)';
                               }}
                             >
-                              &#x1F441; צפייה
-                            </Link>
+                              ⋯
+                            </button>
+                            
+                            {openMenuId === r.id && (
+                              <div style={{
+                                position: 'fixed',
+                                top: menuRefs.current[r.id]?.getBoundingClientRect().bottom + 5 || 0,
+                                right: window.innerWidth - (menuRefs.current[r.id]?.getBoundingClientRect().right || 0),
+                                background: 'white',
+                                borderRadius: '8px',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                                border: '1px solid #e9ecef',
+                                minWidth: '180px',
+                                zIndex: 9999,
+                                overflow: 'hidden'
+                              }}>
+                                <Link
+                                  href={`/quote/${r.id}`}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    padding: '12px 16px',
+                                    textDecoration: 'none',
+                                    color: '#393d3f',
+                                    fontSize: '14px',
+                                    transition: 'background 0.2s ease'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#f8f9fa';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'transparent';
+                                  }}
+                                >
+                                  👁 צפייה
+                                </Link>
+                                
+                                <button
+                                  onClick={() => {
+                                    duplicateQuote(r.id);
+                                    setOpenMenuId(null);
+                                  }}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    padding: '12px 16px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    color: '#393d3f',
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    width: '100%',
+                                    textAlign: 'right',
+                                    transition: 'background 0.2s ease'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#f8f9fa';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'transparent';
+                                  }}
+                                >
+                                  📋 שכפול
+                                </button>
+                                
+                                <button
+                                  onClick={() => {
+                                    deleteQuote(r.id);
+                                    setOpenMenuId(null);
+                                  }}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    padding: '12px 16px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    color: '#dc3545',
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    width: '100%',
+                                    textAlign: 'right',
+                                    transition: 'background 0.2s ease'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#f8f9fa';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'transparent';
+                                  }}
+                                >
+                                  🗑 מחק
+                                </button>
+                                
+                                <button
+                                  onClick={() => {
+                                    sendForSignature(r.id);
+                                    setOpenMenuId(null);
+                                  }}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    padding: '12px 16px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    color: '#393d3f',
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    width: '100%',
+                                    textAlign: 'right',
+                                    transition: 'background 0.2s ease'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#f8f9fa';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'transparent';
+                                  }}
+                                >
+                                  ✍ שליחה לחתימה
+                                </button>
+                                
+                                <button
+                                  onClick={() => {
+                                    downloadPDF(r.id);
+                                    setOpenMenuId(null);
+                                  }}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    padding: '12px 16px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    color: '#393d3f',
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    width: '100%',
+                                    textAlign: 'right',
+                                    transition: 'background 0.2s ease'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#f8f9fa';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'transparent';
+                                  }}
+                                >
+                                  📄 הורד PDF
+                                </button>
+                                
+                                <button
+                                  onClick={() => {
+                                    shareWhatsApp(r);
+                                    setOpenMenuId(null);
+                                  }}
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '10px',
+                                    padding: '12px 16px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    color: '#25d366',
+                                    fontSize: '14px',
+                                    cursor: 'pointer',
+                                    width: '100%',
+                                    textAlign: 'right',
+                                    transition: 'background 0.2s ease',
+                                    borderTop: '1px solid #e9ecef'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = '#f8f9fa';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'transparent';
+                                  }}
+                                >
+                                  📱 שתף בוואטסאפ
+                                </button>
+                              </div>
+                            )}
                           </div>
                         </td>
                       </tr>
@@ -463,32 +731,229 @@ export default function QuotesList() {
                         ₪{Number(r.total || 0).toLocaleString('he-IL')}
                       </div>
                     </div>
-                    <Link 
-                      href={`/quote/${r.id}`}
-                      style={{
-                        background: '#62929e',
-                        color: '#fdfdff',
-                        padding: '12px',
-                        borderRadius: '8px',
-                        textDecoration: 'none',
-                        fontSize: '15px',
-                        fontWeight: 'bold',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '8px',
-                        transition: 'all 0.2s ease',
-                        width: '100%'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = '#546a7b';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = '#62929e';
-                      }}
-                    >
-                      &#x1F441; צפייה בהצעה
-                    </Link>
+                    <div style={{
+                      display: 'flex',
+                      gap: '10px',
+                      marginTop: '10px'
+                    }}>
+                      <Link 
+                        href={`/quote/${r.id}`}
+                        style={{
+                          background: '#62929e',
+                          color: '#fdfdff',
+                          padding: '12px',
+                          borderRadius: '8px',
+                          textDecoration: 'none',
+                          fontSize: '15px',
+                          fontWeight: 'bold',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '8px',
+                          transition: 'all 0.2s ease',
+                          flex: 1
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = '#546a7b';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = '#62929e';
+                        }}
+                      >
+                        👁 צפייה
+                      </Link>
+                      
+                      <div style={{ position: 'relative' }}>
+                        <button
+                          onClick={() => toggleMenu(r.id)}
+                          style={{
+                            background: '#62929e',
+                            color: '#fdfdff',
+                            padding: '12px',
+                            borderRadius: '8px',
+                            border: 'none',
+                            fontSize: '15px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'all 0.2s ease',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            minWidth: '48px'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = '#546a7b';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = '#62929e';
+                          }}
+                        >
+                          ⋯
+                        </button>
+                        
+                        {openMenuId === r.id && (
+                          <div style={{
+                            position: 'absolute',
+                            top: '100%',
+                            right: 0,
+                            background: 'white',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                            border: '1px solid #e9ecef',
+                            minWidth: '180px',
+                            zIndex: 9999,
+                            overflow: 'hidden',
+                            marginTop: '5px'
+                          }}>
+                            <button
+                              onClick={() => {
+                                duplicateQuote(r.id);
+                                setOpenMenuId(null);
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                padding: '12px 16px',
+                                background: 'transparent',
+                                border: 'none',
+                                color: '#393d3f',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                width: '100%',
+                                textAlign: 'right',
+                                transition: 'background 0.2s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#f8f9fa';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'transparent';
+                              }}
+                            >
+                              📋 שכפול
+                            </button>
+                            
+                            <button
+                              onClick={() => {
+                                deleteQuote(r.id);
+                                setOpenMenuId(null);
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                padding: '12px 16px',
+                                background: 'transparent',
+                                border: 'none',
+                                color: '#dc3545',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                width: '100%',
+                                textAlign: 'right',
+                                transition: 'background 0.2s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#f8f9fa';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'transparent';
+                              }}
+                            >
+                              🗑 מחק
+                            </button>
+                            
+                            <button
+                              onClick={() => {
+                                sendForSignature(r.id);
+                                setOpenMenuId(null);
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                padding: '12px 16px',
+                                background: 'transparent',
+                                border: 'none',
+                                color: '#393d3f',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                width: '100%',
+                                textAlign: 'right',
+                                transition: 'background 0.2s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#f8f9fa';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'transparent';
+                              }}
+                            >
+                              ✍ שליחה לחתימה
+                            </button>
+                            
+                            <button
+                              onClick={() => {
+                                downloadPDF(r.id);
+                                setOpenMenuId(null);
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                padding: '12px 16px',
+                                background: 'transparent',
+                                border: 'none',
+                                color: '#393d3f',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                width: '100%',
+                                textAlign: 'right',
+                                transition: 'background 0.2s ease'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#f8f9fa';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'transparent';
+                              }}
+                            >
+                              📄 הורד PDF
+                            </button>
+                            
+                            <button
+                              onClick={() => {
+                                shareWhatsApp(r);
+                                setOpenMenuId(null);
+                              }}
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '10px',
+                                padding: '12px 16px',
+                                background: 'transparent',
+                                border: 'none',
+                                color: '#25d366',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                width: '100%',
+                                textAlign: 'right',
+                                transition: 'background 0.2s ease',
+                                borderTop: '1px solid #e9ecef'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = '#f8f9fa';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'transparent';
+                              }}
+                            >
+                              📱 שתף בוואטסאפ
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
