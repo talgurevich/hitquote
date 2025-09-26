@@ -3,7 +3,7 @@
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-export const generateSimplePDF = async () => {
+export const generateSimplePDF = async (settings = {}) => {
   try {
     // Find the quote container
     const quoteContainer = document.querySelector('.quote-container');
@@ -66,9 +66,11 @@ export const generateSimplePDF = async () => {
       }
     });
     
-    // Keep the header in original yellow color but fix text contrast
+    // Apply user-selected header color or default to yellow
+    const headerColor = settings.header_color || '#FDDC33';
     const header = clonedContainer.querySelector('.mobile-header');
     if (header) {
+      header.style.background = headerColor;
       header.style.color = 'black';
       const headerTexts = header.querySelectorAll('*');
       headerTexts.forEach(el => {
@@ -177,7 +179,7 @@ export const generateSimplePDF = async () => {
   }
 };
 
-export const generatePDFBlob = async (proposal) => {
+export const generatePDFBlob = async (proposal, settings = {}) => {
   try {
     // Find the quote container
     const quoteContainer = document.querySelector('.quote-container');
@@ -238,9 +240,11 @@ export const generatePDFBlob = async (proposal) => {
       }
     });
     
-    // Keep the header in original yellow color but fix text contrast
+    // Apply user-selected header color or default to yellow
+    const headerColor = settings.header_color || '#FDDC33';
     const header = clonedContainer.querySelector('.mobile-header');
     if (header) {
+      header.style.background = headerColor;
       header.style.color = 'black';
       const headerTexts = header.querySelectorAll('*');
       headerTexts.forEach(el => {
@@ -340,7 +344,7 @@ export const generatePDFBlob = async (proposal) => {
   }
 };
 
-export const SimplePDFButton = ({ proposal }) => {
+export const SimplePDFButton = ({ proposal, settings = {} }) => {
   const handleClick = async (e) => {
     const btn = e.currentTarget;
     const originalText = btn.textContent;
@@ -349,7 +353,7 @@ export const SimplePDFButton = ({ proposal }) => {
       btn.textContent = '⏳ מכין PDF...';
       btn.disabled = true;
       
-      await generateSimplePDF();
+      await generateSimplePDF(settings);
     } finally {
       btn.textContent = originalText;
       btn.disabled = false;

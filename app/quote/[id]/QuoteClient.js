@@ -50,7 +50,7 @@ export default function QuoteClient({ id }) {
         // Now get settings for the specific user who owns this proposal
         const { data: st, error: e1 } = await supabase
           .from('settings')
-          .select('business_name, business_email, business_phone, business_address, business_license, logo_url')
+          .select('business_name, business_email, business_phone, business_address, business_license, logo_url, header_color')
           .eq('user_id', proposalData.user_id)
           .limit(1)
           .maybeSingle();
@@ -83,7 +83,7 @@ export default function QuoteClient({ id }) {
       const { generatePDFBlob } = await import('./QuotePDFSimple');
       
       // Generate PDF blob
-      const pdfBlob = await generatePDFBlob(proposal);
+      const pdfBlob = await generatePDFBlob(proposal, settings);
       
       // Create download link for the PDF
       const url = URL.createObjectURL(pdfBlob);
@@ -312,8 +312,9 @@ export default function QuoteClient({ id }) {
           </div>
           
           <div className="mobile-buttons" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-            <QuotePDFDownloadButton 
+            <QuotePDFDownloadButton
               proposal={proposal}
+              settings={settings}
             />
             <SignedPDFDownloadButton 
               proposal={proposal}

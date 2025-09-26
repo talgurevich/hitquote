@@ -25,12 +25,21 @@ export default function QuotesList() {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (openMenuId && menuRefs.current[openMenuId] && !menuRefs.current[openMenuId].contains(event.target)) {
-        setOpenMenuId(null);
+      if (openMenuId && menuRefs.current[openMenuId]) {
+        const menuElement = menuRefs.current[openMenuId];
+        const menuDropdown = menuElement.parentNode.querySelector('[style*="position: absolute"]');
+
+        if (!menuElement.contains(event.target) && (!menuDropdown || !menuDropdown.contains(event.target))) {
+          console.log('Clicking outside menu, closing');
+          setOpenMenuId(null);
+        }
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    if (openMenuId) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -123,11 +132,11 @@ export default function QuotesList() {
   };
 
   const sendForSignature = (quoteId) => {
-    router.push(`/quote/${quoteId}/signature`);
+    router.push(`/sign/${quoteId}`);
   };
 
   const downloadPDF = (quoteId) => {
-    router.push(`/quote/${quoteId}/pdf`);
+    router.push(`/quote/${quoteId}`);
   };
 
   const shareWhatsApp = (quote) => {
@@ -137,6 +146,7 @@ export default function QuotesList() {
   };
 
   const toggleMenu = (quoteId) => {
+    console.log('toggleMenu called with:', quoteId, 'current openMenuId:', openMenuId);
     setOpenMenuId(openMenuId === quoteId ? null : quoteId);
   };
 
@@ -436,7 +446,11 @@ export default function QuotesList() {
                               ref={(el) => {
                                 if (el) menuRefs.current[r.id] = el;
                               }}
-                              onClick={() => toggleMenu(r.id)}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                toggleMenu(r.id);
+                              }}
                               style={{
                                 background: '#62929e',
                                 color: '#fdfdff',
@@ -465,16 +479,17 @@ export default function QuotesList() {
                             
                             {openMenuId === r.id && (
                               <div style={{
-                                position: 'fixed',
-                                top: menuRefs.current[r.id]?.getBoundingClientRect().bottom + 5 || 0,
-                                right: window.innerWidth - (menuRefs.current[r.id]?.getBoundingClientRect().right || 0),
+                                position: 'absolute',
+                                top: '100%',
+                                right: '0',
                                 background: 'white',
                                 borderRadius: '8px',
                                 boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
                                 border: '1px solid #e9ecef',
                                 minWidth: '180px',
                                 zIndex: 9999,
-                                overflow: 'hidden'
+                                overflow: 'hidden',
+                                marginTop: '5px'
                               }}>
                                 <Link
                                   href={`/quote/${r.id}`}
@@ -500,6 +515,7 @@ export default function QuotesList() {
                                 
                                 <button
                                   onClick={() => {
+                                    console.log('Duplicate clicked for:', r.id);
                                     duplicateQuote(r.id);
                                     setOpenMenuId(null);
                                   }}
@@ -765,7 +781,11 @@ export default function QuotesList() {
                       
                       <div style={{ position: 'relative' }}>
                         <button
-                          onClick={() => toggleMenu(r.id)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleMenu(r.id);
+                          }}
                           style={{
                             background: '#62929e',
                             color: '#fdfdff',

@@ -20,7 +20,8 @@ function SettingsContent() {
     business_phone: '',
     business_address: '',
     business_license: '',
-    logo_url: ''
+    logo_url: '',
+    header_color: '#FDDC33'
   });
   const [logoFile, setLogoFile] = useState(null);
   const [logoPreview, setLogoPreview] = useState(null);
@@ -49,7 +50,7 @@ function SettingsContent() {
       
       const { data, error } = await supabase
         .from('settings')
-        .select('business_name, business_email, business_phone, business_address, business_license, logo_url')
+        .select('business_name, business_email, business_phone, business_address, business_license, logo_url, header_color')
         .eq('user_id', userId)
         .limit(1)
         .maybeSingle();
@@ -57,7 +58,10 @@ function SettingsContent() {
       if (error) throw error;
 
       if (data) {
-        setSettings(data);
+        setSettings({
+          ...data,
+          header_color: data.header_color || '#FDDC33'
+        });
         if (data.logo_url) {
           setLogoPreview(data.logo_url);
         }
@@ -528,6 +532,76 @@ function SettingsContent() {
                   margin: '5px 0 0 0'
                 }}>
                   קבצי תמונה בלבד, עד 5MB. מומלץ רזולוציה של 200x100 פיקסלים
+                </p>
+              </div>
+
+              {/* Header Color Picker */}
+              <div>
+                <label style={{
+                  display: 'block',
+                  marginBottom: '8px',
+                  fontWeight: 'bold',
+                  color: '#333'
+                }}>
+                  צבע כותרת PDF:
+                </label>
+
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '15px',
+                  marginBottom: '10px'
+                }}>
+                  <input
+                    type="color"
+                    name="header_color"
+                    value={settings.header_color}
+                    onChange={handleInputChange}
+                    style={{
+                      width: '60px',
+                      height: '40px',
+                      border: '1px solid #c6c5b9',
+                      borderRadius: '8px',
+                      cursor: 'pointer'
+                    }}
+                  />
+                  <input
+                    type="text"
+                    name="header_color"
+                    value={settings.header_color}
+                    onChange={handleInputChange}
+                    placeholder="#FDDC33"
+                    style={{
+                      flex: 1,
+                      padding: '12px',
+                      border: '1px solid #c6c5b9',
+                      borderRadius: '8px',
+                      fontSize: '16px',
+                      boxSizing: 'border-box'
+                    }}
+                  />
+                </div>
+
+                <div style={{
+                  padding: '15px',
+                  border: '1px solid #c6c5b9',
+                  borderRadius: '8px',
+                  background: settings.header_color,
+                  textAlign: 'center',
+                  color: '#000',
+                  fontWeight: 'bold',
+                  fontSize: '16px'
+                }}>
+                  תצוגה מקדימה של צבע הכותרת
+                </div>
+
+                <p style={{
+                  fontSize: '12px',
+                  color: '#546a7b',
+                  marginTop: '5px',
+                  margin: '5px 0 0 0'
+                }}>
+                  הצבע שייבחר כאן יופיע ברקע של הכותרת בקבצי PDF של הצעות המחיר
                 </p>
               </div>
             </div>
